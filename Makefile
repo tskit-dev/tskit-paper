@@ -1,4 +1,6 @@
-paper.pdf: paper.tex paper.bib
+FIGURES=figures/tree-performance.pdf
+
+paper.pdf: paper.tex paper.bib ${FIGURES}
 	pdflatex paper.tex
 	bibtex paper
 	pdflatex paper.tex
@@ -12,6 +14,9 @@ paper.dvi: paper.tex paper.bib
 	bibtex paper
 	latex paper.tex
 	latex paper.tex
+
+figures/%.pdf: plot.py
+	python3 plot.py $*
 
 clean:
 	rm -f *.log *.dvi *.aux
