@@ -1,0 +1,6 @@
+pandas
+click
+numpy 
+msprime
+matplotlib
+numba
