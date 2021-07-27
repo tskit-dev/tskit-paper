@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <err.h>
+#include <time.h>
 
 #include <tskit.h>
 
@@ -9,75 +10,21 @@
         errx(EXIT_FAILURE, "line %d: %s", __LINE__, tsk_strerror(val));                 \
     }
 
-/* static void */
-/* _traverse(tsk_tree_t *tree, tsk_id_t u, int depth) */
-/* { */
-/*     tsk_id_t v; */
-/*     int j; */
 
-/*     for (j = 0; j < depth; j++) { */
-/*         printf("    "); */
-/*     } */
-/*     printf("Visit recursive %lld\n", (long long) u); */
-/*     for (v = tree->left_child[u]; v != TSK_NULL; v = tree->right_sib[v]) { */
-/*         _traverse(tree, v, depth + 1); */
-/*     } */
-/* } */
+static void
+run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
+{
+    int8_t ancestral_state;
+    tsk_size_t num_transitions;
+    tsk_state_transition_t *transitions;
 
-/* static void */
-/* traverse_recursive(tsk_tree_t *tree) */
-/* { */
-/*     tsk_id_t root; */
-
-/*     for (root = tree->left_root; root != TSK_NULL; root = tree->right_sib[root]) { */
-/*         _traverse(tree, root, 0); */
-/*     } */
-/* } */
-
-/* static void */
-/* traverse_stack(tsk_tree_t *tree) */
-/* { */
-/*     int stack_top; */
-/*     tsk_id_t u, v, root; */
-/*     tsk_id_t *stack */
-/*         = malloc(tsk_treeseq_get_num_nodes(tree->tree_sequence) * sizeof(*stack)); */
-
-/*     if (stack == NULL) { */
-/*         errx(EXIT_FAILURE, "Out of memory"); */
-/*     } */
-/*     for (root = tree->left_root; root != TSK_NULL; root = tree->right_sib[root]) { */
-/*         stack_top = 0; */
-/*         stack[stack_top] = root; */
-/*         while (stack_top >= 0) { */
-/*             u = stack[stack_top]; */
-/*             stack_top--; */
-/*             printf("Visit stack %lld\n", (long long) u); */
-/*             /1* Put nodes on the stack right-to-left, so we visit in left-to-right *1/ */
-/*             for (v = tree->right_child[u]; v != TSK_NULL; v = tree->left_sib[v]) { */
-/*                 stack_top++; */
-/*                 stack[stack_top] = v; */
-/*             } */
-/*         } */
-/*     } */
-/*     free(stack); */
-/* } */
-
-/* static void */
-/* traverse_upwards(tsk_tree_t *tree) */
-/* { */
-/*     const tsk_id_t *samples = tsk_treeseq_get_samples(tree->tree_sequence); */
-/*     tsk_size_t num_samples = tsk_treeseq_get_num_samples(tree->tree_sequence); */
-/*     tsk_size_t j; */
-/*     tsk_id_t u; */
-
-/*     for (j = 0; j < num_samples; j++) { */
-/*         u = samples[j]; */
-/*         while (u != TSK_NULL) { */
-/*             printf("Visit upwards: %lld\n", (long long) u); */
-/*             u = tree->parent[u]; */
-/*         } */
-/*     } */
-/* } */
+    int ret = tsk_tree_map_mutations(tree, var->genotypes.i8, NULL, 0, &ancestral_state,
+            &num_transitions, &transitions);
+    if (num_transitions > var->site->mutations_length) {
+        errx(EXIT_FAILURE, "This shouldn't happen");
+    }
+    free(transitions);
+}
 
 int
 main(int argc, char **argv)
@@ -87,9 +34,18 @@ main(int argc, char **argv)
     tsk_tree_t tree;
     tsk_vargen_t vargen;
     tsk_variant_t *var;
+    tsk_id_t max_sites;
+    clock_t before, duration;
+    double total_time = 0.0;
 
-    if (argc != 2) {
-        errx(EXIT_FAILURE, "usage: <tree sequence file>");
+    /* When we add the recursive implementation we can add another argument here
+     * to decide which version to run. */
+    if (argc != 3) {
+        errx(EXIT_FAILURE, "usage: <tree sequence file> <max_sites>");
+    }
+    max_sites = atoi(argv[2]);
+    if (max_sites <= 0) {
+        errx(EXIT_FAILURE, "bad max_sites value");
     }
     ret = tsk_treeseq_load(&ts, argv[1], 0);
     check_tsk_error(ret);
@@ -102,16 +58,16 @@ main(int argc, char **argv)
     check_tsk_error(ret);
 
     while ((ret = tsk_vargen_next(&vargen, &var)) == 1) {
-        printf("variant %d\n", var->site->id);
-
+        if (var->site->id >= max_sites) {
+            break;
+        }
+        before = clock();
+        run_parsimony_library(&tree, var);
+        duration = clock() - before;
+        total_time += ((double) duration) / CLOCKS_PER_SEC;
     }
     check_tsk_error(ret);
-
-/*     traverse_recursive(&tree); */
-
-/*     traverse_stack(&tree); */
-
-/*     traverse_upwards(&tree); */
+    printf("%g\n", total_time / max_sites);
 
     tsk_vargen_free(&vargen);
     tsk_tree_free(&tree);
