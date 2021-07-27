@@ -1,7 +1,7 @@
 
 TSK_OBJECTS=kastore.o tskit_tables.o tskit_core.o tskit_trees.o \
 	tskit_stats.o tskit_genotypes.o tskit_convert.o
-CFLAGS += -Ikastore/c -I tskit/c -O3 -march=native
+CFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native
 
 c_implementation: c_implementation.c libtskit.a
 	${CC} ${CFLAGS} $^ -o $@ -lm

@@ -35,14 +35,22 @@ def _hartigan_postorder(parent, optimal_set, right_child, left_sib):
 
 @numba.njit()
 def _hartigan_preorder(node, state, optimal_set, right_child, left_sib):
-    mutations = []
+    # Note: simplifying this to just return a count rather than the actual
+    # mutations to make it comparable with local C recursive impl
+    # mutations = []
+    # if optimal_set[node, state] == 0:
+    #     state = np.argmax(optimal_set[node])
+    #     mutations.append((node, state))
+    mutations = 0
     if optimal_set[node, state] == 0:
         state = np.argmax(optimal_set[node])
-        mutations.append((node, state))
+        mutations = 1
+
     v = right_child[node]
     while v != tskit.NULL:
         v_muts = _hartigan_preorder(v, state, optimal_set, right_child, left_sib)
-        mutations.extend(v_muts)
+        # mutations.extend(v_muts)
+        mutations += v_muts
         v = left_sib[v]
     return mutations
 
@@ -62,23 +70,16 @@ def numba_map_mutations(tree, genotypes, alleles):
 
     _hartigan_postorder(tree.root, optimal_set, right_child, left_sib)
     ancestral_state = np.argmax(optimal_set[tree.root])
-    ll_mutations = _hartigan_preorder(
+    # Because we're not constructing the mutations we can just return
+    # the count directly. It's straightforward to do, though, and
+    # doesn't impact performance much because mismatches from the
+    # optimal state are rare in the preorder phase
+    return _hartigan_preorder(
         tree.root, ancestral_state, optimal_set, right_child, left_sib
     )
-    mutations = []
-    for node, derived_state in ll_mutations:
-        mutations.append(
-            tskit.Mutation(
-                node=node,
-                derived_state=alleles[derived_state],
-                # Note we're taking a short-cut here and not bothering with
-                # mutation parent.
-            )
-        )
-    return alleles[ancestral_state], mutations
 
 
-def benchmark_python(ts, tree, func, implementation, max_sites=1000):
+def benchmark_python(ts, func, implementation, max_sites=1000):
     assert ts.num_sites >= max_sites
     variants = itertools.islice(ts.variants(), max_sites)
     times = np.zeros(max_sites)
@@ -88,24 +89,31 @@ def benchmark_python(ts, tree, func, implementation, max_sites=1000):
     ) as bar:
         for j, variant in enumerate(bar):
             before = time.perf_counter()
-            _, mutations = func(variant.genotypes, variant.alleles)
+            num_mutations = func(variant.genotypes, variant.alleles)
             duration = time.perf_counter() - before
             times[j] = duration
             site = ts.site(j)
-            assert len(mutations) <= len(site.mutations)
-    return {
-        "implementation": f"{implementation}",
-        "sample_size": ts.num_samples,
-        "time_mean": np.mean(times),
-        "time_var": np.var(times),
-    }
+            assert num_mutations <= len(site.mutations)
+    return [
+        {
+            "implementation": f"{implementation}",
+            "sample_size": ts.num_samples,
+            "time_mean": np.mean(times),
+            "time_var": np.var(times),
+        }
+    ]
 
 
 def benchmark_tskit(ts_path, max_sites):
     ts = tskit.load(ts_path)
     assert ts.num_trees == 1
     tree = ts.first()
-    return benchmark_python(ts, tree, tree.map_mutations, "tskit", max_sites=max_sites)
+
+    def f(genotypes, alleles):
+        _, mutations = tree.map_mutations(genotypes, alleles)
+        return len(mutations)
+
+    return benchmark_python(ts, f, "tskit", max_sites=max_sites)
 
 
 def benchmark_numba(ts_path, max_sites):
@@ -115,29 +123,39 @@ def benchmark_numba(ts_path, max_sites):
     tree = ts.first()
     return benchmark_python(
         ts,
-        tree,
         functools.partial(numba_map_mutations, tree),
         "numba",
         max_sites=max_sites,
     )
 
 
-def benchmark_external(command, ts_path, max_sites, implementation):
+def benchmark_external(command, ts_path, max_sites):
     result = subprocess.run(
-        command + f" {ts_path} {max_sites}", shell=True, check=True, capture_output=True
+        command + f" {ts_path} {max_sites}",
+        shell=True,
+        check=True,
+        capture_output=True,
+        text=True,
     )
-    time = float(result.stdout)
+    ret = []
     ts = tskit.load(ts_path)
-    return {
-        "implementation": f"{implementation}",
-        "sample_size": ts.num_samples,
-        "time_mean": time,
-        "time_var": 0,  # TODO Probably not worth bothering with this
-    }
+    for line in result.stdout.splitlines():
+        splits = line.split()
+        implementation = splits[0]
+        time = float(splits[1])
+        ret.append(
+            {
+                "implementation": implementation,
+                "sample_size": ts.num_samples,
+                "time_mean": time,
+                "time_var": 0,  # TODO Probably not worth bothering with this
+            }
+        )
+    return ret
 
 
 def benchmark_c_library(ts_path, max_sites):
-    return benchmark_external(f"./c_implementation", ts_path, max_sites, "c_lib")
+    return benchmark_external(f"./c_implementation", ts_path, max_sites)
 
 
 @click.command()
@@ -156,8 +174,8 @@ def run_benchmarks(max_sites):
         ts = tskit.load(path)
         assert ts.num_trees == 1
         for impl in [benchmark_numba, benchmark_tskit, benchmark_c_library]:
-            perf_data.append(impl(path, max_sites=max_sites))
-            print(perf_data[-1])
+            perf_data.extend(impl(path, max_sites=max_sites))
+            print(perf_data[-3:])
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance.csv")
 
