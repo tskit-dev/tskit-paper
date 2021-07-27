@@ -20,6 +20,7 @@ run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
 
     int ret = tsk_tree_map_mutations(tree, var->genotypes.i8, NULL, 0, &ancestral_state,
             &num_transitions, &transitions);
+    check_tsk_error(ret);
     if (num_transitions > var->site->mutations_length) {
         errx(EXIT_FAILURE, "This shouldn't happen");
     }
