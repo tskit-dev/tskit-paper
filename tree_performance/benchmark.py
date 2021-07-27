@@ -5,6 +5,7 @@ import pathlib
 import time
 import itertools
 import functools
+import subprocess
 
 import pandas as pd
 import numpy as np
@@ -100,13 +101,16 @@ def benchmark_python(ts, tree, func, implementation, max_sites=1000):
     }
 
 
-def benchmark_tskit(ts, max_sites):
+def benchmark_tskit(ts_path, max_sites):
+    ts = tskit.load(ts_path)
     assert ts.num_trees == 1
     tree = ts.first()
     return benchmark_python(ts, tree, tree.map_mutations, "tskit", max_sites=max_sites)
 
 
-def benchmark_numba(ts, max_sites):
+def benchmark_numba(ts_path, max_sites):
+
+    ts = tskit.load(ts_path)
     assert ts.num_trees == 1
     tree = ts.first()
     return benchmark_python(
@@ -118,6 +122,24 @@ def benchmark_numba(ts, max_sites):
     )
 
 
+def benchmark_external(command, ts_path, max_sites, implementation):
+    result = subprocess.run(
+        command + f" {ts_path} {max_sites}", shell=True, check=True, capture_output=True
+    )
+    time = float(result.stdout)
+    ts = tskit.load(ts_path)
+    return {
+        "implementation": f"{implementation}",
+        "sample_size": ts.num_samples,
+        "time_mean": time,
+        "time_var": 0,  # TODO Probably not worth bothering with this
+    }
+
+
+def benchmark_c_library(ts_path, max_sites):
+    return benchmark_external(f"./c_implementation", ts_path, max_sites, "c_lib")
+
+
 @click.command()
 @click.option("--max-sites", type=int, default=1000)
 def run_benchmarks(max_sites):
@@ -126,16 +148,15 @@ def run_benchmarks(max_sites):
     """
     # Warm up the jit
     ts = msprime.sim_ancestry(100, sequence_length=100000, random_seed=43)
-    ts = msprime.sim_mutations(ts, rate=0.01)
-    benchmark_numba(ts, 10)
+    numba_map_mutations(ts.first(), np.zeros(ts.num_samples, dtype=np.int8), ["0"])
 
     datapath = pathlib.Path("data")
     perf_data = []
     for path in sorted(datapath.glob("*.trees")):
         ts = tskit.load(path)
         assert ts.num_trees == 1
-        for impl in [benchmark_numba, benchmark_tskit]:
-            perf_data.append(impl(ts, max_sites=max_sites))
+        for impl in [benchmark_numba, benchmark_tskit, benchmark_c_library]:
+            perf_data.append(impl(path, max_sites=max_sites))
             print(perf_data[-1])
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance.csv")
