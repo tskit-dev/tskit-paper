@@ -52,7 +52,7 @@ struct Node
 };
 
 static void
-_traverse(tsk_tree_t *tree, tsk_id_t u, int depth)
+_traverse(tsk_tree_t *tree, tsk_id_t u, tsk_id_t parent, int depth)
 {
     tsk_id_t v;
     int j;
@@ -61,10 +61,10 @@ _traverse(tsk_tree_t *tree, tsk_id_t u, int depth)
         {
             printf("    ");
         }
-    printf("Visit recursive %lld %d\n", (long long)u, depth);
+    printf("Visit recursive %lld %d %d\n", (long long)u, parent, depth);
     for (v = tree->left_child[u]; v != TSK_NULL; v = tree->right_sib[v])
         {
-            _traverse(tree, v, depth + 1);
+            _traverse(tree, v, u, depth + 1);
         }
 }
 
@@ -75,7 +75,7 @@ traverse_recursive(tsk_tree_t *tree)
 
     for (root = tree->left_root; root != TSK_NULL; root = tree->right_sib[root])
         {
-            _traverse(tree, root, 0);
+            _traverse(tree, root, -1, 0);
         }
 }
 
