@@ -58,6 +58,27 @@ struct Node
     }
 };
 
+static tsk_size_t
+run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
+{
+    int8_t ancestral_state;
+    tsk_size_t num_transitions;
+    tsk_state_transition_t *transitions;
+
+    int ret = tsk_tree_map_mutations(tree, var->genotypes.i8, NULL, 0, &ancestral_state,
+                                     &num_transitions, &transitions);
+    if (ret < 0)
+        {
+            throw std::runtime_error("error from tsk_tree_map_mutations");
+        }
+    if (num_transitions > var->site->mutations_length)
+        {
+            throw std::runtime_error("This shouldn't happen");
+        }
+    free(transitions);
+    return num_transitions;
+}
+
 static void
 _traverse(const tsk_tree_t *tree, tsk_id_t u, tsk_id_t parent, int depth)
 {
@@ -172,6 +193,7 @@ int
 main(int argc, char **argv)
 {
     auto ts = load_treeseq(argv[1]);
+    tsk_id_t max_sites = std::atoi(argv[2]);
     TskTree tree(ts);
     if (count_roots(&tree.tree) != 1)
         {
@@ -181,4 +203,28 @@ main(int argc, char **argv)
 
     auto cpp_tree = build_tree(&tree.tree);
     traverse_recursive_confirm(cpp_tree);
+
+    tsk_vargen_t vargen;
+    tsk_variant_t *var;
+    auto ret = tsk_vargen_init(&vargen, &ts.ts, NULL, 0, NULL, 0);
+    if (ret < 0)
+        {
+            throw std::runtime_error("error initializing tsk_variant_t");
+        }
+
+    while ((ret = tsk_vargen_next(&vargen, &var)) == 1)
+        {
+            if (var->site->id >= max_sites)
+                {
+                    break;
+                }
+            auto before = clock();
+            auto score_lib = run_parsimony_library(&tree.tree, var);
+            auto duration = clock() - before;
+            auto lib_total_time = ((double)duration) / CLOCKS_PER_SEC;
+
+            before = clock();
+            duration = clock() - before;
+            auto recursive_total_time = ((double)duration) / CLOCKS_PER_SEC;
+        }
 }
