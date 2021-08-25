@@ -55,6 +55,25 @@ struct Node {
     Node() : id{ -1 }, children{} {}
 };
 
+struct HeapNode {
+    int id;
+    std::vector<std::unique_ptr<HeapNode> > children;
+
+    HeapNode() : id{ -1 }, children{} {}
+};
+
+inline const Node &
+dispatch_node(const Node &n)
+{
+    return n;
+}
+
+inline const HeapNode &
+dispatch_node(const std::unique_ptr<HeapNode> &n)
+{
+    return *n;
+}
+
 static void
 print_tree(const Node &parent, int depth)
 {
@@ -63,7 +82,7 @@ print_tree(const Node &parent, int depth)
     }
     std::cout << parent.id << "\n";
     for (auto &child : parent.children) {
-        print_tree(child, depth + 1);
+        print_tree(dispatch_node(child), depth + 1);
     }
 }
 
@@ -96,9 +115,10 @@ count_roots(const tsk_tree_t *tree)
     return nroots;
 }
 
+template <typename NodeType>
 void
 build_node_stack_recursive(const tsk_tree_t *tree, tsk_id_t u, tsk_id_t parent,
-    std::vector<std::pair<int, Node> > &node_stack)
+    std::vector<std::pair<int, NodeType> > &node_stack)
 {
     node_stack[u].first = parent;
     node_stack[u].second.id = u;
@@ -108,20 +128,35 @@ build_node_stack_recursive(const tsk_tree_t *tree, tsk_id_t u, tsk_id_t parent,
     }
 }
 
+template <typename NodeType>
 void
-build_recursive(const tsk_tree_t *tree, std::vector<std::pair<int, Node> > &node_stack)
+build_recursive(
+    const tsk_tree_t *tree, std::vector<std::pair<int, NodeType> > &node_stack)
 {
     node_stack.resize(tree->left_root + 1);
     build_node_stack_recursive(tree, tree->left_root, -1, node_stack);
 }
 
+inline Node &
+build_tree_pre_allocated_dispatch(Node &&n)
+{
+    return n;
+}
+
+inline std::unique_ptr<HeapNode>
+build_tree_pre_allocated_dispatch(HeapNode &&n)
+{
+    return std::make_unique<HeapNode>(std::move(n));
+}
+
 /* Build a tree using the C++ Node class, where we preallocate all the nodes
  * at once.
  */
-static Node
+template <typename NodeType>
+static NodeType
 build_tree_pre_allocated(tsk_tree_t *tree)
 {
-    std::vector<std::pair<int, Node> > node_stack;
+    std::vector<std::pair<int, NodeType> > node_stack;
 
     build_recursive(tree, node_stack);
 
@@ -132,12 +167,12 @@ build_tree_pre_allocated(tsk_tree_t *tree)
     for (std::size_t i = 0; i < node_stack.size(); ++i) {
         if (node_stack[i].first != TSK_NULL) {
             // node is not a root node
-            node_stack[node_stack[i].first].second.children.push_back(
-                node_stack[i].second);
+            node_stack[node_stack[i].first].second.children.emplace_back(
+                build_tree_pre_allocated_dispatch(std::move(node_stack[i].second)));
         }
     }
 
-    Node root{ node_stack.back().second };
+    NodeType root{ std::move(node_stack.back().second) };
     return root;
 }
 
@@ -277,7 +312,8 @@ main(int argc, char **argv)
     if (count_roots(&tree.tree) != 1) {
         throw std::invalid_argument("tree must have a single root");
     }
-    auto cpp_tree_prealloc = build_tree_pre_allocated(&tree.tree);
+    auto cpp_tree_prealloc = build_tree_pre_allocated<Node>(&tree.tree);
+    auto cpp_tree_prealloc_heap = build_tree_pre_allocated<HeapNode>(&tree.tree);
     /* auto cpp_tree_node_alloc = build_tree_node_allocated(&tree.tree); */
 
     tsk_vargen_t vargen;
