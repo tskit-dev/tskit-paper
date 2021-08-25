@@ -396,5 +396,6 @@ main(int argc, char **argv)
               << heapalloc_total_time / max_sites << "\n";
     /* std::cout << "recursive_node_alloc\t" << std::scientific */
     /*           << node_alloc_total_time / max_sites << "\n"; */
+    tsk_vargen_free(&vargen);
     return 0;
 }
