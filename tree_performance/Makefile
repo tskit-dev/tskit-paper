@@ -2,7 +2,7 @@ TARGETS=c_implementation cpp_implementation_stack_allocated
 TSK_OBJECTS=kastore.o tskit_tables.o tskit_core.o tskit_trees.o \
 	tskit_stats.o tskit_genotypes.o tskit_convert.o
 CFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native
-CXXFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native -std=c++11
+CXXFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native -std=c++14
 
 all: $(TARGETS)
 
