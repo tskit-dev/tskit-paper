@@ -389,10 +389,10 @@ main(int argc, char **argv)
     if (ret < 0) {
         handle_tsk_error(ret, "vargen");
     }
-    std::cout << "lib\t" << std::scientific << lib_total_time / max_sites << "\n";
-    std::cout << "recursive_pre_alloc\t" << std::scientific
+    std::cout << "cpp_lib\t" << std::scientific << lib_total_time / max_sites << "\n";
+    std::cout << "cpp_recursive_pre_alloc\t" << std::scientific
               << prealloc_total_time / max_sites << "\n";
-    std::cout << "recursive_heap_alloc\t" << std::scientific
+    std::cout << "cpp_recursive_heap_alloc\t" << std::scientific
               << heapalloc_total_time / max_sites << "\n";
     /* std::cout << "recursive_node_alloc\t" << std::scientific */
     /*           << node_alloc_total_time / max_sites << "\n"; */

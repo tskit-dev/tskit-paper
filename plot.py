@@ -18,7 +18,6 @@ def tree_performance():
 
     df = pd.read_csv("data/tree-performance.csv")
     print(df)
-
     fig, ax1 = plt.subplots(1, 1)
     for implementation in set(df.implementation):
         dfi = df[df.implementation == implementation]

@@ -113,7 +113,7 @@ def benchmark_tskit(ts_path, max_sites):
         _, mutations = tree.map_mutations(genotypes, alleles)
         return len(mutations)
 
-    return benchmark_python(ts, f, "tskit", max_sites=max_sites)
+    return benchmark_python(ts, f, "py_tskit", max_sites=max_sites)
 
 
 def benchmark_numba(ts_path, max_sites):
@@ -124,7 +124,7 @@ def benchmark_numba(ts_path, max_sites):
     return benchmark_python(
         ts,
         functools.partial(numba_map_mutations, tree),
-        "numba",
+        "py_numba",
         max_sites=max_sites,
     )
 
@@ -158,6 +158,12 @@ def benchmark_c_library(ts_path, max_sites):
     return benchmark_external(f"./c_implementation", ts_path, max_sites)
 
 
+def benchmark_cpp_library(ts_path, max_sites):
+    return benchmark_external(
+        f"./cpp_implementation_stack_allocated", ts_path, max_sites
+    )
+
+
 @click.command()
 @click.option("--max-sites", type=int, default=1000)
 def run_benchmarks(max_sites):
@@ -173,8 +179,14 @@ def run_benchmarks(max_sites):
     for path in sorted(datapath.glob("*.trees")):
         ts = tskit.load(path)
         assert ts.num_trees == 1
-        for impl in [benchmark_numba, benchmark_tskit, benchmark_c_library]:
-            perf_data.extend(impl(path, max_sites=max_sites))
+        for impl in [
+            benchmark_numba,
+            benchmark_tskit,
+            benchmark_c_library,
+            benchmark_cpp_library,
+        ]:
+            m = max_sites if ts.num_samples < 10**6 else 10
+            perf_data.extend(impl(path, max_sites=m))
             print(perf_data[-3:])
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance.csv")

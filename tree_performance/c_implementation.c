@@ -181,8 +181,8 @@ main(int argc, char **argv)
         }
     }
     check_tsk_error(ret);
-    printf("lib\t%g\n", lib_total_time / max_sites);
-    printf("recursive\t%g\n", recursive_total_time / max_sites);
+    printf("c_lib\t%g\n", lib_total_time / max_sites);
+    printf("c_recursive\t%g\n", recursive_total_time / max_sites);
 
     tsk_vargen_free(&vargen);
     tsk_tree_free(&tree);
