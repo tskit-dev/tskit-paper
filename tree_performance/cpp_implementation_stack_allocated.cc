@@ -62,16 +62,34 @@ struct HeapNode {
     HeapNode() : id{ -1 }, children{} {}
 };
 
-inline const Node &
+inline const auto &
 dispatch_node(const Node &n)
 {
     return n;
 }
 
-inline const HeapNode &
+inline const auto &
 dispatch_node(const std::unique_ptr<HeapNode> &n)
 {
     return *n;
+}
+
+inline const auto
+get_node_id(const Node &n)
+{
+    return n.id;
+}
+
+inline const auto
+get_node_id(const HeapNode &n)
+{
+    return n.id;
+}
+
+inline const auto
+get_node_id(const std::unique_ptr<HeapNode> &n)
+{
+    return n->id;
 }
 
 static void
@@ -211,8 +229,9 @@ argmax(tsk_size_t n, const int8_t *values)
     return k_max;
 }
 
+template <typename NodeType>
 static void
-_hartigan_postorder(const Node &parent, tsk_size_t num_nodes, tsk_size_t num_alleles,
+_hartigan_postorder(const NodeType &parent, tsk_size_t num_nodes, tsk_size_t num_alleles,
     int8_t *optimal_set)
 {
     int allele_count[num_alleles]; /* This isn't portable, and it's a bad idea */
@@ -224,9 +243,9 @@ _hartigan_postorder(const Node &parent, tsk_size_t num_nodes, tsk_size_t num_all
     }
 
     for (auto &child : parent.children) {
-        _hartigan_postorder(child, num_nodes, num_alleles, optimal_set);
+        _hartigan_postorder(dispatch_node(child), num_nodes, num_alleles, optimal_set);
         for (k = 0; k < num_alleles; k++) {
-            allele_count[k] += optimal_set[child.id * num_alleles + k];
+            allele_count[k] += optimal_set[get_node_id(child) * num_alleles + k];
         }
     }
 
@@ -238,14 +257,15 @@ _hartigan_postorder(const Node &parent, tsk_size_t num_nodes, tsk_size_t num_all
         }
         for (k = 0; k < num_alleles; k++) {
             if (allele_count[k] == max_allele_count) {
-                optimal_set[parent.id * num_alleles + k] = 1;
+                optimal_set[get_node_id(parent) * num_alleles + k] = 1;
             }
         }
     }
 }
 
+template <typename NodeType>
 static tsk_size_t
-_hartigan_preorder(const Node &parent, int8_t state, tsk_size_t num_nodes,
+_hartigan_preorder(const NodeType &parent, int8_t state, tsk_size_t num_nodes,
     tsk_size_t num_alleles, const int8_t *optimal_set)
 {
     tsk_size_t num_mutations = 0;
@@ -257,14 +277,16 @@ _hartigan_preorder(const Node &parent, int8_t state, tsk_size_t num_nodes,
         num_mutations++;
     }
     for (auto &child : parent.children) {
-        num_mutations
-            += _hartigan_preorder(child, state, num_nodes, num_alleles, optimal_set);
+        num_mutations += _hartigan_preorder(
+            dispatch_node(child), state, num_nodes, num_alleles, optimal_set);
     }
     return num_mutations;
 }
 
+template <typename NodeType>
 static tsk_size_t
-run_parsimony_recursive(const Node &root, const TskTreeSeq &ts, const tsk_variant_t *var)
+run_parsimony_recursive(
+    const NodeType &root, const TskTreeSeq &ts, const tsk_variant_t *var)
 {
     const auto *genotypes = var->genotypes.i8;
     const auto num_alleles = var->num_alleles;
@@ -313,7 +335,7 @@ main(int argc, char **argv)
         throw std::invalid_argument("tree must have a single root");
     }
     auto cpp_tree_prealloc = build_tree_pre_allocated<Node>(&tree.tree);
-    auto cpp_tree_prealloc_heap = build_tree_pre_allocated<HeapNode>(&tree.tree);
+    auto cpp_tree_heapalloc = build_tree_pre_allocated<HeapNode>(&tree.tree);
     /* auto cpp_tree_node_alloc = build_tree_node_allocated(&tree.tree); */
 
     tsk_vargen_t vargen;
@@ -325,6 +347,7 @@ main(int argc, char **argv)
 
     double lib_total_time = 0;
     double prealloc_total_time = 0;
+    double heapalloc_total_time = 0;
     /* double node_alloc_total_time = 0; */
     while ((ret = tsk_vargen_next(&vargen, &var)) == 1) {
         if (var->site->id >= max_sites) {
@@ -336,9 +359,18 @@ main(int argc, char **argv)
         lib_total_time += ((double) duration) / CLOCKS_PER_SEC;
 
         before = clock();
-        auto score_cpp = run_parsimony_recursive(cpp_tree_prealloc, ts, var);
+        auto score_cpp = run_parsimony_recursive<Node>(cpp_tree_prealloc, ts, var);
         duration = clock() - before;
         prealloc_total_time += ((double) duration) / CLOCKS_PER_SEC;
+
+        if (score_cpp != score_lib) {
+            throw std::runtime_error("Error in parsimony implementation");
+        }
+
+        before = clock();
+        score_cpp = run_parsimony_recursive<HeapNode>(cpp_tree_heapalloc, ts, var);
+        duration = clock() - before;
+        heapalloc_total_time += ((double) duration) / CLOCKS_PER_SEC;
 
         if (score_cpp != score_lib) {
             throw std::runtime_error("Error in parsimony implementation");
@@ -360,6 +392,8 @@ main(int argc, char **argv)
     std::cout << "lib\t" << std::scientific << lib_total_time / max_sites << "\n";
     std::cout << "recursive_pre_alloc\t" << std::scientific
               << prealloc_total_time / max_sites << "\n";
+    std::cout << "recursive_heap_alloc\t" << std::scientific
+              << heapalloc_total_time / max_sites << "\n";
     /* std::cout << "recursive_node_alloc\t" << std::scientific */
     /*           << node_alloc_total_time / max_sites << "\n"; */
     return 0;
