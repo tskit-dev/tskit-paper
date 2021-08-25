@@ -55,6 +55,18 @@ struct Node {
     Node() : id{ -1 }, children{} {}
 };
 
+static void
+print_tree(const Node &parent, int depth)
+{
+    for (int d = 0; d < depth; d++) {
+        std::cout << "  ";
+    }
+    std::cout << parent.id << "\n";
+    for (auto &child : parent.children) {
+        print_tree(child, depth + 1);
+    }
+}
+
 static tsk_size_t
 run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
 {
@@ -103,8 +115,11 @@ build_recursive(const tsk_tree_t *tree, std::vector<std::pair<int, Node> > &node
     build_node_stack_recursive(tree, tree->left_root, -1, node_stack);
 }
 
+/* Build a tree using the C++ Node class, where we preallocate all the nodes
+ * at once.
+ */
 static Node
-build_tree(tsk_tree_t *tree)
+build_tree_pre_allocated(tsk_tree_t *tree)
 {
     std::vector<std::pair<int, Node> > node_stack;
 
@@ -126,23 +141,24 @@ build_tree(tsk_tree_t *tree)
     return root;
 }
 
-void
-_traverse_confirm(const Node &node, int parent, int depth)
+#if 0
+/* Build a tree using the C++ Node class where we call new for each
+ * instance.
+ */
+static Node
+build_tree_node_allocated(tsk_tree_t *tree)
 {
-    for (int d = 0; d < depth; ++d) {
-        std::cout << "    ";
-    }
-    std::cout << "Visit confirm " << node.id << ' ' << parent << ' ' << depth << '\n';
-    for (auto &c : node.children) {
-        _traverse_confirm(c, node.id, depth + 1);
-    }
+    std::vector<Node *> node_map;
+    /* Gah - got myself wrapped up in knots here trying to figure out how
+     * to deal with the difference between call by reference/value etc.
+     * I guess we probably need a different Node class where the
+     * children are pointers to Nodes, not Node instances. That'll make the
+     * algorithm pretty tedious though if we have two different versions.
+     */
+    return *node_map[tree->left_root];
 }
 
-void
-traverse_recursive_confirm(const Node &node)
-{
-    _traverse_confirm(node, -1, 0);
-}
+#endif
 
 static int
 argmax(tsk_size_t n, const int8_t *values)
@@ -160,7 +176,7 @@ argmax(tsk_size_t n, const int8_t *values)
     return k_max;
 }
 
-void
+static void
 _hartigan_postorder(const Node &parent, tsk_size_t num_nodes, tsk_size_t num_alleles,
     int8_t *optimal_set)
 {
@@ -237,13 +253,8 @@ run_parsimony_recursive(const Node &root, const TskTreeSeq &ts, const tsk_varian
     }
     _hartigan_postorder(root, num_nodes, num_alleles, optimal_set);
     ancestral_state = argmax(num_alleles, &optimal_set[root.id * num_alleles]);
-
     num_mutations
         = _hartigan_preorder(root, ancestral_state, num_nodes, num_alleles, optimal_set);
-
-    /* num_mutations = _hartigan_preorder(tree->left_root, ancestral_state, num_nodes, */
-    /* num_alleles, optimal_set, tree->right_child, tree->left_sib); */
-
     free(optimal_set);
     return num_mutations;
 }
@@ -266,7 +277,9 @@ main(int argc, char **argv)
     if (count_roots(&tree.tree) != 1) {
         throw std::invalid_argument("tree must have a single root");
     }
-    auto cpp_tree = build_tree(&tree.tree);
+    auto cpp_tree_prealloc = build_tree_pre_allocated(&tree.tree);
+    /* auto cpp_tree_node_alloc = build_tree_node_allocated(&tree.tree); */
+
     tsk_vargen_t vargen;
     tsk_variant_t *var;
     auto ret = tsk_vargen_init(&vargen, &ts.ts, NULL, 0, NULL, 0);
@@ -275,7 +288,8 @@ main(int argc, char **argv)
     }
 
     double lib_total_time = 0;
-    double recursive_total_time = 0;
+    double prealloc_total_time = 0;
+    /* double node_alloc_total_time = 0; */
     while ((ret = tsk_vargen_next(&vargen, &var)) == 1) {
         if (var->site->id >= max_sites) {
             break;
@@ -286,18 +300,31 @@ main(int argc, char **argv)
         lib_total_time += ((double) duration) / CLOCKS_PER_SEC;
 
         before = clock();
-        auto score_cpp = run_parsimony_recursive(cpp_tree, ts, var);
+        auto score_cpp = run_parsimony_recursive(cpp_tree_prealloc, ts, var);
         duration = clock() - before;
-        recursive_total_time += ((double) duration) / CLOCKS_PER_SEC;
+        prealloc_total_time += ((double) duration) / CLOCKS_PER_SEC;
+
         if (score_cpp != score_lib) {
             throw std::runtime_error("Error in parsimony implementation");
         }
+
+        /* before = clock(); */
+        /* score_cpp = run_parsimony_recursive(cpp_tree_node_alloc, ts, var); */
+        /* duration = clock() - before; */
+        /* node_alloc_total_time += ((double) duration) / CLOCKS_PER_SEC; */
+
+        /* std::cout << "score:" << score_lib << "::" << score_cpp << "\n"; */
+        /* if (score_cpp != score_lib) { */
+        /*     throw std::runtime_error("Error in parsimony implementation"); */
+        /* } */
     }
     if (ret < 0) {
         handle_tsk_error(ret, "vargen");
     }
     std::cout << "lib\t" << std::scientific << lib_total_time / max_sites << "\n";
     std::cout << "recursive_pre_alloc\t" << std::scientific
-              << recursive_total_time / max_sites << "\n";
+              << prealloc_total_time / max_sites << "\n";
+    /* std::cout << "recursive_node_alloc\t" << std::scientific */
+    /*           << node_alloc_total_time / max_sites << "\n"; */
     return 0;
 }

@@ -2,7 +2,7 @@ TARGETS=c_implementation cpp_implementation_stack_allocated
 TSK_OBJECTS=kastore.o tskit_tables.o tskit_core.o tskit_trees.o \
 	tskit_stats.o tskit_genotypes.o tskit_convert.o
 CFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native
-CXXFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native
+CXXFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native -std=c++11
 
 all: $(TARGETS)
 
@@ -10,7 +10,7 @@ c_implementation: c_implementation.c libtskit.a
 	${CC} ${CFLAGS} $^ -o $@ -lm
 
 cpp_implementation_stack_allocated: cpp_implementation_stack_allocated.cc libtskit.a
-	${CXX} ${CFLAGS} $^ -o $@ -lm
+	${CXX} ${CXXFLAGS} $^ -o $@ -lm
 
 libtskit.a: ${TSK_OBJECTS}
 	${AR} rcs $@ ${TSK_OBJECTS}
