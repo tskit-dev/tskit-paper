@@ -14,6 +14,8 @@ import msprime
 import tskit
 import numba
 
+import pythran_implementation
+
 
 @numba.njit()
 def _hartigan_postorder(parent, optimal_set, right_child, left_sib):
@@ -55,7 +57,7 @@ def _hartigan_preorder(node, state, optimal_set, right_child, left_sib):
     return mutations
 
 
-def numba_map_mutations(tree, genotypes, alleles):
+def numba_hartigan_parsimony(tree, genotypes, alleles):
 
     right_child = tree.right_child_array
     left_sib = tree.left_sib_array
@@ -75,6 +77,27 @@ def numba_map_mutations(tree, genotypes, alleles):
     # doesn't impact performance much because mismatches from the
     # optimal state are rare in the preorder phase
     return _hartigan_preorder(
+        tree.root, ancestral_state, optimal_set, right_child, left_sib
+    )
+
+
+def pythran_hartigan_parsimony(tree, genotypes, alleles):
+    # Basically same implementation as numba method above.
+    right_child = tree.right_child_array
+    left_sib = tree.left_sib_array
+
+    # Simple version assuming non missing data and one root
+    num_alleles = np.max(genotypes) + 1
+    num_nodes = tree.tree_sequence.num_nodes
+
+    optimal_set = np.zeros((num_nodes + 1, num_alleles), dtype=np.int8)
+    for allele, u in zip(genotypes, tree.tree_sequence.samples()):
+        optimal_set[u, allele] = 1
+    pythran_implementation._hartigan_postorder(
+        tree.root, optimal_set, right_child, left_sib
+    )
+    ancestral_state = np.argmax(optimal_set[tree.root])
+    return pythran_implementation._hartigan_preorder(
         tree.root, ancestral_state, optimal_set, right_child, left_sib
     )
 
@@ -123,8 +146,21 @@ def benchmark_numba(ts_path, max_sites):
     tree = ts.first()
     return benchmark_python(
         ts,
-        functools.partial(numba_map_mutations, tree),
+        functools.partial(numba_hartigan_parsimony, tree),
         "py_numba",
+        max_sites=max_sites,
+    )
+
+
+def benchmark_pythran(ts_path, max_sites):
+
+    ts = tskit.load(ts_path)
+    assert ts.num_trees == 1
+    tree = ts.first()
+    return benchmark_python(
+        ts,
+        functools.partial(pythran_hartigan_parsimony, tree),
+        "py_pythran",
         max_sites=max_sites,
     )
 
@@ -170,7 +206,7 @@ def run_benchmarks(max_sites):
     """
     # Warm up the jit
     ts = msprime.sim_ancestry(100, sequence_length=100000, random_seed=43)
-    numba_map_mutations(ts.first(), np.zeros(ts.num_samples, dtype=np.int8), ["0"])
+    numba_hartigan_parsimony(ts.first(), np.zeros(ts.num_samples, dtype=np.int8), ["0"])
 
     datapath = pathlib.Path("data")
     perf_data = []
@@ -179,6 +215,7 @@ def run_benchmarks(max_sites):
         order = "preorder" if "preorder" in str(path) else "msprime"
         assert ts.num_trees == 1
         for impl in [
+            benchmark_pythran,
             benchmark_numba,
             benchmark_tskit,
             benchmark_c_library,
@@ -251,8 +288,32 @@ def cli():
     pass
 
 
+@click.command()
+@click.argument("filename")
+def verify(filename):
+
+    ts = tskit.load(filename)
+    tree = ts.first()
+
+    with click.progressbar(
+        ts.variants(), length=ts.num_sites, label=f"Verify parsimony"
+    ) as bar:
+        for variant in bar:
+            _, mutations = tree.map_mutations(variant.genotypes, variant.alleles)
+            lib_score = len(mutations)
+            pythran_score = pythran_hartigan_parsimony(
+                tree, variant.genotypes, variant.alleles
+            )
+            assert pythran_score == lib_score
+            numba_score = numba_hartigan_parsimony(
+                tree, variant.genotypes, variant.alleles
+            )
+            assert numba_score == lib_score
+
+
 cli.add_command(generate_data)
 cli.add_command(run_benchmarks)
+cli.add_command(verify)
 
 
 if __name__ == "__main__":
