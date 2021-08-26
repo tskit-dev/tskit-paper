@@ -176,6 +176,7 @@ def run_benchmarks(max_sites):
     perf_data = []
     for path in sorted(datapath.glob("*.trees")):
         ts = tskit.load(path)
+        print(path)
         assert ts.num_trees == 1
         for impl in [
             benchmark_numba,
@@ -221,7 +222,9 @@ def to_preorder(ts):
     # to reassure ourselves it's working correctly in the absence of
     # unit tests
     zipped = zip(new_ts.variants(samples=node_map[ts.samples()]), ts.variants())
-    with click.progressbar(zipped, length=ts.num_sites, label=f"Verify preorder") as bar:
+    with click.progressbar(
+        zipped, length=ts.num_sites, label=f"Verify preorder"
+    ) as bar:
         for v1, v2 in bar:
             assert np.array_equal(v1.genotypes, v2.genotypes)
     return new_ts

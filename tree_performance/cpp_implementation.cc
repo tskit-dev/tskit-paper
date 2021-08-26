@@ -167,6 +167,8 @@ build_tree_pre_allocated(tsk_tree_t *tree)
 {
     std::vector<std::pair<int, NodeType> > node_stack;
     std::size_t root_index = -1;
+    /* FIXME - there's something wrong here in that this doesn't work
+     * for arbitrary input trees. */
 
     node_stack.resize(tsk_treeseq_get_num_nodes(tree->tree_sequence));
     build_node_stack_recursive(tree, tree->left_root, -1, node_stack);
@@ -176,8 +178,6 @@ build_tree_pre_allocated(tsk_tree_t *tree)
     }
 
     for (std::size_t i = 0; i < node_stack.size(); ++i) {
-        std::cout << "node stack " << i << " parent = " << node_stack[i].first << " u = "
-            << node_stack[i].second.id << "\n";
         if (node_stack[i].first != TSK_NULL) {
             // node is not a root node
             node_stack[node_stack[i].first].second.children.emplace_back(
@@ -287,7 +287,6 @@ run_parsimony_recursive(
 
     for (j = 0; j < num_samples; j++) {
         u = samples[j];
-        std::cout << "sample " << u << " = " << (int) genotypes[j] << "\n";
         optimal_set[u * num_alleles + genotypes[j]] = 1;
     }
     _hartigan_postorder(root, num_nodes, num_alleles, optimal_set);
@@ -321,7 +320,7 @@ main(int argc, char **argv)
     tsk_vargen_t vargen;
     tsk_variant_t *var;
 
-    print_tree(cpp_tree_prealloc, 0);
+    /* print_tree(cpp_tree_prealloc, 0); */
     /* print_tree(dispatch_node(&cpp_tree_heapalloc), 0); */
 
     auto ret = tsk_vargen_init(&vargen, &ts.ts, NULL, 0, NULL, 0);
@@ -346,7 +345,7 @@ main(int argc, char **argv)
         duration = clock() - before;
         prealloc_total_time += ((double) duration) / CLOCKS_PER_SEC;
 
-        std::cout << "score = " << score_lib << ": " << score_cpp << "\n";
+        /* std::cout << "score = " << score_lib << ": " << score_cpp << "\n"; */
         if (score_cpp != score_lib) {
             throw std::runtime_error("Error in parsimony implementation");
         }
@@ -363,10 +362,9 @@ main(int argc, char **argv)
     if (ret < 0) {
         handle_tsk_error(ret, "vargen");
     }
-    std::cout << "cpp_lib\t" << lib_total_time / max_sites << "\n";
-    std::cout << "cpp_recursive_pre_alloc\t" << prealloc_total_time / max_sites << "\n";
-    std::cout << "cpp_recursive_heap_alloc\t" << heapalloc_total_time / max_sites
-              << "\n";
+    std::cout << "cpp_lib         " << lib_total_time / max_sites << "\n";
+    std::cout << "cpp_pre_alloc   " << prealloc_total_time / max_sites << "\n";
+    std::cout << "cpp_heap_alloc  " << heapalloc_total_time / max_sites << "\n";
     tsk_vargen_free(&vargen);
     return 0;
 }
