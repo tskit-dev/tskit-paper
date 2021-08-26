@@ -10,7 +10,6 @@
         errx(EXIT_FAILURE, "line %d: %s", __LINE__, tsk_strerror(val));                 \
     }
 
-
 static tsk_size_t
 run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
 {
@@ -19,7 +18,7 @@ run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
     tsk_state_transition_t *transitions;
 
     int ret = tsk_tree_map_mutations(tree, var->genotypes.i8, NULL, 0, &ancestral_state,
-            &num_transitions, &transitions);
+        &num_transitions, &transitions);
     check_tsk_error(ret);
     if (num_transitions > var->site->mutations_length) {
         errx(EXIT_FAILURE, "This shouldn't happen");
@@ -45,9 +44,9 @@ argmax(tsk_size_t n, const int8_t *values)
 }
 
 static tsk_size_t
-_hartigan_preorder(tsk_id_t parent, int8_t state,
-        tsk_size_t num_nodes, tsk_size_t num_alleles,
-        const int8_t *optimal_set, const tsk_id_t *right_child, const tsk_id_t *left_sib)
+_hartigan_preorder(tsk_id_t parent, int8_t state, tsk_size_t num_nodes,
+    tsk_size_t num_alleles, const int8_t *optimal_set, const tsk_id_t *right_child,
+    const tsk_id_t *left_sib)
 {
     tsk_id_t child;
     tsk_size_t num_mutations = 0;
@@ -59,15 +58,15 @@ _hartigan_preorder(tsk_id_t parent, int8_t state,
         num_mutations++;
     }
     for (child = right_child[parent]; child != TSK_NULL; child = left_sib[child]) {
-        num_mutations += _hartigan_preorder(child, state, num_nodes, num_alleles,
-                optimal_set, right_child, left_sib);
+        num_mutations += _hartigan_preorder(
+            child, state, num_nodes, num_alleles, optimal_set, right_child, left_sib);
     }
     return num_mutations;
 }
 
 static void
 _hartigan_postorder(tsk_id_t parent, tsk_size_t num_nodes, tsk_size_t num_alleles,
-        int8_t *optimal_set, const tsk_id_t *right_child, const tsk_id_t *left_sib)
+    int8_t *optimal_set, const tsk_id_t *right_child, const tsk_id_t *left_sib)
 {
     int allele_count[num_alleles]; /* This isn't portable, and it's a bad idea */
     int max_allele_count;
@@ -78,8 +77,8 @@ _hartigan_postorder(tsk_id_t parent, tsk_size_t num_nodes, tsk_size_t num_allele
         allele_count[k] = 0;
     }
     for (child = right_child[parent]; child != TSK_NULL; child = left_sib[child]) {
-        _hartigan_postorder(child, num_nodes, num_alleles, optimal_set,
-                right_child, left_sib);
+        _hartigan_postorder(
+            child, num_nodes, num_alleles, optimal_set, right_child, left_sib);
         for (k = 0; k < num_alleles; k++) {
             allele_count[k] += optimal_set[child * num_alleles + k];
         }
@@ -121,15 +120,14 @@ run_parsimony_recursive(tsk_tree_t *tree, tsk_variant_t *var)
     }
     /* Assuming a single root */
     _hartigan_postorder(tree->left_root, num_nodes, num_alleles, optimal_set,
-            tree->right_child, tree->left_sib);
+        tree->right_child, tree->left_sib);
     ancestral_state = argmax(num_alleles, &optimal_set[tree->left_root * num_alleles]);
-    num_mutations = _hartigan_preorder(tree->left_root, ancestral_state,
-            num_nodes, num_alleles, optimal_set, tree->right_child, tree->left_sib);
+    num_mutations = _hartigan_preorder(tree->left_root, ancestral_state, num_nodes,
+        num_alleles, optimal_set, tree->right_child, tree->left_sib);
 
     free(optimal_set);
 
     return num_mutations;
-
 }
 
 int
@@ -181,11 +179,10 @@ main(int argc, char **argv)
         if (score_lib != score_recursive) {
             errx(EXIT_FAILURE, "Score mismatch");
         }
-
     }
     check_tsk_error(ret);
-    printf("lib\t%g\n", lib_total_time / max_sites);
-    printf("recursive\t%g\n", recursive_total_time / max_sites);
+    printf("c_lib\t%g\n", lib_total_time / max_sites);
+    printf("c_recursive\t%g\n", recursive_total_time / max_sites);
 
     tsk_vargen_free(&vargen);
     tsk_tree_free(&tree);
