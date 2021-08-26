@@ -234,7 +234,7 @@ def run_simulation(
     return msprime.sim_mutations(ts, rate=mutation_rate)
 
 
-def to_preorder(ts):
+def to_preorder(ts, verify=False):
     """
     Returns a copy of the specified tree sequence in which the nodes are listed
     in preorder, such that the first root is node 0, its left-most child is node 1,
@@ -252,15 +252,16 @@ def to_preorder(ts):
     tables.edges.child = node_map[tables.edges.child]
     tables.mutations.node = node_map[tables.mutations.node]
     new_ts = tables.tree_sequence()
-    # This isn't really necessary, but it doesn't take long and just
-    # to reassure ourselves it's working correctly in the absence of
-    # unit tests
-    zipped = zip(new_ts.variants(samples=node_map[ts.samples()]), ts.variants())
-    with click.progressbar(
-        zipped, length=ts.num_sites, label=f"Verify preorder"
-    ) as bar:
-        for v1, v2 in bar:
-            assert np.array_equal(v1.genotypes, v2.genotypes)
+    if verify:
+        # This isn't really necessary, but it doesn't take long and just
+        # to reassure ourselves it's working correctly in the absence of
+        # unit tests
+        zipped = zip(new_ts.variants(samples=node_map[ts.samples()]), ts.variants())
+        with click.progressbar(
+            zipped, length=ts.num_sites, label=f"Verify preorder"
+        ) as bar:
+            for v1, v2 in bar:
+                assert np.array_equal(v1.genotypes, v2.genotypes)
     return new_ts
 
 
@@ -269,12 +270,12 @@ def generate_data():
     """
     Generate the data used in the benchmarks. Saved in the "data" directory.
     """
-    for k in range(1, 7):
+    for k in range(1, 8):
         n = 10 ** k
         ts = run_simulation(n)
         print(n, ":", ts.num_mutations, "at", ts.num_sites, "sites")
         ts.dump(f"data/n_1e{k}.trees")
-        ts_preorder = to_preorder(ts)
+        ts_preorder = to_preorder(ts, verify=k < 6)
         ts_preorder.dump(f"data/n_1e{k}_preorder.trees")
 
 
@@ -328,8 +329,8 @@ def quickbench(filename):
         m = 1000 if ts.num_samples < 10 ** 6 else 10
         for datum in impl(filename, max_sites=m):
             print(datum["implementation"], datum["time_mean"], sep="\t")
-    _hartigan_postorder.inspect_types()
-    _hartigan_preorder.inspect_types()
+    # _hartigan_postorder.inspect_types()
+    # _hartigan_preorder.inspect_types()
 
 cli.add_command(generate_data)
 cli.add_command(run_benchmarks)

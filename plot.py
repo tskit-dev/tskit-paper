@@ -18,16 +18,18 @@ def save(name):
 def tree_performance():
 
     df = pd.read_csv("data/tree-performance.csv")
+    df = df[df.sample_size >= 1000]
     fig, ax = plt.subplots(1, 1)
+    implementations = sorted(set(df.implementation))
     dfo = df[df.order == "msprime"]
     line_map = {}
-    for implementation in set(df.implementation):
+    for implementation in implementations:
         dfi = dfo[dfo.implementation == implementation]
         (line,) = ax.loglog(dfi.sample_size, dfi.time_mean, "-o", label=implementation)
         line_map[implementation] = line
 
     dfo = df[df.order == "preorder"]
-    for implementation in set(df.implementation):
+    for implementation in implementations:
         dfi = dfo[dfo.implementation == implementation]
         (line,) = ax.loglog(
             dfi.sample_size,
@@ -54,13 +56,14 @@ def tree_performance_relative():
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
 
     dfo = df[df.order == "msprime"]
+    implementations = sorted(set(df.implementation))
     print(dfo)
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
     print(norm)
     line_map = {}
     ax = axes[0]
     ax.set_title("Node order = msprime")
-    for implementation in set(df.implementation):
+    for implementation in implementations:
         if "py" not in implementation:
             dfi = dfo[dfo.implementation == implementation]
             (line,) = ax.plot(
@@ -72,7 +75,7 @@ def tree_performance_relative():
     ax.set_title("Node order = preorder")
     dfo = df[df.order == "preorder"]
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
-    for implementation in set(df.implementation):
+    for implementation in implementations:
         if "py" not in implementation:
             dfi = dfo[dfo.implementation == implementation]
             ax.plot(
