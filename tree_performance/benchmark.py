@@ -37,12 +37,6 @@ def _hartigan_postorder(parent, optimal_set, right_child, left_sib):
 
 @numba.njit()
 def _hartigan_preorder(node, state, optimal_set, right_child, left_sib):
-    # Note: simplifying this to just return a count rather than the actual
-    # mutations to make it comparable with local C recursive impl
-    # mutations = []
-    # if optimal_set[node, state] == 0:
-    #     state = np.argmax(optimal_set[node])
-    #     mutations.append((node, state))
     mutations = 0
     if optimal_set[node, state] == 0:
         state = np.argmax(optimal_set[node])
@@ -51,7 +45,6 @@ def _hartigan_preorder(node, state, optimal_set, right_child, left_sib):
     v = right_child[node]
     while v != tskit.NULL:
         v_muts = _hartigan_preorder(v, state, optimal_set, right_child, left_sib)
-        # mutations.extend(v_muts)
         mutations += v_muts
         v = left_sib[v]
     return mutations
@@ -197,6 +190,10 @@ def benchmark_c_library(ts_path, max_sites):
 def benchmark_cpp_library(ts_path, max_sites):
     return benchmark_external(f"./cpp_implementation", ts_path, max_sites)
 
+def warmup_jit():
+    ts = msprime.sim_ancestry(100, sequence_length=100000, random_seed=43)
+    numba_hartigan_parsimony(ts.first(), np.zeros(ts.num_samples, dtype=np.int8), ["0"])
+
 
 @click.command()
 @click.option("--max-sites", type=int, default=1000)
@@ -204,9 +201,7 @@ def run_benchmarks(max_sites):
     """
     Run the benchmarks and save the data.
     """
-    # Warm up the jit
-    ts = msprime.sim_ancestry(100, sequence_length=100000, random_seed=43)
-    numba_hartigan_parsimony(ts.first(), np.zeros(ts.num_samples, dtype=np.int8), ["0"])
+    warmup_jit()
 
     datapath = pathlib.Path("data")
     perf_data = []
@@ -218,7 +213,7 @@ def run_benchmarks(max_sites):
             benchmark_pythran,
             benchmark_numba,
             benchmark_tskit,
-            # benchmark_c_library,
+            benchmark_c_library,
             # turning off C++ for now as it can't handle preorder
             # benchmark_cpp_library,
         ]:
@@ -320,6 +315,8 @@ def quickbench(filename):
     """
     Run a quick benchmark on the specified file.
     """
+    warmup_jit()
+
     ts = tskit.load(filename)
     assert ts.num_trees == 1
     for impl in [
@@ -331,6 +328,8 @@ def quickbench(filename):
         m = 1000 if ts.num_samples < 10 ** 6 else 10
         for datum in impl(filename, max_sites=m):
             print(datum["implementation"], datum["time_mean"], sep="\t")
+    _hartigan_postorder.inspect_types()
+    _hartigan_preorder.inspect_types()
 
 cli.add_command(generate_data)
 cli.add_command(run_benchmarks)
