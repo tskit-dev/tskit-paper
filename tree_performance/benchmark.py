@@ -94,9 +94,9 @@ def pythran_hartigan_parsimony(tree, genotypes, alleles):
     for allele, u in zip(genotypes, tree.tree_sequence.samples()):
         optimal_set[u, allele] = 1
     pythran_implementation._hartigan_postorder(
-        tree.root, optimal_set, right_child, left_sib
+        tree.root, num_alleles, optimal_set, right_child, left_sib
     )
-    ancestral_state = np.argmax(optimal_set[tree.root])
+    ancestral_state = np.argmax(optimal_set[tree.root]).astype(np.int8)
     return pythran_implementation._hartigan_preorder(
         tree.root, ancestral_state, optimal_set, right_child, left_sib
     )
@@ -218,14 +218,14 @@ def run_benchmarks(max_sites):
             benchmark_pythran,
             benchmark_numba,
             benchmark_tskit,
-            benchmark_c_library,
+            # benchmark_c_library,
             # turning off C++ for now as it can't handle preorder
             # benchmark_cpp_library,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m):
                 perf_data.append({"order": order, **datum})
-            print(perf_data[-3:])
+                print(datum)
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance.csv")
 
@@ -291,6 +291,9 @@ def cli():
 @click.command()
 @click.argument("filename")
 def verify(filename):
+    """
+    Verify the Python implementations to make sure they are correct.
+    """
 
     ts = tskit.load(filename)
     tree = ts.first()
@@ -311,9 +314,28 @@ def verify(filename):
             assert numba_score == lib_score
 
 
+@click.command()
+@click.argument("filename")
+def quickbench(filename):
+    """
+    Run a quick benchmark on the specified file.
+    """
+    ts = tskit.load(filename)
+    assert ts.num_trees == 1
+    for impl in [
+        benchmark_pythran,
+        benchmark_numba,
+        benchmark_tskit,
+        benchmark_c_library,
+    ]:
+        m = 1000 if ts.num_samples < 10 ** 6 else 10
+        for datum in impl(filename, max_sites=m):
+            print(datum["implementation"], datum["time_mean"], sep="\t")
+
 cli.add_command(generate_data)
 cli.add_command(run_benchmarks)
 cli.add_command(verify)
+cli.add_command(quickbench)
 
 
 if __name__ == "__main__":
