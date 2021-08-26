@@ -159,9 +159,7 @@ def benchmark_c_library(ts_path, max_sites):
 
 
 def benchmark_cpp_library(ts_path, max_sites):
-    return benchmark_external(
-        f"./cpp_implementation_stack_allocated", ts_path, max_sites
-    )
+    return benchmark_external(f"./cpp_implementation", ts_path, max_sites)
 
 
 @click.command()
@@ -185,7 +183,7 @@ def run_benchmarks(max_sites):
             benchmark_c_library,
             benchmark_cpp_library,
         ]:
-            m = max_sites if ts.num_samples < 10**6 else 10
+            m = max_sites if ts.num_samples < 10 ** 6 else 10
             perf_data.extend(impl(path, max_sites=m))
             print(perf_data[-3:])
             df = pd.DataFrame(perf_data)

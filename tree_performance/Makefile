@@ -1,4 +1,4 @@
-TARGETS=c_implementation cpp_implementation_stack_allocated
+TARGETS=c_implementation cpp_implementation
 TSK_OBJECTS=kastore.o tskit_tables.o tskit_core.o tskit_trees.o \
 	tskit_stats.o tskit_genotypes.o tskit_convert.o
 CFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native
@@ -9,7 +9,7 @@ all: $(TARGETS)
 c_implementation: c_implementation.c libtskit.a
 	${CC} ${CFLAGS} $^ -o $@ -lm
 
-cpp_implementation_stack_allocated: cpp_implementation_stack_allocated.cc libtskit.a
+cpp_implementation: cpp_implementation.cc libtskit.a
 	${CXX} ${CXXFLAGS} $^ -o $@ -lm
 
 libtskit.a: ${TSK_OBJECTS}
