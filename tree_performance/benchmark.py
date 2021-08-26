@@ -199,6 +199,34 @@ def run_simulation(
     return msprime.sim_mutations(ts, rate=mutation_rate)
 
 
+def to_preorder(ts):
+    """
+    Returns a copy of the specified tree sequence in which the nodes are listed
+    in preorder, such that the first root is node 0, its left-most child is node 1,
+    etc.
+    """
+    if ts.num_trees != 1:
+        raise ValueError("Only applicable for tree sequences containing one tree")
+    node_map = np.zeros(ts.num_nodes, dtype=np.int32) - 1
+    tables = ts.dump_tables()
+    tables.nodes.clear()
+    tree = ts.first()
+    for u in tree.nodes():
+        node_map[u] = tables.nodes.append(ts.node(u))
+    tables.edges.parent = node_map[tables.edges.parent]
+    tables.edges.child = node_map[tables.edges.child]
+    tables.mutations.node = node_map[tables.mutations.node]
+    new_ts = tables.tree_sequence()
+    # This isn't really necessary, but it doesn't take long and just
+    # to reassure ourselves it's working correctly in the absence of
+    # unit tests
+    zipped = zip(new_ts.variants(samples=node_map[ts.samples()]), ts.variants())
+    with click.progressbar(zipped, length=ts.num_sites, label=f"Verify preorder") as bar:
+        for v1, v2 in bar:
+            assert np.array_equal(v1.genotypes, v2.genotypes)
+    return new_ts
+
+
 @click.command()
 def generate_data():
     """
@@ -209,6 +237,8 @@ def generate_data():
         ts = run_simulation(n)
         print(n, ":", ts.num_mutations, "at", ts.num_sites, "sites")
         ts.dump(f"data/n_1e{k}.trees")
+        ts_preorder = to_preorder(ts)
+        ts_preorder.dump(f"data/n_1e{k}_preorder.trees")
 
 
 @click.group()
