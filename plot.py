@@ -37,8 +37,9 @@ def tree_performance():
         )
 
     legend1 = ax.legend()
+    # TODO make both these lines black
     ax.legend(
-        [line, list(line_map.values())[0]], ["msprime", "preorder"], loc="lower right"
+        [line, list(line_map.values())[0]], ["preorder", "msprime"], loc="lower right"
     )
     ax.set_xlabel("Sample size")
     ax.set_ylabel("CPU Time")
