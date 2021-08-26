@@ -176,16 +176,18 @@ def run_benchmarks(max_sites):
     perf_data = []
     for path in sorted(datapath.glob("*.trees")):
         ts = tskit.load(path)
-        print(path)
+        order = "preorder" if "preorder" in str(path) else "msprime"
         assert ts.num_trees == 1
         for impl in [
             benchmark_numba,
             benchmark_tskit,
             benchmark_c_library,
-            benchmark_cpp_library,
+            # turning off C++ for now as it can't handle preorder
+            # benchmark_cpp_library,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
-            perf_data.extend(impl(path, max_sites=m))
+            for datum in impl(path, max_sites=m):
+                perf_data.append({"order": order, **datum})
             print(perf_data[-3:])
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance.csv")
