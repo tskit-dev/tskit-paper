@@ -11,7 +11,7 @@
     }
 
 static int
-argmax(tsk_size_t n, const int8_t *values)
+argmax(tsk_size_t n, const int8_t *restrict values)
 {
     tsk_size_t k;
     int8_t max = INT8_MIN;
@@ -122,12 +122,12 @@ build_tree_small_mallocs(const tsk_tree_t *tree)
 }
 
 static tsk_size_t
-_hartigan_preorder_struct(tree_node_t *parent, int8_t state, tsk_size_t num_nodes,
-    tsk_size_t num_alleles, const int8_t *optimal_set)
+_hartigan_preorder_struct(const tree_node_t *restrict parent, int8_t state,
+    tsk_size_t num_nodes, tsk_size_t num_alleles, const int8_t *restrict optimal_set)
 {
     tsk_size_t j;
     tsk_size_t num_mutations = 0;
-    const int8_t *parent_optimal_set = &optimal_set[parent->id * num_alleles];
+    const int8_t *restrict parent_optimal_set = &optimal_set[parent->id * num_alleles];
 
     if (parent_optimal_set[state] == 0) {
         /* Choose a new state */
@@ -142,8 +142,8 @@ _hartigan_preorder_struct(tree_node_t *parent, int8_t state, tsk_size_t num_node
 }
 
 static void
-_hartigan_postorder_struct(const tree_node_t *parent, tsk_size_t num_nodes,
-    tsk_size_t num_alleles, int8_t *optimal_set)
+_hartigan_postorder_struct(const tree_node_t *restrict parent, tsk_size_t num_nodes,
+    tsk_size_t num_alleles, int8_t *restrict optimal_set)
 {
     int allele_count[num_alleles]; /* This isn't portable, and it's a bad idea */
     int max_allele_count;
