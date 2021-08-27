@@ -146,15 +146,6 @@ build_node_stack_recursive(const tsk_tree_t *tree, tsk_id_t u, tsk_id_t parent,
     }
 }
 
-template <typename NodeType>
-void
-build_recursive(
-    const tsk_tree_t *tree, std::vector<std::pair<int, NodeType> > &node_stack)
-{
-    node_stack.resize(tree->left_root + 1);
-    build_node_stack_recursive(tree, tree->left_root, -1, node_stack);
-}
-
 inline Node &
 build_tree_pre_allocated_dispatch(Node &&n)
 {
@@ -175,8 +166,12 @@ static NodeType
 build_tree_pre_allocated(tsk_tree_t *tree)
 {
     std::vector<std::pair<int, NodeType> > node_stack;
+    std::size_t root_index = -1;
+    /* FIXME - there's something wrong here in that this doesn't work
+     * for arbitrary input trees. */
 
-    build_recursive(tree, node_stack);
+    node_stack.resize(tsk_treeseq_get_num_nodes(tree->tree_sequence));
+    build_node_stack_recursive(tree, tree->left_root, -1, node_stack);
 
     if (node_stack.empty()) {
         throw std::runtime_error("node stack is empty");
@@ -187,31 +182,17 @@ build_tree_pre_allocated(tsk_tree_t *tree)
             // node is not a root node
             node_stack[node_stack[i].first].second.children.emplace_back(
                 build_tree_pre_allocated_dispatch(std::move(node_stack[i].second)));
+        } else {
+            root_index = i;
         }
     }
 
-    NodeType root{ std::move(node_stack.back().second) };
+    /* NodeType root{ std::move(node_stack.back().second) }; */
+    /* NodeType root{ std::move(node_stack.front().second) }; */
+    NodeType root{ std::move(node_stack[root_index].second) };
+
     return root;
 }
-
-#if 0
-/* Build a tree using the C++ Node class where we call new for each
- * instance.
- */
-static Node
-build_tree_node_allocated(tsk_tree_t *tree)
-{
-    std::vector<Node *> node_map;
-    /* Gah - got myself wrapped up in knots here trying to figure out how
-     * to deal with the difference between call by reference/value etc.
-     * I guess we probably need a different Node class where the
-     * children are pointers to Nodes, not Node instances. That'll make the
-     * algorithm pretty tedious though if we have two different versions.
-     */
-    return *node_map[tree->left_root];
-}
-
-#endif
 
 static int
 argmax(tsk_size_t n, const int8_t *values)
@@ -336,10 +317,12 @@ main(int argc, char **argv)
     }
     auto cpp_tree_prealloc = build_tree_pre_allocated<Node>(&tree.tree);
     auto cpp_tree_heapalloc = build_tree_pre_allocated<HeapNode>(&tree.tree);
-    /* auto cpp_tree_node_alloc = build_tree_node_allocated(&tree.tree); */
-
     tsk_vargen_t vargen;
     tsk_variant_t *var;
+
+    /* print_tree(cpp_tree_prealloc, 0); */
+    /* print_tree(dispatch_node(&cpp_tree_heapalloc), 0); */
+
     auto ret = tsk_vargen_init(&vargen, &ts.ts, NULL, 0, NULL, 0);
     if (ret < 0) {
         handle_tsk_error(ret, "error initializing tsk_variant_t");
@@ -348,7 +331,6 @@ main(int argc, char **argv)
     double lib_total_time = 0;
     double prealloc_total_time = 0;
     double heapalloc_total_time = 0;
-    /* double node_alloc_total_time = 0; */
     while ((ret = tsk_vargen_next(&vargen, &var)) == 1) {
         if (var->site->id >= max_sites) {
             break;
@@ -363,6 +345,7 @@ main(int argc, char **argv)
         duration = clock() - before;
         prealloc_total_time += ((double) duration) / CLOCKS_PER_SEC;
 
+        /* std::cout << "score = " << score_lib << ": " << score_cpp << "\n"; */
         if (score_cpp != score_lib) {
             throw std::runtime_error("Error in parsimony implementation");
         }
@@ -375,27 +358,13 @@ main(int argc, char **argv)
         if (score_cpp != score_lib) {
             throw std::runtime_error("Error in parsimony implementation");
         }
-
-        /* before = clock(); */
-        /* score_cpp = run_parsimony_recursive(cpp_tree_node_alloc, ts, var); */
-        /* duration = clock() - before; */
-        /* node_alloc_total_time += ((double) duration) / CLOCKS_PER_SEC; */
-
-        /* std::cout << "score:" << score_lib << "::" << score_cpp << "\n"; */
-        /* if (score_cpp != score_lib) { */
-        /*     throw std::runtime_error("Error in parsimony implementation"); */
-        /* } */
     }
     if (ret < 0) {
         handle_tsk_error(ret, "vargen");
     }
-    std::cout << "cpp_lib\t" << std::scientific << lib_total_time / max_sites << "\n";
-    std::cout << "cpp_recursive_pre_alloc\t" << std::scientific
-              << prealloc_total_time / max_sites << "\n";
-    std::cout << "cpp_recursive_heap_alloc\t" << std::scientific
-              << heapalloc_total_time / max_sites << "\n";
-    /* std::cout << "recursive_node_alloc\t" << std::scientific */
-    /*           << node_alloc_total_time / max_sites << "\n"; */
+    std::cout << "cpp_lib         " << lib_total_time / max_sites << "\n";
+    std::cout << "cpp_pre_alloc   " << prealloc_total_time / max_sites << "\n";
+    std::cout << "cpp_heap_alloc  " << heapalloc_total_time / max_sites << "\n";
     tsk_vargen_free(&vargen);
     return 0;
 }

@@ -176,15 +176,18 @@ def run_benchmarks(max_sites):
     perf_data = []
     for path in sorted(datapath.glob("*.trees")):
         ts = tskit.load(path)
+        order = "preorder" if "preorder" in str(path) else "msprime"
         assert ts.num_trees == 1
         for impl in [
             benchmark_numba,
             benchmark_tskit,
             benchmark_c_library,
-            benchmark_cpp_library,
+            # turning off C++ for now as it can't handle preorder
+            # benchmark_cpp_library,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
-            perf_data.extend(impl(path, max_sites=m))
+            for datum in impl(path, max_sites=m):
+                perf_data.append({"order": order, **datum})
             print(perf_data[-3:])
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance.csv")
@@ -199,6 +202,36 @@ def run_simulation(
     return msprime.sim_mutations(ts, rate=mutation_rate)
 
 
+def to_preorder(ts):
+    """
+    Returns a copy of the specified tree sequence in which the nodes are listed
+    in preorder, such that the first root is node 0, its left-most child is node 1,
+    etc.
+    """
+    if ts.num_trees != 1:
+        raise ValueError("Only applicable for tree sequences containing one tree")
+    node_map = np.zeros(ts.num_nodes, dtype=np.int32) - 1
+    tables = ts.dump_tables()
+    tables.nodes.clear()
+    tree = ts.first()
+    for u in tree.nodes():
+        node_map[u] = tables.nodes.append(ts.node(u))
+    tables.edges.parent = node_map[tables.edges.parent]
+    tables.edges.child = node_map[tables.edges.child]
+    tables.mutations.node = node_map[tables.mutations.node]
+    new_ts = tables.tree_sequence()
+    # This isn't really necessary, but it doesn't take long and just
+    # to reassure ourselves it's working correctly in the absence of
+    # unit tests
+    zipped = zip(new_ts.variants(samples=node_map[ts.samples()]), ts.variants())
+    with click.progressbar(
+        zipped, length=ts.num_sites, label=f"Verify preorder"
+    ) as bar:
+        for v1, v2 in bar:
+            assert np.array_equal(v1.genotypes, v2.genotypes)
+    return new_ts
+
+
 @click.command()
 def generate_data():
     """
@@ -209,6 +242,8 @@ def generate_data():
         ts = run_simulation(n)
         print(n, ":", ts.num_mutations, "at", ts.num_sites, "sites")
         ts.dump(f"data/n_1e{k}.trees")
+        ts_preorder = to_preorder(ts)
+        ts_preorder.dump(f"data/n_1e{k}_preorder.trees")
 
 
 @click.group()
