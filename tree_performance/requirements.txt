@@ -5,3 +5,4 @@ msprime
 matplotlib
 numba
 pythran
+BioPython
