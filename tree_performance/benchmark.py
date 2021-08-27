@@ -6,6 +6,8 @@ import time
 import itertools
 import functools
 import subprocess
+import io
+import textwrap
 
 import pandas as pd
 import numpy as np
@@ -13,6 +15,7 @@ import click
 import msprime
 import tskit
 import numba
+import Bio.Phylo.TreeConstruction
 
 import pythran_implementation
 
@@ -120,6 +123,45 @@ def benchmark_python(ts, func, implementation, max_sites=1000):
     ]
 
 
+
+def benchmark_biopython(ts_path, max_sites=1000):
+    ts = tskit.load(ts_path)
+    assert ts.num_sites >= max_sites
+    variants = itertools.islice(ts.variants(), max_sites)
+    times = np.zeros(max_sites)
+
+    tree = ts.first()
+    bp_tree = Bio.Phylo.read(io.StringIO(tree.newick()), "newick")
+    ps = Bio.Phylo.TreeConstruction.ParsimonyScorer()
+
+    with click.progressbar(
+        variants, length=max_sites, label=f"BioPython:n={ts.num_samples}"
+    ) as bar:
+        for j, variant in enumerate(bar):
+            records = [
+                Bio.SeqRecord.SeqRecord(
+                    Bio.Seq.Seq(str(variant.genotypes[k])), id=str(k + 1)
+                )
+                for k in range(ts.num_samples)
+            ]
+            alignment = Bio.Align.MultipleSeqAlignment(records)
+
+            before = time.perf_counter()
+            bp_score = ps.get_score(bp_tree, alignment)
+            duration = time.perf_counter() - before
+            times[j] = duration
+            _, mutations = tree.map_mutations(variant.genotypes, variant.alleles)
+            assert bp_score == len(mutations)
+    return [
+        {
+            "implementation": f"BioPython",
+            "sample_size": ts.num_samples,
+            "time_mean": np.mean(times),
+            "time_var": np.var(times),
+        }
+    ]
+
+
 def benchmark_tskit(ts_path, max_sites):
     ts = tskit.load(ts_path)
     assert ts.num_trees == 1
@@ -189,6 +231,7 @@ def benchmark_c_library(ts_path, max_sites):
 
 def benchmark_cpp_library(ts_path, max_sites):
     return benchmark_external(f"./cpp_implementation", ts_path, max_sites)
+
 
 def warmup_jit():
     ts = msprime.sim_ancestry(100, sequence_length=100000, random_seed=43)
@@ -265,6 +308,32 @@ def to_preorder(ts, verify=False):
     return new_ts
 
 
+def convert_phylo(ts, num_sites, newick_path, fasta_path):
+
+    tree = ts.first()
+    with open(newick_path, "w") as f:
+        f.write(tree.newick())
+
+    H = np.empty((ts.num_samples, num_sites), dtype=np.int8)
+    for var in ts.variants():
+        if var.site.id >= num_sites:
+            break
+        alleles = np.full(len(var.alleles), 0, dtype=np.int8)
+        for i, allele in enumerate(var.alleles):
+            ascii_allele = allele.encode("ascii")
+            allele_int8 = ord(ascii_allele)
+            alleles[i] = allele_int8
+        H[:, var.site.id] = alleles[var.genotypes]
+
+    with open(fasta_path, "w") as f:
+        # Sample are labelled 1,.., n in the newick
+        for j, h in enumerate(H, start=1):
+            print(f">{j}", file=f)
+            sequence = h.tobytes().decode("ascii")
+            for line in textwrap.wrap(sequence):
+                print(line, file=f)
+
+
 @click.command()
 def generate_data():
     """
@@ -277,6 +346,10 @@ def generate_data():
         ts.dump(f"data/n_1e{k}.trees")
         ts_preorder = to_preorder(ts, verify=k < 6)
         ts_preorder.dump(f"data/n_1e{k}_preorder.trees")
+        if k < 7:
+            convert_phylo(ts, 1000, f"data/n_1e{k}.nwk", f"data/n_1e{k}.fasta")
+        else:
+            break
 
 
 @click.group()
@@ -321,21 +394,55 @@ def quickbench(filename):
     ts = tskit.load(filename)
     assert ts.num_trees == 1
     for impl in [
+        # benchmark_biopython,
         benchmark_pythran,
         benchmark_numba,
         benchmark_tskit,
         benchmark_c_library,
     ]:
-        m = 1000 if ts.num_samples < 10 ** 6 else 10
+        m = 100 if ts.num_samples < 10 ** 6 else 10
         for datum in impl(filename, max_sites=m):
             print(datum["implementation"], datum["time_mean"], sep="\t")
     # _hartigan_postorder.inspect_types()
     # _hartigan_preorder.inspect_types()
 
+
+@click.command()
+def benchmark_libs():
+    """
+    Runs benchmarks on available libraries.
+    """
+    # warmup_jit()
+
+    benchmark_biopython(tskit.load("data/n_1e3.trees"))
+
+    benchmark_R("data/n_1e3.trees")
+
+    # ts = tskit.load("data/n_1e1.trees")
+    # print(ts)
+
+    # assert ts.num_trees == 1
+    # for impl in [
+    #     benchmark_pythran,
+    #     benchmark_numba,
+    #     benchmark_tskit,
+    #     benchmark_c_library,
+    # ]:
+    #     m = 1000 if ts.num_samples < 10 ** 6 else 10
+    #     for datum in impl(filename, max_sites=m):
+    #         print(datum["implementation"], datum["time_mean"], sep="\t")
+    # _hartigan_postorder.inspect_types()
+    # _hartigan_preorder.inspect_types()
+
+
+
+
+
 cli.add_command(generate_data)
 cli.add_command(run_benchmarks)
 cli.add_command(verify)
 cli.add_command(quickbench)
+cli.add_command(benchmark_libs)
 
 
 if __name__ == "__main__":
