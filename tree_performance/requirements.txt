@@ -4,3 +4,4 @@ numpy
 msprime
 matplotlib
 numba
+pythran
