@@ -3,6 +3,11 @@ Implementations of parsimony algorithms using Pythran.
 """
 import numpy as np
 
+# pythran export _hartigan_initialise(int8[:,:], int8[:], int32[:])
+def _hartigan_initialise(optimal_set, genotypes, samples):
+    for j, u in enumerate(samples):
+        optimal_set[u, genotypes[j]] = 1
+
 
 # pythran export _hartigan_postorder(int32, int64, int8[:, :], int32[:], int32[:])
 def _hartigan_postorder(parent, num_alleles, optimal_set, right_child, left_sib):
