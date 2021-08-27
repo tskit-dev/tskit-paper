@@ -7,6 +7,7 @@ import itertools
 import functools
 import subprocess
 import io
+import textwrap
 
 import pandas as pd
 import numpy as np
@@ -307,6 +308,32 @@ def to_preorder(ts, verify=False):
     return new_ts
 
 
+def convert_phylo(ts, num_sites, newick_path, fasta_path):
+
+    tree = ts.first()
+    with open(newick_path, "w") as f:
+        f.write(tree.newick())
+
+    H = np.empty((ts.num_samples, num_sites), dtype=np.int8)
+    for var in ts.variants():
+        if var.site.id >= num_sites:
+            break
+        alleles = np.full(len(var.alleles), 0, dtype=np.int8)
+        for i, allele in enumerate(var.alleles):
+            ascii_allele = allele.encode("ascii")
+            allele_int8 = ord(ascii_allele)
+            alleles[i] = allele_int8
+        H[:, var.site.id] = alleles[var.genotypes]
+
+    with open(fasta_path, "w") as f:
+        # Sample are labelled 1,.., n in the newick
+        for j, h in enumerate(H, start=1):
+            print(f">{j}", file=f)
+            sequence = h.tobytes().decode("ascii")
+            for line in textwrap.wrap(sequence):
+                print(line, file=f)
+
+
 @click.command()
 def generate_data():
     """
@@ -319,6 +346,10 @@ def generate_data():
         ts.dump(f"data/n_1e{k}.trees")
         ts_preorder = to_preorder(ts, verify=k < 6)
         ts_preorder.dump(f"data/n_1e{k}_preorder.trees")
+        if k < 7:
+            convert_phylo(ts, 1000, f"data/n_1e{k}.nwk", f"data/n_1e{k}.fasta")
+        else:
+            break
 
 
 @click.group()
@@ -363,13 +394,13 @@ def quickbench(filename):
     ts = tskit.load(filename)
     assert ts.num_trees == 1
     for impl in [
-        benchmark_biopython,
+        # benchmark_biopython,
         benchmark_pythran,
         benchmark_numba,
         benchmark_tskit,
         benchmark_c_library,
     ]:
-        m = 1000 if ts.num_samples < 10 ** 6 else 10
+        m = 100 if ts.num_samples < 10 ** 6 else 10
         for datum in impl(filename, max_sites=m):
             print(datum["implementation"], datum["time_mean"], sep="\t")
     # _hartigan_postorder.inspect_types()
@@ -384,6 +415,8 @@ def benchmark_libs():
     # warmup_jit()
 
     benchmark_biopython(tskit.load("data/n_1e3.trees"))
+
+    benchmark_R("data/n_1e3.trees")
 
     # ts = tskit.load("data/n_1e1.trees")
     # print(ts)
@@ -400,6 +433,9 @@ def benchmark_libs():
     #         print(datum["implementation"], datum["time_mean"], sep="\t")
     # _hartigan_postorder.inspect_types()
     # _hartigan_preorder.inspect_types()
+
+
+
 
 
 cli.add_command(generate_data)
