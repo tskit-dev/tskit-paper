@@ -1,6 +1,7 @@
 # install.packages("reticulate")
 # install.packages("phangorn")
 library(reticulate)
+library(ape)
 library(phangorn)
 
 # The num_sites argument here should be the same number of sites in the FASTA.
@@ -20,8 +21,10 @@ benchmark_phangorn <- function(ts_path, num_sites, tree_path, fasta_path) {
     before <- proc.time()
     score <- sankoff(tree, data)
     duration <- proc.time() - before
-
-    cat("phangorn", duration[1] / num_distinct_sites, "\n")
+    
+    time_per_site <- (duration[1] + duration[2]) / num_distinct_sites
+    # Sum of user and system time
+    cat("phangorn", time_per_site, "\n")
         
     # Check the parsimony result against tskit
     tskit <- reticulate::import("tskit")
