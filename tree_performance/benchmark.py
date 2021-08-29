@@ -81,70 +81,75 @@ def numba_hartigan_parsimony(tree, genotypes, alleles):
     )
 
 
-# def _hartigan_postorder_vectorised(parent, optimal_set, right_child, left_sib):
-#     num_alleles, num_samples = optimal_set.shape[1:]
+@numba.njit()
+def _hartigan_postorder_vectorised(parent, optimal_set, right_child, left_sib):
+    num_sites, num_alleles = optimal_set.shape[1:]
 
-#     allele_count = np.zeros(optimal_set.shape[1:], dtype=np.int32)
-#     child = right_child[parent]
-#     while child != tskit.NULL:
-#         _hartigan_postorder_vectorised(child, optimal_set, right_child, left_sib)
-#         allele_count += optimal_set[child]
-#         child = left_sib[child]
+    allele_count = np.zeros((num_sites, num_alleles), dtype=np.int32)
+    child = right_child[parent]
+    while child != tskit.NULL:
+        _hartigan_postorder_vectorised(child, optimal_set, right_child, left_sib)
+        allele_count += optimal_set[child]
+        child = left_sib[child]
 
-#     # print(optimal_set[child])
-#     print("allele_count = ", parent)
-#     print(allele_count)
-#     if right_child[parent] != tskit.NULL:
-#         max_allele_count = np.max(allele_count, axis=1)
-#         print("max_allele_count = ", max_allele_count)
-#         for j in range(num_alleles):
-#             if allele_count[j] == max_allele_count:
-#                 optimal_set[parent, j] = 1
-#     else:
-#         print("leaf: ", parent)
-#         print(optimal_set[parent])
+    if right_child[parent] != tskit.NULL:
+        for j in range(num_sites):
+            max_allele_count = np.max(allele_count[j])
+            for k in range(num_alleles):
+                if allele_count[j, k] == max_allele_count:
+                    optimal_set[parent, j, k] = 1
 
 
-# def _hartigan_preorder_vectorised(node, state, optimal_set, right_child, left_sib):
-#     mutations = 0
-#     if optimal_set[node, state] == 0:
-#         state = np.argmax(optimal_set[node])
-#         mutations = 1
+@numba.njit()
+def _hartigan_preorder_vectorised(node, state, optimal_set, right_child, left_sib):
+    num_sites, num_alleles = optimal_set.shape[1:]
 
-#     v = right_child[node]
-#     while v != tskit.NULL:
-#         v_muts = _hartigan_preorder(v, state, optimal_set, right_child, left_sib)
-#         mutations += v_muts
-#         v = left_sib[v]
-#     return mutations
+    mutations = np.zeros(num_sites, dtype=np.int32)
+    node_optimal_set = optimal_set[node]
+    # Strictly speaking we only need to do this if we mutate it. Might be worth
+    # keeping track of - but then that would complicate the inner loop, which
+    # could hurt vectorisation/pipelining/etc.
+    state = state.copy()
+    for j in range(num_sites):
+        if node_optimal_set[j, state[j]] == 0:
+            state[j] = np.argmax(node_optimal_set[j])
+            mutations[j] = 1
+
+    v = right_child[node]
+    while v != tskit.NULL:
+        v_muts = _hartigan_preorder_vectorised(
+            v, state, optimal_set, right_child, left_sib
+        )
+        mutations += v_muts
+        v = left_sib[v]
+    return mutations
 
 
-# def numba_hartigan_parsimony_vectorised(tree, genotypes, alleles):
+@numba.njit()
+def _hartigan_initialise_vectorised(optimal_set, genotypes, samples):
+    for k, site_genotypes in enumerate(genotypes):
+        for j, u in enumerate(samples):
+            optimal_set[u, k, site_genotypes[j]] = 1
 
-#     right_child = tree.right_child_array
-#     left_sib = tree.left_sib_array
 
-#     # Simple version assuming non missing data and one root
-#     num_alleles = np.max(genotypes) + 1
-#     num_samples = genotypes.shape[1]
-#     num_nodes = tree.tree_sequence.num_nodes
-#     print(num_alleles)
+def numba_hartigan_parsimony_vectorised(tree, genotypes, alleles):
 
-#     samples = tree.tree_sequence.samples()
-#     optimal_set = np.zeros((num_nodes, num_alleles, num_samples), dtype=np.int8)
-#     for sample_genotypes in genotypes:
-#         for allele, u in zip(sample_genotypes, samples):
-#             optimal_set[u, allele] = 1
+    right_child = tree.right_child_array
+    left_sib = tree.left_sib_array
 
-#     _hartigan_postorder_vectorised(tree.root, optimal_set, right_child, left_sib)
-#     ancestral_state = np.argmax(optimal_set[tree.root])
-#     # Because we're not constructing the mutations we can just return
-#     # the count directly. It's straightforward to do, though, and
-#     # doesn't impact performance much because mismatches from the
-#     # optimal state are rare in the preorder phase
-#     return _hartigan_preorder(
-#         tree.root, ancestral_state, optimal_set, right_child, left_sib
-#     )
+    # Simple version assuming non missing data and one root
+    num_alleles = np.max(genotypes) + 1
+    num_sites = genotypes.shape[0]
+    num_nodes = tree.tree_sequence.num_nodes
+    samples = tree.tree_sequence.samples()
+
+    optimal_set = np.zeros((num_nodes, num_sites, num_alleles), dtype=np.int8)
+    _hartigan_initialise_vectorised(optimal_set, genotypes, samples)
+    _hartigan_postorder_vectorised(tree.root, optimal_set, right_child, left_sib)
+    ancestral_state = np.argmax(optimal_set[tree.root], axis=1)
+    return _hartigan_preorder_vectorised(
+        tree.root, ancestral_state, optimal_set, right_child, left_sib
+    )
 
 
 def pythran_hartigan_parsimony(tree, genotypes, alleles):
@@ -187,7 +192,6 @@ def benchmark_python(ts, func, implementation, max_sites=1000):
             "implementation": f"{implementation}",
             "sample_size": ts.num_samples,
             "time_mean": np.mean(times),
-            "time_var": np.var(times),
         }
     ]
 
@@ -225,7 +229,6 @@ def benchmark_biopython(ts_path, max_sites=1000):
             "implementation": f"BioPython",
             "sample_size": ts.num_samples,
             "time_mean": np.mean(times),
-            "time_var": np.var(times),
         }
     ]
 
@@ -268,6 +271,30 @@ def benchmark_pythran(ts_path, max_sites):
     )
 
 
+def benchmark_numba_vectorised(ts_path, max_sites):
+
+    ts = tskit.load(ts_path)
+    assert ts.num_trees == 1
+    tree = ts.first()
+
+    chunk_size = 1000
+    alleles = ("A", "C", "G", "T")
+    total_time = 0
+    for chunk in variant_chunks(ts, chunk_size, max_sites=max_sites, alleles=alleles):
+        genotypes = np.array([var.genotypes for var in chunk])
+        before = time.perf_counter()
+        numba_hartigan_parsimony_vectorised(tree, genotypes, alleles)
+        duration = time.perf_counter() - before
+        total_time += duration
+    return [
+        {
+            "implementation": "py_numba_vect",
+            "sample_size": ts.num_samples,
+            "time_mean": total_time / max_sites,
+        }
+    ]
+
+
 def benchmark_external(command, ts_path, max_sites):
     result = subprocess.run(
         command + f" {ts_path} {max_sites}",
@@ -287,7 +314,6 @@ def benchmark_external(command, ts_path, max_sites):
                 "implementation": implementation,
                 "sample_size": ts.num_samples,
                 "time_mean": time,
-                "time_var": 0,  # TODO Probably not worth bothering with this
             }
         )
     return ret
@@ -317,7 +343,6 @@ def benchmark_R(ts_path, max_sites=1000):
                 "implementation": implementation,
                 "sample_size": ts.num_samples,
                 "time_mean": time,
-                "time_var": 0,  # TODO Probably not worth bothering with this
             }
         )
     return ret
@@ -432,6 +457,19 @@ def convert_phylo(ts, num_sites, newick_path, fasta_path):
                 print(line, file=f)
 
 
+def variant_chunks(ts, chunk_size, max_sites=None, **kwargs):
+    chunk = []
+    for var in ts.variants(**kwargs):
+        if max_sites is not None and var.site.id >= max_sites:
+            break
+        chunk.append(var)
+        if len(chunk) == chunk_size:
+            yield chunk
+            chunk = []
+    if len(chunk) > 0:
+        yield chunk
+
+
 @click.command()
 def generate_data():
     """
@@ -480,6 +518,24 @@ def verify(filename):
             )
             assert numba_score == lib_score
 
+    chunk_size = 6
+    alleles = ("A", "C", "G", "T")
+    chunks = variant_chunks(ts, chunk_size, alleles=alleles)
+    with click.progressbar(
+        chunks, length=ts.num_sites // chunk_size, label="verify chunkwise"
+    ) as bar:
+        for chunk in bar:
+            genotypes = np.array([var.genotypes for var in chunk])
+            chunk_score = numba_hartigan_parsimony_vectorised(tree, genotypes, alleles)
+            # print(chunk_score)
+            # print(len(chunk), len(chunk_score))
+            assert len(chunk_score) == len(chunk)
+            for var, score in zip(chunk, chunk_score):
+                _, mutations = tree.map_mutations(var.genotypes, var.alleles)
+                lib_score = len(mutations)
+                # print(score, lib_score)
+                assert score == lib_score
+
 
 @click.command()
 @click.argument("filename")
@@ -494,12 +550,14 @@ def quickbench(filename):
     for impl in [
         # benchmark_biopython,
         # benchmark_R,
-        benchmark_pythran,
-        benchmark_numba,
-        benchmark_tskit,
+        # benchmark_pythran,
+        # benchmark_numba,
+        benchmark_numba_vectorised,
+        # benchmark_tskit,
         benchmark_c_library,
     ]:
-        m = 100 if ts.num_samples < 10 ** 6 else 10
+        # m = 100 if ts.num_samples < 10 ** 6 else 10
+        m = 10000
         for datum in impl(filename, max_sites=m):
             print(datum["implementation"], datum["time_mean"], sep="\t")
     # _hartigan_postorder.inspect_types()
@@ -516,12 +574,16 @@ def benchmark_libs():
 
     chunk_size = 10
     chunk = []
+    score = []
     for var in ts.variants(alleles=("A", "C", "G", "T")):
         chunk.append(var.genotypes)
         if len(chunk) == chunk_size:
             chunk = np.array(chunk)
-            numba_hartigan_parsimony_vectorised(tree, chunk, var.alleles)
+            chunk_score = numba_hartigan_parsimony_vectorised(tree, chunk, var.alleles)
             chunk = []
+            score.extend(chunk_score)
+    score = np.array(chunk_score, dtype=np.int32)
+    print(score)
 
     # warmup_jit()
 
