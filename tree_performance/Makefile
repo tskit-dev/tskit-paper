@@ -1,11 +1,14 @@
 PYTHRAN_SO=pythran_implementation.cpython-38-x86_64-linux-gnu.so
-TARGETS=c_implementation cpp_implementation ${PYTHRAN_SO}
+TARGETS=c_implementation cpp_implementation ${PYTHRAN_SO} c_vectorised
 TSK_OBJECTS=kastore.o tskit_tables.o tskit_core.o tskit_trees.o \
 	tskit_stats.o tskit_genotypes.o tskit_convert.o
 CFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native
 CXXFLAGS += -g -Wall -Ikastore/c -I tskit/c -O3 -march=native -std=c++14
 
 all: $(TARGETS)
+
+c_vectorised: c_vectorised.c libtskit.a
+	${CC} ${CFLAGS} $^ -o $@ -lm
 
 c_implementation: c_implementation.c libtskit.a
 	${CC} ${CFLAGS} $^ -o $@ -lm
