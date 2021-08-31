@@ -230,6 +230,7 @@ build_tree_contiguous(const tsk_tree_t *tree)
         depth += 1;
     }
 
+    // Sort by depth w/in number of children.
     std::sort(begin(child_map), end(child_map), [](const auto &left, const auto &right) {
         if (left.first.size() == right.first.size()) {
             return left.second < right.second;
