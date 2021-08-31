@@ -1,6 +1,7 @@
 #include <tskit.h>
 
 #include <vector>
+#include <algorithm>
 #include <stack>
 #include <utility>
 #include <iostream>
@@ -209,9 +210,10 @@ build_tree_contiguous(const tsk_tree_t *tree)
     std::size_t num_nodes = tsk_treeseq_get_num_nodes(tree->tree_sequence);
     nodes.reserve(num_nodes);
 
-    std::vector<std::vector<tsk_id_t> > child_map(num_nodes);
+    std::vector<std::pair<std::vector<tsk_id_t>, std::size_t> > child_map(num_nodes);
 
     node_stack.push(tree->left_root);
+    std::size_t depth = 0;
 
     while (!node_stack.empty()) {
         auto parent = node_stack.top();
@@ -220,16 +222,25 @@ build_tree_contiguous(const tsk_tree_t *tree)
         nodes.emplace_back(parent);
 
         auto child = tree->left_child[parent];
+        child_map[parent].second = depth;
         for (; child != TSK_NULL; child = tree->right_sib[child]) {
-            child_map[parent].push_back(child);
+            child_map[parent].first.push_back(child);
             node_stack.push(child);
         }
+        depth += 1;
     }
+
+    std::sort(begin(child_map), end(child_map), [](const auto &left, const auto &right) {
+        if (left.first.size() == right.first.size()) {
+            return left.second < right.second;
+        }
+        return left.first.size() < right.first.size();
+    });
 
     for (auto ci = std::rbegin(child_map); ci != std::rend(child_map); ++ci) {
         auto parent = std::distance(ci, std::rend(child_map)) - 1;
-        std::cout << parent << ' ' << child_map[parent].size() << ' ' << tree->left_root
-                  << '\n';
+        std::cout << parent << ' ' << child_map[parent].first.size() << ' '
+                  << child_map[parent].second << ' ' << tree->left_root << '\n';
         ;
     }
 
