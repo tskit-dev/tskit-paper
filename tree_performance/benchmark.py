@@ -356,7 +356,7 @@ def run_benchmarks(max_sites):
             benchmark_tskit,
             benchmark_c_library,
             # turning off C++ for now as it can't handle preorder
-            # benchmark_cpp_library,
+            benchmark_cpp_library,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m):
