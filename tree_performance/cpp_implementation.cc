@@ -325,11 +325,6 @@ main(int argc, char **argv)
     if (count_roots(&tree.tree) != 1) {
         throw std::invalid_argument("tree must have a single root");
     }
-    // auto cpp_tree_prealloc = build_tree_pre_allocated<Node>(&tree.tree);
-    // auto cpp_tree_heapalloc = build_tree_pre_allocated<HeapNode>(&tree.tree);
-
-    // auto cpp_tree_foo = build_tree_contiguous<Node>(&tree.tree);
-    // auto cpp_tree_foo_heap = build_tree_contiguous<HeapNode>(&tree.tree);
     auto cpp_tree_prealloc = build_tree_contiguous<Node>(&tree.tree);
     auto cpp_tree_heapalloc = build_tree_contiguous<HeapNode>(&tree.tree);
     tsk_vargen_t vargen;
