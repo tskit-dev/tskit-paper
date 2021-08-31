@@ -1,6 +1,7 @@
 #include <tskit.h>
 
 #include <vector>
+#include <stack>
 #include <utility>
 #include <iostream>
 #include <sstream>
@@ -53,6 +54,8 @@ struct Node {
     std::vector<Node> children;
 
     Node() : id{ -1 }, children{} {}
+
+    explicit Node(tsk_id_t id) : id{ id }, children{} {}
 };
 
 struct HeapNode {
@@ -60,6 +63,8 @@ struct HeapNode {
     std::vector<std::unique_ptr<HeapNode> > children;
 
     HeapNode() : id{ -1 }, children{} {}
+
+    explicit HeapNode(tsk_id_t id) : id{ id }, children{} {}
 };
 
 inline const auto &
@@ -194,6 +199,44 @@ build_tree_pre_allocated(tsk_tree_t *tree)
     return root;
 }
 
+template <typename NodeType>
+static NodeType
+build_tree_contiguous(const tsk_tree_t *tree)
+{
+    std::stack<tsk_id_t, std::vector<tsk_id_t> > node_stack;
+
+    std::vector<NodeType> nodes;
+    std::size_t num_nodes = tsk_treeseq_get_num_nodes(tree->tree_sequence);
+    nodes.reserve(num_nodes);
+
+    std::vector<std::vector<tsk_id_t> > child_map(num_nodes);
+
+    node_stack.push(tree->left_root);
+
+    while (!node_stack.empty()) {
+        auto parent = node_stack.top();
+        node_stack.pop();
+
+        nodes.emplace_back(parent);
+
+        auto child = tree->left_child[parent];
+        for (; child != TSK_NULL; child = tree->right_sib[child]) {
+            child_map[parent].push_back(child);
+            node_stack.push(child);
+        }
+    }
+
+    for (auto ci = std::rbegin(child_map); ci != std::rend(child_map); ++ci) {
+        auto parent = std::distance(ci, std::rend(child_map)) - 1;
+        std::cout << parent << ' ' << child_map[parent].size() << ' ' << tree->left_root
+                  << '\n';
+        ;
+    }
+
+    auto x{ std::move(nodes[tree->left_root]) }; // subtle...
+    return x;
+}
+
 static int
 argmax(tsk_size_t n, const int8_t *values)
 {
@@ -317,6 +360,9 @@ main(int argc, char **argv)
     }
     auto cpp_tree_prealloc = build_tree_pre_allocated<Node>(&tree.tree);
     auto cpp_tree_heapalloc = build_tree_pre_allocated<HeapNode>(&tree.tree);
+
+    auto cpp_tree_foo = build_tree_contiguous<Node>(&tree.tree);
+    auto cpp_tree_foo_heap = build_tree_contiguous<HeapNode>(&tree.tree);
     tsk_vargen_t vargen;
     tsk_variant_t *var;
 
