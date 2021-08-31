@@ -287,23 +287,16 @@ run_parsimony_recursive(
     tsk_size_t j, num_mutations;
     tsk_id_t u;
     int8_t ancestral_state;
-    /* TODO Do this in a C++ way */
-    int8_t *optimal_set
-        = (int8_t *) calloc((num_nodes + 1) * num_alleles, sizeof(*optimal_set));
-
-    if (optimal_set == NULL) {
-        throw std::runtime_error("Memory allocation failure");
-    }
+    std::vector<std::int8_t> optimal_set((num_nodes + 1) * num_alleles, 0);
 
     for (j = 0; j < num_samples; j++) {
         u = samples[j];
         optimal_set[u * num_alleles + genotypes[j]] = 1;
     }
-    _hartigan_postorder(root, num_nodes, num_alleles, optimal_set);
+    _hartigan_postorder(root, num_nodes, num_alleles, optimal_set.data());
     ancestral_state = argmax(num_alleles, &optimal_set[root.id * num_alleles]);
-    num_mutations
-        = _hartigan_preorder(root, ancestral_state, num_nodes, num_alleles, optimal_set);
-    free(optimal_set);
+    num_mutations = _hartigan_preorder(
+        root, ancestral_state, num_nodes, num_alleles, optimal_set.data());
     return num_mutations;
 }
 
