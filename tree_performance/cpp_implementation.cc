@@ -1,6 +1,8 @@
 #include <tskit.h>
 
 #include <vector>
+#include <algorithm>
+#include <stack>
 #include <utility>
 #include <iostream>
 #include <sstream>
@@ -53,6 +55,8 @@ struct Node {
     std::vector<Node> children;
 
     Node() : id{ -1 }, children{} {}
+
+    explicit Node(tsk_id_t id) : id{ id }, children{} {}
 };
 
 struct HeapNode {
@@ -60,6 +64,8 @@ struct HeapNode {
     std::vector<std::unique_ptr<HeapNode> > children;
 
     HeapNode() : id{ -1 }, children{} {}
+
+    explicit HeapNode(tsk_id_t id) : id{ id }, children{} {}
 };
 
 inline const auto &
@@ -92,8 +98,9 @@ get_node_id(const std::unique_ptr<HeapNode> &n)
     return n->id;
 }
 
+template <typename NodeType>
 static void
-print_tree(const Node &parent, int depth)
+print_tree(const NodeType &parent, int depth)
 {
     for (int d = 0; d < depth; d++) {
         std::cout << "  ";
@@ -133,19 +140,6 @@ count_roots(const tsk_tree_t *tree)
     return nroots;
 }
 
-template <typename NodeType>
-void
-build_node_stack_recursive(const tsk_tree_t *tree, tsk_id_t u, tsk_id_t parent,
-    std::vector<std::pair<int, NodeType> > &node_stack)
-{
-    node_stack[u].first = parent;
-    node_stack[u].second.id = u;
-
-    for (auto c = tree->left_child[u]; c != TSK_NULL; c = tree->right_sib[c]) {
-        build_node_stack_recursive(tree, c, u, node_stack);
-    }
-}
-
 inline Node &
 build_tree_pre_allocated_dispatch(Node &&n)
 {
@@ -158,40 +152,56 @@ build_tree_pre_allocated_dispatch(HeapNode &&n)
     return std::make_unique<HeapNode>(std::move(n));
 }
 
-/* Build a tree using the C++ Node class, where we preallocate all the nodes
- * at once.
- */
 template <typename NodeType>
 static NodeType
-build_tree_pre_allocated(tsk_tree_t *tree)
+build_tree_contiguous(const tsk_tree_t *tree)
 {
-    std::vector<std::pair<int, NodeType> > node_stack;
-    std::size_t root_index = -1;
-    /* FIXME - there's something wrong here in that this doesn't work
-     * for arbitrary input trees. */
+    std::stack<tsk_id_t, std::vector<tsk_id_t> > node_stack;
 
-    node_stack.resize(tsk_treeseq_get_num_nodes(tree->tree_sequence));
-    build_node_stack_recursive(tree, tree->left_root, -1, node_stack);
+    std::vector<NodeType> nodes, nodes_input_order;
+    std::size_t num_nodes = tsk_treeseq_get_num_nodes(tree->tree_sequence);
+    nodes.reserve(num_nodes);
 
-    if (node_stack.empty()) {
-        throw std::runtime_error("node stack is empty");
-    }
+    std::vector<std::vector<tsk_id_t> > child_map(num_nodes);
+    std::vector<int> order_seen(num_nodes, -1);
 
-    for (std::size_t i = 0; i < node_stack.size(); ++i) {
-        if (node_stack[i].first != TSK_NULL) {
-            // node is not a root node
-            node_stack[node_stack[i].first].second.children.emplace_back(
-                build_tree_pre_allocated_dispatch(std::move(node_stack[i].second)));
-        } else {
-            root_index = i;
+    node_stack.push(tree->left_root);
+
+    int order = 0;
+
+    while (!node_stack.empty()) {
+        auto parent = node_stack.top();
+        node_stack.pop();
+
+        nodes.emplace_back(parent);
+        nodes_input_order.emplace_back(parent);
+        order_seen[parent] = order++;
+
+        auto child = tree->left_child[parent];
+        for (; child != TSK_NULL; child = tree->right_sib[child]) {
+            child_map[parent].push_back(child);
+            node_stack.push(child);
         }
     }
 
-    /* NodeType root{ std::move(node_stack.back().second) }; */
-    /* NodeType root{ std::move(node_stack.front().second) }; */
-    NodeType root{ std::move(node_stack[root_index].second) };
+    std::sort(
+        begin(nodes), end(nodes), [&order_seen](const auto &left, const auto &right) {
+            return order_seen[left.id] < order_seen[right.id];
+        });
+    if (nodes[0].id != tree->left_root) {
+        throw std::runtime_error("something bad is going on...");
+    }
 
-    return root;
+    for (auto r = std::rbegin(nodes); r != std::rend(nodes); ++r) {
+        for (auto c : child_map[r->id]) {
+            nodes_input_order[order_seen[r->id]].children.emplace_back(
+                build_tree_pre_allocated_dispatch(
+                    std::move(nodes_input_order[order_seen[c]])));
+        }
+    }
+
+    auto x{ std::move(nodes_input_order[0]) }; // subtle...
+    return x;
 }
 
 static int
@@ -277,23 +287,16 @@ run_parsimony_recursive(
     tsk_size_t j, num_mutations;
     tsk_id_t u;
     int8_t ancestral_state;
-    /* TODO Do this in a C++ way */
-    int8_t *optimal_set
-        = (int8_t *) calloc((num_nodes + 1) * num_alleles, sizeof(*optimal_set));
-
-    if (optimal_set == NULL) {
-        throw std::runtime_error("Memory allocation failure");
-    }
+    std::vector<std::int8_t> optimal_set((num_nodes + 1) * num_alleles, 0);
 
     for (j = 0; j < num_samples; j++) {
         u = samples[j];
         optimal_set[u * num_alleles + genotypes[j]] = 1;
     }
-    _hartigan_postorder(root, num_nodes, num_alleles, optimal_set);
+    _hartigan_postorder(root, num_nodes, num_alleles, optimal_set.data());
     ancestral_state = argmax(num_alleles, &optimal_set[root.id * num_alleles]);
-    num_mutations
-        = _hartigan_preorder(root, ancestral_state, num_nodes, num_alleles, optimal_set);
-    free(optimal_set);
+    num_mutations = _hartigan_preorder(
+        root, ancestral_state, num_nodes, num_alleles, optimal_set.data());
     return num_mutations;
 }
 
@@ -315,8 +318,8 @@ main(int argc, char **argv)
     if (count_roots(&tree.tree) != 1) {
         throw std::invalid_argument("tree must have a single root");
     }
-    auto cpp_tree_prealloc = build_tree_pre_allocated<Node>(&tree.tree);
-    auto cpp_tree_heapalloc = build_tree_pre_allocated<HeapNode>(&tree.tree);
+    auto cpp_tree_prealloc = build_tree_contiguous<Node>(&tree.tree);
+    auto cpp_tree_heapalloc = build_tree_contiguous<HeapNode>(&tree.tree);
     tsk_vargen_t vargen;
     tsk_variant_t *var;
 
@@ -347,7 +350,7 @@ main(int argc, char **argv)
 
         /* std::cout << "score = " << score_lib << ": " << score_cpp << "\n"; */
         if (score_cpp != score_lib) {
-            throw std::runtime_error("Error in parsimony implementation");
+            throw std::runtime_error("Error in parsimony implementation (Node)");
         }
 
         before = clock();
@@ -356,7 +359,7 @@ main(int argc, char **argv)
         heapalloc_total_time += ((double) duration) / CLOCKS_PER_SEC;
 
         if (score_cpp != score_lib) {
-            throw std::runtime_error("Error in parsimony implementation");
+            throw std::runtime_error("Error in parsimony implementation (HeapNode)");
         }
     }
     if (ret < 0) {
