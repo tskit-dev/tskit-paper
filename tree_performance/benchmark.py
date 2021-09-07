@@ -210,14 +210,16 @@ def benchmark_python(ts, func, implementation, max_sites=1000):
 
 def benchmark_biopython(ts_path, max_sites=1000):
     ts = tskit.load(ts_path)
-    if ts.num_samples >= 10**5:
+    if ts.num_samples >= 10 ** 5:
         return []
     assert ts.num_sites >= max_sites
     variants = itertools.islice(ts.variants(), max_sites)
     times = np.zeros(max_sites)
 
     tree = ts.first()
-    bp_tree = Bio.Phylo.read(io.StringIO(tree.newick()), "newick")
+    # THIS IS SLOOOOOOOW!
+    newick = tree.newick(node_labels={u: str(u) for u in ts.samples()})
+    bp_tree = Bio.Phylo.read(io.StringIO(newick), "newick")
     ps = Bio.Phylo.TreeConstruction.ParsimonyScorer()
 
     with click.progressbar(
@@ -226,9 +228,9 @@ def benchmark_biopython(ts_path, max_sites=1000):
         for j, variant in enumerate(bar):
             records = [
                 Bio.SeqRecord.SeqRecord(
-                    Bio.Seq.Seq(str(variant.genotypes[k])), id=str(k + 1)
+                    Bio.Seq.Seq(str(variant.genotypes[k])), id=str(u)
                 )
-                for k in range(ts.num_samples)
+                for k, u in enumerate(ts.samples())
             ]
             alignment = Bio.Align.MultipleSeqAlignment(records)
 
@@ -363,7 +365,7 @@ def benchmark_R(ts_path, max_sites, chunk_size):
     assert max_sites == chunk_size
     ts_path = pathlib.Path(ts_path)
     ts = tskit.load(ts_path)
-    if ts.num_samples >= 10**7:
+    if ts.num_samples >= 10 ** 7:
         # We seem to run out of memory at 10^7 samples, even though it's only
         # 10 sites.
         return []
@@ -447,7 +449,7 @@ def benchmark_vectorised(max_sites, chunk_size):
 
 
 @click.command()
-@click.option("--max-sites", type=int, default=1000)
+@click.option("--max-sites", type=int, default=100)
 def benchmark_sequential(max_sites):
     """
     Benchmark the sequential implementations
@@ -468,6 +470,7 @@ def benchmark_sequential(max_sites):
             benchmark_cpp_sequential,
             benchmark_biopython,
         ]:
+            print("running", impl)
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m):
                 perf_data.append({"order": order, **datum})

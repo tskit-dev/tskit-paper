@@ -61,24 +61,27 @@ def tree_performance_relative():
     df2 = pd.read_csv("data/tree-performance-vectorised.csv")
     df = pd.concat([df1, df2])
 
-    print(df)
+    # print(df)
+    # Only interested in the close-to-metal implementations here
+    implementations = [x for x in sorted(set(df.implementation)) if x.startswith("c")]
+    print(implementations)
 
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
     dfo = df[df.order == "msprime"]
-    implementations = sorted(set(df.implementation))
     print(dfo)
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
+    print(dfo[dfo.implementation == "c_vectorised"])
+    print(dfo[dfo.implementation == "c_recursive"])
     print(norm)
     line_map = {}
     ax = axes[0]
     ax.set_title("Node order = msprime")
     for implementation in implementations:
-        if "py" not in implementation:
-            dfi = dfo[dfo.implementation == implementation]
-            (line,) = ax.plot(
-                dfi.sample_size, dfi.time_mean / norm, "-o", label=implementation
-            )
-            line_map[implementation] = line
+        dfi = dfo[dfo.implementation == implementation]
+        (line,) = ax.plot(
+            dfi.sample_size, dfi.time_mean / norm, "-o", label=implementation
+        )
+        line_map[implementation] = line
 
     ax = axes[1]
     ax.set_title("Node order = preorder")
