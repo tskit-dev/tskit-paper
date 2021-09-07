@@ -283,13 +283,12 @@ def benchmark_pythran(ts_path, max_sites):
     )
 
 
-def benchmark_numba_vectorised(ts_path, max_sites):
+def benchmark_numba_vectorised(ts_path, max_sites, chunk_size):
 
     ts = tskit.load(ts_path)
     assert ts.num_trees == 1
     tree = ts.first()
 
-    chunk_size = 1000
     alleles = ("A", "C", "G", "T")
     total_time = 0
     for chunk in variant_chunks(ts, chunk_size, max_sites=max_sites, alleles=alleles):
@@ -307,9 +306,12 @@ def benchmark_numba_vectorised(ts_path, max_sites):
     ]
 
 
-def benchmark_external(command, ts_path, max_sites):
+def benchmark_external(command, ts_path, max_sites, chunk_size=None):
+    cmd = command + f" {ts_path} {max_sites}"
+    if chunk_size is not None:
+        cmd += f" {chunk_size}"
     result = subprocess.run(
-        command + f" {ts_path} {max_sites}",
+        cmd,
         shell=True,
         check=True,
         capture_output=True,
@@ -359,13 +361,15 @@ def benchmark_R(ts_path, max_sites=1000):
         )
     return ret
 
+def benchmark_c_vectorised(ts_path, max_sites, chunk_size):
+    return benchmark_external(f"./c_vectorised", ts_path, max_sites, chunk_size)
 
-def benchmark_c_library(ts_path, max_sites):
-    return benchmark_external(f"./c_implementation", ts_path, max_sites)
+def benchmark_c_sequential(ts_path, max_sites):
+    return benchmark_external(f"./c_sequential", ts_path, max_sites)
 
 
-def benchmark_cpp_library(ts_path, max_sites):
-    return benchmark_external(f"./cpp_implementation", ts_path, max_sites)
+def benchmark_cpp_sequential(ts_path, max_sites):
+    return benchmark_external(f"./cpp_sequential", ts_path, max_sites)
 
 
 def warmup_jit():
@@ -377,9 +381,37 @@ def warmup_jit():
 
 @click.command()
 @click.option("--max-sites", type=int, default=1000)
-def run_benchmarks(max_sites):
+@click.option("--chunk-size", type=int, default=1000)
+def benchmark_vectorised(max_sites, chunk_size):
     """
-    Run the benchmarks and save the data.
+    Benchmark the vectorised implementations
+    """
+    warmup_jit()
+
+    datapath = pathlib.Path("data")
+    perf_data = []
+    for path in sorted(datapath.glob("*.trees")):
+        ts = tskit.load(path)
+        order = "preorder" if "preorder" in str(path) else "msprime"
+        assert ts.num_trees == 1
+        for impl in [
+            benchmark_numba_vectorised,
+            benchmark_c_vectorised,
+            # benchmark_R,
+        ]:
+            m = max_sites if ts.num_samples < 10 ** 6 else 10
+            for datum in impl(path, max_sites=m, chunk_size=min(chunk_size, m)):
+                perf_data.append({"order": order, **datum})
+                print(datum)
+            df = pd.DataFrame(perf_data)
+            df.to_csv("../data/tree-performance-vectorised.csv")
+
+
+@click.command()
+@click.option("--max-sites", type=int, default=1000)
+def benchmark_sequential(max_sites):
+    """
+    Benchmark the sequential implementations
     """
     warmup_jit()
 
@@ -394,7 +426,6 @@ def run_benchmarks(max_sites):
             benchmark_numba,
             benchmark_tskit,
             benchmark_c_library,
-            # turning off C++ for now as it can't handle preorder
             benchmark_cpp_library,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
@@ -626,7 +657,8 @@ def benchmark_libs():
 
 
 cli.add_command(generate_data)
-cli.add_command(run_benchmarks)
+cli.add_command(benchmark_sequential)
+cli.add_command(benchmark_vectorised)
 cli.add_command(verify)
 cli.add_command(quickbench)
 cli.add_command(benchmark_libs)

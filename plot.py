@@ -14,10 +14,8 @@ def save(name):
     plt.savefig(f"figures/{name}.pdf")
 
 
-@click.command()
-def tree_performance():
-
-    df = pd.read_csv("data/tree-performance.csv")
+def plot_tree_performance(name):
+    df = pd.read_csv(f"data/{name}.csv")
     df = df[df.sample_size >= 1000]
     fig, ax = plt.subplots(1, 1)
     implementations = sorted(set(df.implementation))
@@ -46,13 +44,20 @@ def tree_performance():
     ax.set_xlabel("Sample size")
     ax.set_ylabel("CPU Time")
     fig.add_artist(legend1)
-    save("tree-performance")
+    save(f"{name}")
+
+
+@click.command()
+def tree_performance():
+
+    plot_tree_performance("tree-performance-sequential")
+    plot_tree_performance("tree-performance-vectorised")
 
 
 @click.command()
 def tree_performance_relative():
 
-    df = pd.read_csv("data/tree-performance.csv")
+    df = pd.read_csv("data/tree-performance-sequential.csv")
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
 
     dfo = df[df.order == "msprime"]
