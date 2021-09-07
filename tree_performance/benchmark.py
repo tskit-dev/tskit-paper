@@ -333,21 +333,51 @@ def benchmark_external(command, ts_path, max_sites, chunk_size=None):
     return ret
 
 
-def benchmark_R(ts_path, max_sites=1000):
-    # max_sites is ignored here
-    # assert max_sites == 1000
+def write_fasta(ts, num_sites, fasta_path):
+
+    tree = ts.first()
+    H = np.empty((ts.num_samples, num_sites), dtype=np.int8)
+    for var in ts.variants():
+        if var.site.id >= num_sites:
+            break
+        alleles = np.full(len(var.alleles), 0, dtype=np.int8)
+        for i, allele in enumerate(var.alleles):
+            ascii_allele = allele.encode("ascii")
+            allele_int8 = ord(ascii_allele)
+            alleles[i] = allele_int8
+        H[:, var.site.id] = alleles[var.genotypes]
+
+    with open(fasta_path, "w") as f:
+        # Sample are labelled 1,.., n in the newick
+        for u, h in zip(ts.samples(), H):
+            print(f">{u}", file=f)
+            sequence = h.tobytes().decode("ascii")
+            for line in textwrap.wrap(sequence):
+                print(line, file=f)
+
+
+def benchmark_R(ts_path, max_sites, chunk_size):
+    assert max_sites == chunk_size
     ts_path = pathlib.Path(ts_path)
+    ts = tskit.load(ts_path)
     newick_path = ts_path.with_suffix(".nwk")
-    fasta_path = ts_path.with_suffix(".fasta")
+    if not newick_path.exists():
+        print("writing", newick_path)
+        tree = ts.first()
+        with open(newick_path, "w") as f:
+            f.write(tree.newick(node_labels={u: str(u) for u in ts.samples()}))
+    fasta_path = ts_path.with_suffix(f".m_{max_sites}.fasta")
+    if not fasta_path.exists():
+        write_fasta(ts, max_sites, fasta_path)
+
     result = subprocess.run(
-        f"Rscript R_implementations.R {ts_path} 1000 {newick_path} {fasta_path}",
+        f"Rscript R_implementations.R {ts_path} {max_sites} {newick_path} {fasta_path}",
         shell=True,
         check=True,
         capture_output=True,
         text=True,
     )
     ret = []
-    ts = tskit.load(ts_path)
     for line in result.stdout.splitlines():
         splits = line.split()
         implementation = splits[0]
@@ -361,8 +391,10 @@ def benchmark_R(ts_path, max_sites=1000):
         )
     return ret
 
+
 def benchmark_c_vectorised(ts_path, max_sites, chunk_size):
     return benchmark_external(f"./c_vectorised", ts_path, max_sites, chunk_size)
+
 
 def benchmark_c_sequential(ts_path, max_sites):
     return benchmark_external(f"./c_sequential", ts_path, max_sites)
@@ -397,7 +429,7 @@ def benchmark_vectorised(max_sites, chunk_size):
         for impl in [
             benchmark_numba_vectorised,
             benchmark_c_vectorised,
-            # benchmark_R,
+            benchmark_R,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m, chunk_size=min(chunk_size, m)):
@@ -425,15 +457,15 @@ def benchmark_sequential(max_sites):
             benchmark_pythran,
             benchmark_numba,
             benchmark_tskit,
-            benchmark_c_library,
-            benchmark_cpp_library,
+            benchmark_c_sequential,
+            benchmark_cpp_sequential,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m):
                 perf_data.append({"order": order, **datum})
                 print(datum)
             df = pd.DataFrame(perf_data)
-            df.to_csv("../data/tree-performance.csv")
+            df.to_csv("../data/tree-performance-sequential.csv")
 
 
 def run_simulation(
@@ -476,32 +508,6 @@ def to_preorder(ts, verify=False):
     return new_ts
 
 
-def convert_phylo(ts, num_sites, newick_path, fasta_path):
-
-    tree = ts.first()
-    with open(newick_path, "w") as f:
-        f.write(tree.newick())
-
-    H = np.empty((ts.num_samples, num_sites), dtype=np.int8)
-    for var in ts.variants():
-        if var.site.id >= num_sites:
-            break
-        alleles = np.full(len(var.alleles), 0, dtype=np.int8)
-        for i, allele in enumerate(var.alleles):
-            ascii_allele = allele.encode("ascii")
-            allele_int8 = ord(ascii_allele)
-            alleles[i] = allele_int8
-        H[:, var.site.id] = alleles[var.genotypes]
-
-    with open(fasta_path, "w") as f:
-        # Sample are labelled 1,.., n in the newick
-        for j, h in enumerate(H, start=1):
-            print(f">{j}", file=f)
-            sequence = h.tobytes().decode("ascii")
-            for line in textwrap.wrap(sequence):
-                print(line, file=f)
-
-
 def variant_chunks(ts, chunk_size, max_sites=None, **kwargs):
     chunk = []
     for var in ts.variants(**kwargs):
@@ -527,10 +533,6 @@ def generate_data():
         ts.dump(f"data/n_1e{k}.trees")
         ts_preorder = to_preorder(ts, verify=k < 6)
         ts_preorder.dump(f"data/n_1e{k}_preorder.trees")
-        if k < 7:
-            convert_phylo(ts, 1000, f"data/n_1e{k}.nwk", f"data/n_1e{k}.fasta")
-        else:
-            break
 
 
 @click.group()
