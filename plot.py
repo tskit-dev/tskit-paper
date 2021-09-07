@@ -57,9 +57,13 @@ def tree_performance():
 @click.command()
 def tree_performance_relative():
 
-    df = pd.read_csv("data/tree-performance-sequential.csv")
-    fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
+    df1 = pd.read_csv("data/tree-performance-sequential.csv")
+    df2 = pd.read_csv("data/tree-performance-vectorised.csv")
+    df = pd.concat([df1, df2])
 
+    print(df)
+
+    fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
     dfo = df[df.order == "msprime"]
     implementations = sorted(set(df.implementation))
     print(dfo)

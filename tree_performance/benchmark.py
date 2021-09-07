@@ -210,6 +210,8 @@ def benchmark_python(ts, func, implementation, max_sites=1000):
 
 def benchmark_biopython(ts_path, max_sites=1000):
     ts = tskit.load(ts_path)
+    if ts.num_samples >= 10**5:
+        return []
     assert ts.num_sites >= max_sites
     variants = itertools.islice(ts.variants(), max_sites)
     times = np.zeros(max_sites)
@@ -357,9 +359,14 @@ def write_fasta(ts, num_sites, fasta_path):
 
 
 def benchmark_R(ts_path, max_sites, chunk_size):
+
     assert max_sites == chunk_size
     ts_path = pathlib.Path(ts_path)
     ts = tskit.load(ts_path)
+    if ts.num_samples >= 10**7:
+        # We seem to run out of memory at 10^7 samples, even though it's only
+        # 10 sites.
+        return []
     newick_path = ts_path.with_suffix(".nwk")
     if not newick_path.exists():
         print("writing", newick_path)
@@ -459,6 +466,7 @@ def benchmark_sequential(max_sites):
             benchmark_tskit,
             benchmark_c_sequential,
             benchmark_cpp_sequential,
+            benchmark_biopython,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m):
