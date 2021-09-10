@@ -14,10 +14,8 @@ def save(name):
     plt.savefig(f"figures/{name}.pdf")
 
 
-@click.command()
-def tree_performance():
-
-    df = pd.read_csv("data/tree-performance.csv")
+def plot_tree_performance(name):
+    df = pd.read_csv(f"data/{name}.csv")
     df = df[df.sample_size >= 1000]
     fig, ax = plt.subplots(1, 1)
     implementations = sorted(set(df.implementation))
@@ -46,17 +44,31 @@ def tree_performance():
     ax.set_xlabel("Sample size")
     ax.set_ylabel("CPU Time")
     fig.add_artist(legend1)
-    save("tree-performance")
+    save(f"{name}")
+
+
+@click.command()
+def tree_performance():
+
+    plot_tree_performance("tree-performance-sequential")
+    plot_tree_performance("tree-performance-vectorised")
 
 
 @click.command()
 def tree_performance_relative():
 
-    df = pd.read_csv("data/tree-performance.csv")
-    fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
+    df1 = pd.read_csv("data/tree-performance-sequential.csv")
+    df2 = pd.read_csv("data/tree-performance-vectorised.csv")
+    df = pd.concat([df1, df2])
+    # df = df[df.sample_size >= 1000]
 
+    print(df)
+    # Only interested in the close-to-metal implementations here
+    implementations = [x for x in sorted(set(df.implementation)) if x.startswith("c_")]
+    print(implementations)
+
+    fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
     dfo = df[df.order == "msprime"]
-    implementations = sorted(set(df.implementation))
     print(dfo)
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
     print(norm)
@@ -64,26 +76,27 @@ def tree_performance_relative():
     ax = axes[0]
     ax.set_title("Node order = msprime")
     for implementation in implementations:
-        if "py" not in implementation:
-            dfi = dfo[dfo.implementation == implementation]
-            (line,) = ax.plot(
-                dfi.sample_size, dfi.time_mean / norm, "-o", label=implementation
-            )
-            line_map[implementation] = line
+        dfi = dfo[dfo.implementation == implementation]
+        (line,) = ax.plot(
+            dfi.sample_size, dfi.time_mean / norm, "-o", label=implementation
+        )
+        line_map[implementation] = line
 
     ax = axes[1]
     ax.set_title("Node order = preorder")
     dfo = df[df.order == "preorder"]
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
     for implementation in implementations:
-        if "py" not in implementation:
-            dfi = dfo[dfo.implementation == implementation]
-            ax.plot(
-                dfi.sample_size,
-                dfi.time_mean / norm,
-                "-o",
-                color=line_map[implementation].get_color(),
-            )
+        print(implementation)
+        dfi = dfo[dfo.implementation == implementation]
+        print(dfi.sample_size)
+        print(dfi.time_mean)
+        ax.plot(
+            dfi.sample_size,
+            dfi.time_mean / norm,
+            "-o",
+            color=line_map[implementation].get_color(),
+        )
 
     for ax in axes:
         ax.set_xscale("log")

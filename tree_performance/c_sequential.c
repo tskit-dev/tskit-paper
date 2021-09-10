@@ -224,8 +224,8 @@ run_parsimony_library(tsk_tree_t *tree, tsk_variant_t *var)
 
 static tsk_size_t
 _hartigan_preorder(tsk_id_t parent, int8_t state, tsk_size_t num_nodes,
-    tsk_size_t num_alleles, const int8_t *optimal_set, const tsk_id_t *right_child,
-    const tsk_id_t *left_sib)
+    tsk_size_t num_alleles, const int8_t *restrict optimal_set,
+    const tsk_id_t *restrict right_child, const tsk_id_t *restrict left_sib)
 {
     tsk_id_t child;
     tsk_size_t num_mutations = 0;
@@ -245,7 +245,8 @@ _hartigan_preorder(tsk_id_t parent, int8_t state, tsk_size_t num_nodes,
 
 static void
 _hartigan_postorder(tsk_id_t parent, tsk_size_t num_nodes, tsk_size_t num_alleles,
-    int8_t *optimal_set, const tsk_id_t *right_child, const tsk_id_t *left_sib)
+    int8_t *restrict optimal_set, const tsk_id_t *restrict right_child,
+    const tsk_id_t *restrict left_sib)
 {
     int allele_count[num_alleles]; /* This isn't portable, and it's a bad idea */
     int max_allele_count;
