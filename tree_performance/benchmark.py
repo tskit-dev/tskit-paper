@@ -473,8 +473,7 @@ def benchmark_sequential(max_sites):
             benchmark_numba,
             benchmark_tskit,
             benchmark_c_sequential,
-            # This is running out of memory on my machine.
-            # benchmark_cpp_sequential,
+            benchmark_cpp_sequential,
             benchmark_biopython,
         ]:
             print("running", impl)
