@@ -140,10 +140,13 @@ count_roots(const tsk_tree_t *tree)
     return nroots;
 }
 
-inline Node &
+// Reason 43,124,151 why we can hate C++:
+// returning Node & here prevented copy-elision,
+// resulting in n^2 memory needs.
+inline Node 
 build_tree_pre_allocated_dispatch(Node &&n)
 {
-    return n;
+    return Node(std::move(n));
 }
 
 inline std::unique_ptr<HeapNode>
