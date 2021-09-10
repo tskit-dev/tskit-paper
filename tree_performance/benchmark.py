@@ -208,6 +208,17 @@ def benchmark_python(ts, func, implementation, max_sites=1000):
     ]
 
 
+def get_newick_path(ts_path, ts):
+    # Make a newick file for the specified ts as it's very slow
+    newick_path = ts_path.with_suffix(".nwk")
+    if not newick_path.exists():
+        print("writing", newick_path)
+        tree = ts.first()
+        with open(newick_path, "w") as f:
+            f.write(tree.newick(node_labels={u: str(u) for u in ts.samples()}))
+    return newick_path
+
+
 def benchmark_biopython(ts_path, max_sites=1000):
     ts = tskit.load(ts_path)
     if ts.num_samples >= 10 ** 5:
@@ -217,9 +228,9 @@ def benchmark_biopython(ts_path, max_sites=1000):
     times = np.zeros(max_sites)
 
     tree = ts.first()
-    # THIS IS SLOOOOOOOW!
-    newick = tree.newick(node_labels={u: str(u) for u in ts.samples()})
-    bp_tree = Bio.Phylo.read(io.StringIO(newick), "newick")
+    newick_path = get_newick_path(ts_path, ts)
+    # This bit is very very slow
+    bp_tree = Bio.Phylo.read(newick_path, "newick")
     ps = Bio.Phylo.TreeConstruction.ParsimonyScorer()
 
     with click.progressbar(
@@ -369,12 +380,7 @@ def benchmark_R(ts_path, max_sites, chunk_size):
         # We seem to run out of memory at 10^7 samples, even though it's only
         # 10 sites.
         return []
-    newick_path = ts_path.with_suffix(".nwk")
-    if not newick_path.exists():
-        print("writing", newick_path)
-        tree = ts.first()
-        with open(newick_path, "w") as f:
-            f.write(tree.newick(node_labels={u: str(u) for u in ts.samples()}))
+    newick_path = get_newick_path(ts_path, ts)
     fasta_path = ts_path.with_suffix(f".m_{max_sites}.fasta")
     if not fasta_path.exists():
         write_fasta(ts, max_sites, fasta_path)
@@ -467,7 +473,8 @@ def benchmark_sequential(max_sites):
             benchmark_numba,
             benchmark_tskit,
             benchmark_c_sequential,
-            benchmark_cpp_sequential,
+            # This is running out of memory on my machine.
+            # benchmark_cpp_sequential,
             benchmark_biopython,
         ]:
             print("running", impl)

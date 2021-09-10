@@ -60,18 +60,17 @@ def tree_performance_relative():
     df1 = pd.read_csv("data/tree-performance-sequential.csv")
     df2 = pd.read_csv("data/tree-performance-vectorised.csv")
     df = pd.concat([df1, df2])
+    # df = df[df.sample_size >= 1000]
 
-    # print(df)
+    print(df)
     # Only interested in the close-to-metal implementations here
-    implementations = [x for x in sorted(set(df.implementation)) if x.startswith("c")]
+    implementations = [x for x in sorted(set(df.implementation)) if x.startswith("c_")]
     print(implementations)
 
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
     dfo = df[df.order == "msprime"]
     print(dfo)
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
-    print(dfo[dfo.implementation == "c_vectorised"])
-    print(dfo[dfo.implementation == "c_recursive"])
     print(norm)
     line_map = {}
     ax = axes[0]
@@ -88,14 +87,16 @@ def tree_performance_relative():
     dfo = df[df.order == "preorder"]
     norm = np.array(dfo[dfo.implementation == "c_lib"].time_mean)
     for implementation in implementations:
-        if "py" not in implementation:
-            dfi = dfo[dfo.implementation == implementation]
-            ax.plot(
-                dfi.sample_size,
-                dfi.time_mean / norm,
-                "-o",
-                color=line_map[implementation].get_color(),
-            )
+        print(implementation)
+        dfi = dfo[dfo.implementation == implementation]
+        print(dfi.sample_size)
+        print(dfi.time_mean)
+        ax.plot(
+            dfi.sample_size,
+            dfi.time_mean / norm,
+            "-o",
+            color=line_map[implementation].get_color(),
+        )
 
     for ax in axes:
         ax.set_xscale("log")
