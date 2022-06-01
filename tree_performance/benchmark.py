@@ -185,104 +185,74 @@ def numba_hartigan_parsimony_vectorised(tree, genotypes, alleles):
     return muts
 
 @cuda.jit()
-def _hartigan_initialise_vectorised_cuda(optimal_set, genotypes, samples):
-    site_k, sample_j = cuda.grid(2)
-    if site_k >= genotypes.shape[0] or sample_j >= genotypes.shape[1]:
-        return
-    optimal_set[samples[sample_j], site_k, genotypes[site_k][sample_j]] = 1
+def _hartigan_parsimony_cuda(mutations, root, has_child, parent, preorder, postorder, samples, genotypes, num_alleles):
+    num_sites = genotypes.shape[0]
+    num_nodes = len(preorder)
+    num_samples = len(samples)
 
-@cuda.jit()
-def _hartigan_postorder_vectorised_cuda(optimal_set, allele_count, postorder, left_child, parent, num_alleles, num_sites):
     site_i = cuda.grid(1)
     if site_i >= num_sites:
         return
+    optimal_set = np.zeros((num_nodes, num_alleles), dtype=np.int8)
+    for sample_j in range(num_samples):
+        optimal_set[samples[sample_j], genotypes[site_i, sample_j]] = 1
+    allele_count = np.zeros((num_nodes, num_alleles), dtype=np.int32)
     for node_j in postorder:
-        if left_child[node_j] != tskit.NULL:
+        if has_child[node_j]:
             max_allele_count = 0
             for allele_k in range(num_alleles):
-                if allele_count[site_i, node_j, allele_k] > max_allele_count:
-                    max_allele_count = allele_count[site_i, node_j, allele_k] #TODO CHECK PERF WITH BRANCHLESS
+                if allele_count[node_j, allele_k] > max_allele_count:
+                    max_allele_count = allele_count[node_j, allele_k] #TODO CHECK PERF WITH BRANCHLESS
             for allele_k in range(num_alleles):
-                if allele_count[site_i, node_j, allele_k] == max_allele_count:
-                    optimal_set[node_j, site_i, allele_k] = 1  #TODO CHECK PERF WITH BRANCHLESS
+                if allele_count[node_j, allele_k] == max_allele_count:
+                    optimal_set[node_j, allele_k] = 1  #TODO CHECK PERF WITH BRANCHLESS
         for allele_k in range(num_alleles):
-            allele_count[site_i, parent[node_j], allele_k] += optimal_set[node_j, site_i, allele_k]
-
-@cuda.jit()
-def _hartigan_preorder_vectorised_cuda(optimal_set, state, ancestral_state, preorder, parent, mutations, num_sites, num_nodes, num_alleles):
-    site_j = cuda.grid(1)
-    if site_j >= num_sites:
-        return
-    state = state[site_j]
-    state[:] = ancestral_state[site_j]
-    for node_i in preorder:
-        state[node_i] = state[parent[node_i]]
-        site_optimal_set = optimal_set[node_i, site_j]
-        if site_optimal_set[state[node_i]] == 0:
+            allele_count[parent[node_j], allele_k] += optimal_set[node_j, allele_k]
+    state = np.zeros((num_nodes,), dtype=np.int32)
+    state[:] = np.argmax(optimal_set[root])
+    for node_j in preorder:
+        state[node_j] = state[parent[node_j]]
+        node_optimal_set = optimal_set[node_j]
+        if node_optimal_set[state[node_j]] == 0:
             maxval = -1
             argmax = -1
             for k in range(num_alleles):
-                if site_optimal_set[k] > maxval:
-                    maxval = site_optimal_set[k]
+                if node_optimal_set[k] > maxval:
+                    maxval = node_optimal_set[k]
                     argmax = k
-            state[node_i] = argmax
-            mutations[site_j] += 1
-
+            state[node_j] = argmax
+            mutations[site_i] += 1
 
 def numba_cuda_hartigan_parsimony_vectorised(tree, genotypes, alleles):
     left_child = tree.left_child_array
-    left_child_global = cuda.to_device(left_child)
+    has_child = np.zeros_like(left_child, dtype=np.int8)
+    has_child[left_child != tskit.NULL] = 1
+    has_child_global = cuda.to_device(has_child)
     parent = tree.parent_array
     parent_global = cuda.to_device(parent)
     genotypes_global = cuda.to_device(genotypes)
 
-
-    # Simple version assuming non missing data and one root
     num_alleles = np.max(genotypes) + 1
-    num_sites = genotypes.shape[0]
-    num_nodes = tree.tree_sequence.num_nodes
     samples = tree.tree_sequence.samples()
     samples_global = cuda.to_device(samples)
-    num_samples = len(samples)
-
-    optimal_set = np.zeros((num_nodes, num_sites, num_alleles), dtype=np.int8)
-    optimal_set_global = cuda.to_device(optimal_set)
-
-    allele_count = np.zeros((num_sites, num_nodes, num_alleles), dtype=np.int32)
-    allele_count_global = cuda.to_device(allele_count)
+    num_sites = genotypes.shape[0]
 
     postorder = tree.postorder()
     postorder_global = cuda.to_device(postorder)
     preorder = tree.preorder()
     preorder_global = cuda.to_device(preorder)
-
-    threadsperblock = [16,16]
-    blockspergrid_sites = int(math.ceil(num_sites / threadsperblock[0]))
-    blockspergrid_samples = int(math.ceil(num_samples / threadsperblock[1]))
-
-    _hartigan_initialise_vectorised_cuda[
-        (blockspergrid_sites, blockspergrid_samples), threadsperblock
-    ](
-        optimal_set_global, genotypes_global, samples_global
-    )
-    _hartigan_postorder_vectorised_cuda[
-        (blockspergrid_sites,), threadsperblock[:1]
-    ](
-        optimal_set_global, allele_count_global, postorder_global, left_child_global, parent_global, num_alleles, num_sites
-    )
-    ancestral_state = np.argmax(optimal_set_global[tree.root], axis=1)
-    ancestral_state_global = cuda.to_device(ancestral_state)
     mutations = np.zeros(num_sites, dtype=np.int32)
     mutations_global = cuda.to_device(mutations)
-    state = np.zeros((num_sites, num_nodes), dtype=np.int32)
-    state_global = cuda.to_device(state)
-    _hartigan_preorder_vectorised_cuda[
-        (blockspergrid_sites,), threadsperblock[:1]
-    ](
-        optimal_set_global, state_global, ancestral_state_global, preorder_global, parent_global,
-        mutations_global, num_sites, num_nodes, num_alleles
+
+    threadsperblock = 16
+    blockspergrid_sites = int(math.ceil(num_sites / threadsperblock))
+    _hartigan_parsimony_cuda[blockspergrid_sites, threadsperblock](
+        mutations_global, tree.root, has_child_global, parent_global, preorder_global, postorder_global, samples_global, genotypes_global, num_alleles
     )
+
     return mutations_global.copy_to_host()
+
+
 
 def pythran_hartigan_parsimony(tree, genotypes, alleles):
     # Basically same implementation as numba method above.
