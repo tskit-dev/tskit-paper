@@ -185,7 +185,7 @@ def numba_hartigan_parsimony_vectorised(tree, genotypes, alleles):
     return muts
 
 @cuda.jit()
-def _hartigan_parsimony_cuda(mutations, root, has_child, parent, preorder, postorder, samples, genotypes, num_alleles):
+def _hartigan_parsimony_cuda(mutations, optimal_set, allele_count, state, root, has_child, parent, preorder, postorder, samples, genotypes, num_alleles):
     num_sites = genotypes.shape[0]
     num_nodes = len(preorder)
     num_samples = len(samples)
@@ -193,34 +193,31 @@ def _hartigan_parsimony_cuda(mutations, root, has_child, parent, preorder, posto
     site_i = cuda.grid(1)
     if site_i >= num_sites:
         return
-    optimal_set = np.zeros((num_nodes, num_alleles), dtype=np.int8)
     for sample_j in range(num_samples):
-        optimal_set[samples[sample_j], genotypes[site_i, sample_j]] = 1
-    allele_count = np.zeros((num_nodes, num_alleles), dtype=np.int32)
+        optimal_set[site_i, samples[sample_j], genotypes[site_i, sample_j]] = 1
     for node_j in postorder:
         if has_child[node_j]:
             max_allele_count = 0
             for allele_k in range(num_alleles):
-                if allele_count[node_j, allele_k] > max_allele_count:
-                    max_allele_count = allele_count[node_j, allele_k] #TODO CHECK PERF WITH BRANCHLESS
+                if allele_count[site_i, node_j, allele_k] > max_allele_count:
+                    max_allele_count = allele_count[site_i, node_j, allele_k] #TODO CHECK PERF WITH BRANCHLESS
             for allele_k in range(num_alleles):
-                if allele_count[node_j, allele_k] == max_allele_count:
-                    optimal_set[node_j, allele_k] = 1  #TODO CHECK PERF WITH BRANCHLESS
+                if allele_count[site_i, node_j, allele_k] == max_allele_count:
+                    optimal_set[site_i, node_j, allele_k] = 1  #TODO CHECK PERF WITH BRANCHLESS
         for allele_k in range(num_alleles):
-            allele_count[parent[node_j], allele_k] += optimal_set[node_j, allele_k]
-    state = np.zeros((num_nodes,), dtype=np.int32)
-    state[:] = np.argmax(optimal_set[root])
+            allele_count[site_i, parent[node_j], allele_k] += optimal_set[site_i, node_j, allele_k]
+    state[site_i, :] = np.argmax(optimal_set[site_i, root])
     for node_j in preorder:
-        state[node_j] = state[parent[node_j]]
-        node_optimal_set = optimal_set[node_j]
-        if node_optimal_set[state[node_j]] == 0:
+        state[site_i, node_j] = state[site_i, parent[node_j]]
+        node_optimal_set = optimal_set[site_i, node_j]
+        if node_optimal_set[state[site_i, node_j]] == 0:
             maxval = -1
             argmax = -1
             for k in range(num_alleles):
                 if node_optimal_set[k] > maxval:
                     maxval = node_optimal_set[k]
                     argmax = k
-            state[node_j] = argmax
+            state[site_i, node_j] = argmax
             mutations[site_i] += 1
 
 def numba_cuda_hartigan_parsimony_vectorised(tree, genotypes, alleles):
@@ -241,13 +238,22 @@ def numba_cuda_hartigan_parsimony_vectorised(tree, genotypes, alleles):
     postorder_global = cuda.to_device(postorder)
     preorder = tree.preorder()
     preorder_global = cuda.to_device(preorder)
+    num_nodes = len(postorder)
+
+    optimal_set = np.zeros((num_sites, num_nodes, num_alleles), dtype=np.int8)
+    optimal_set_global = cuda.to_device(optimal_set)
+    allele_count = np.zeros((num_sites, num_nodes, num_alleles), dtype=np.int32)
+    allele_count_global = cuda.to_device(allele_count)
+    state = np.zeros((num_sites, num_nodes), dtype=np.int32)
+    state_global = cuda.to_device(state)
+
     mutations = np.zeros(num_sites, dtype=np.int32)
     mutations_global = cuda.to_device(mutations)
 
     threadsperblock = 16
     blockspergrid_sites = int(math.ceil(num_sites / threadsperblock))
     _hartigan_parsimony_cuda[blockspergrid_sites, threadsperblock](
-        mutations_global, tree.root, has_child_global, parent_global, preorder_global, postorder_global, samples_global, genotypes_global, num_alleles
+        mutations_global, optimal_set_global, allele_count_global, state_global, tree.root, has_child_global, parent_global, preorder_global, postorder_global, samples_global, genotypes_global, num_alleles
     )
 
     return mutations_global.copy_to_host()
