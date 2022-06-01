@@ -209,11 +209,12 @@ def _hartigan_postorder_vectorised_cuda(optimal_set, allele_count, postorder, le
             allele_count[site_i, parent[node_j], allele_k] += optimal_set[node_j, site_i, allele_k]
 
 @cuda.jit()
-def _hartigan_preorder_vectorised_cuda(optimal_set, ancestral_state, preorder, parent, mutations, num_sites, num_nodes, num_alleles):
+def _hartigan_preorder_vectorised_cuda(optimal_set, state, ancestral_state, preorder, parent, mutations, num_sites, num_nodes, num_alleles):
     site_j = cuda.grid(1)
     if site_j >= num_sites:
         return
-    state = np.repeat(ancestral_state[site_j], num_nodes)
+    state = state[site_j]
+    state[:] = ancestral_state[site_j]
     for node_i in preorder:
         state[node_i] = state[parent[node_i]]
         site_optimal_set = optimal_set[node_i, site_j]
@@ -273,10 +274,12 @@ def numba_cuda_hartigan_parsimony_vectorised(tree, genotypes, alleles):
     ancestral_state_global = cuda.to_device(ancestral_state)
     mutations = np.zeros(num_sites, dtype=np.int32)
     mutations_global = cuda.to_device(mutations)
+    state = np.zeros((num_sites, num_nodes), dtype=np.int32)
+    state_global = cuda.to_device(state)
     _hartigan_preorder_vectorised_cuda[
         (blockspergrid_sites,), threadsperblock[:1]
     ](
-        optimal_set_global, ancestral_state_global, preorder_global, parent_global,
+        optimal_set_global, state_global, ancestral_state_global, preorder_global, parent_global,
         mutations_global, num_sites, num_nodes, num_alleles
     )
     return mutations_global.copy_to_host()
@@ -592,7 +595,7 @@ def benchmark_vectorised(max_sites, chunk_size):
         for impl in [
             benchmark_numba_vectorised,
             benchmark_c_vectorised,
-            benchmark_R,
+            # benchmark_R,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m, chunk_size=min(chunk_size, m)):
