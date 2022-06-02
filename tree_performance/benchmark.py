@@ -6,9 +6,10 @@ import time
 import itertools
 import functools
 import subprocess
+import math
 import io
 import textwrap
-
+import numpy
 import pandas as pd
 import numpy as np
 import click
@@ -16,6 +17,7 @@ import msprime
 import tskit
 import numba
 import Bio.Phylo.TreeConstruction
+from numba import cuda
 
 import pythran_implementation
 
@@ -82,17 +84,15 @@ def numba_hartigan_parsimony(tree, genotypes, alleles):
 
 
 @numba.njit()
-def _hartigan_postorder_vectorised(parent, optimal_set, right_child, left_sib):
+def _hartigan_postorder_vectorised(parent, optimal_set, left_child, right_sib):
     num_sites, num_alleles = optimal_set.shape[1:]
-
     allele_count = np.zeros((num_sites, num_alleles), dtype=np.int32)
-    child = right_child[parent]
+    child = left_child[parent]
     while child != tskit.NULL:
-        _hartigan_postorder_vectorised(child, optimal_set, right_child, left_sib)
+        _hartigan_postorder_vectorised(child, optimal_set, left_child, right_sib)
         allele_count += optimal_set[child]
-        child = left_sib[child]
-
-    if right_child[parent] != tskit.NULL:
+        child = right_sib[child]
+    if left_child[parent] != tskit.NULL:
         for j in range(num_sites):
             site_allele_count = allele_count[j]
             # max_allele_count = np.max(site_allele_count)
@@ -106,7 +106,7 @@ def _hartigan_postorder_vectorised(parent, optimal_set, right_child, left_sib):
 
 
 @numba.njit()
-def _hartigan_preorder_vectorised(node, state, optimal_set, right_child, left_sib):
+def _hartigan_preorder_vectorised(node, state, optimal_set, left_child, right_sib):
     num_sites, num_alleles = optimal_set.shape[1:]
 
     mutations = np.zeros(num_sites, dtype=np.int32)
@@ -127,13 +127,13 @@ def _hartigan_preorder_vectorised(node, state, optimal_set, right_child, left_si
             state[j] = argmax
             mutations[j] = 1
 
-    v = right_child[node]
+    v = left_child[node]
     while v != tskit.NULL:
         v_muts = _hartigan_preorder_vectorised(
-            v, state, optimal_set, right_child, left_sib
+            v, state, optimal_set, left_child, right_sib
         )
         mutations += v_muts
-        v = left_sib[v]
+        v = right_sib[v]
     return mutations
 
 
@@ -146,8 +146,8 @@ def _hartigan_initialise_vectorised(optimal_set, genotypes, samples):
 
 def numba_hartigan_parsimony_vectorised(tree, genotypes, alleles):
 
-    right_child = tree.right_child_array
-    left_sib = tree.left_sib_array
+    left_child = tree.left_child_array
+    right_sib = tree.right_sib_array
 
     # Simple version assuming non missing data and one root
     num_alleles = np.max(genotypes) + 1
@@ -157,11 +157,92 @@ def numba_hartigan_parsimony_vectorised(tree, genotypes, alleles):
 
     optimal_set = np.zeros((num_nodes, num_sites, num_alleles), dtype=np.int8)
     _hartigan_initialise_vectorised(optimal_set, genotypes, samples)
-    _hartigan_postorder_vectorised(tree.root, optimal_set, right_child, left_sib)
+    _hartigan_postorder_vectorised(tree.root, optimal_set, left_child, right_sib)
     ancestral_state = np.argmax(optimal_set[tree.root], axis=1)
-    return _hartigan_preorder_vectorised(
-        tree.root, ancestral_state, optimal_set, right_child, left_sib
+    muts =  _hartigan_preorder_vectorised(
+        tree.root, ancestral_state, optimal_set, left_child, right_sib
     )
+    return muts
+
+@cuda.jit()
+def _hartigan_parsimony_cuda(mutations, optimal_set, allele_count, state, root, has_child, parent, preorder, postorder, samples, genotypes, num_alleles):
+    num_sites = genotypes.shape[0]
+    num_nodes = len(preorder)
+    num_samples = len(samples)
+
+    site_i = cuda.grid(1)
+    if site_i >= num_sites:
+        return
+    for sample_j in range(num_samples):
+        optimal_set[site_i, samples[sample_j], genotypes[site_i, sample_j]] = 1
+    for node_j in postorder:
+        if has_child[node_j]:
+            max_allele_count = 0
+            for allele_k in range(num_alleles):
+                if allele_count[site_i, node_j, allele_k] > max_allele_count:
+                    max_allele_count = allele_count[site_i, node_j, allele_k] #TODO CHECK PERF WITH BRANCHLESS
+            for allele_k in range(num_alleles):
+                if allele_count[site_i, node_j, allele_k] == max_allele_count:
+                    optimal_set[site_i, node_j, allele_k] = 1  #TODO CHECK PERF WITH BRANCHLESS
+        for allele_k in range(num_alleles):
+            allele_count[site_i, parent[node_j], allele_k] += optimal_set[site_i, node_j, allele_k]
+
+    index, max_val = -1, -1
+    for i in range(len(optimal_set[site_i, root])):
+        if optimal_set[site_i, root,i] > max_val:
+            index, max_val = i, optimal_set[site_i, root, i]
+    state[site_i, :] = index
+    for node_j in preorder:
+        state[site_i, node_j] = state[site_i, parent[node_j]]
+        node_optimal_set = optimal_set[site_i, node_j]
+        if node_optimal_set[state[site_i, node_j]] == 0:
+            maxval = -1
+            argmax = -1
+            for k in range(num_alleles):
+                if node_optimal_set[k] > maxval:
+                    maxval = node_optimal_set[k]
+                    argmax = k
+            state[site_i, node_j] = argmax
+            mutations[site_i] += 1
+
+def numba_cuda_hartigan_parsimony_vectorised(tree, genotypes, alleles):
+    left_child = tree.left_child_array
+    has_child = np.zeros_like(left_child, dtype=np.int8)
+    has_child[left_child != tskit.NULL] = 1
+    has_child_global = cuda.to_device(has_child)
+    parent = tree.parent_array
+    parent_global = cuda.to_device(parent)
+    genotypes_global = cuda.to_device(genotypes)
+
+    num_alleles = np.max(genotypes) + 1
+    samples = tree.tree_sequence.samples()
+    samples_global = cuda.to_device(samples)
+    num_sites = genotypes.shape[0]
+
+    postorder = tree.postorder()
+    postorder_global = cuda.to_device(postorder)
+    preorder = tree.preorder()
+    preorder_global = cuda.to_device(preorder)
+    num_nodes = len(postorder)
+
+    optimal_set = np.zeros((num_sites, num_nodes, num_alleles), dtype=np.int8)
+    optimal_set_global = cuda.to_device(optimal_set)
+    allele_count = np.zeros((num_sites, num_nodes, num_alleles), dtype=np.int32)
+    allele_count_global = cuda.to_device(allele_count)
+    state = np.zeros((num_sites, num_nodes), dtype=np.int32)
+    state_global = cuda.to_device(state)
+
+    mutations = np.zeros(num_sites, dtype=np.int32)
+    mutations_global = cuda.to_device(mutations)
+
+    threadsperblock = 16
+    blockspergrid_sites = int(math.ceil(num_sites / threadsperblock))
+    _hartigan_parsimony_cuda[blockspergrid_sites, threadsperblock](
+        mutations_global, optimal_set_global, allele_count_global, state_global, tree.root, has_child_global, parent_global, preorder_global, postorder_global, samples_global, genotypes_global, num_alleles
+    )
+
+    return mutations_global.copy_to_host()
+
 
 
 def pythran_hartigan_parsimony(tree, genotypes, alleles):
@@ -320,6 +401,28 @@ def benchmark_numba_vectorised(ts_path, max_sites, chunk_size):
         }
     ]
 
+def benchmark_numba_cuda(ts_path, max_sites, chunk_size):
+
+    ts = tskit.load(ts_path)
+    assert ts.num_trees == 1
+    tree = ts.first()
+
+    alleles = ("A", "C", "G", "T")
+    total_time = 0
+    for chunk in variant_chunks(ts, chunk_size, max_sites=max_sites, alleles=alleles):
+        genotypes = np.array([var.genotypes for var in chunk])
+        before = time.perf_counter()
+        numba_cuda_hartigan_parsimony_vectorised(tree, genotypes, alleles)
+        duration = time.perf_counter() - before
+        total_time += duration
+    return [
+        {
+            "implementation": "py_numba_cuda",
+            "sample_size": ts.num_samples,
+            "time_mean": total_time / max_sites,
+        }
+    ]
+
 
 def benchmark_external(command, ts_path, max_sites, chunk_size=None):
     cmd = command + f" {ts_path} {max_sites}"
@@ -426,6 +529,15 @@ def warmup_jit():
     numba_hartigan_parsimony_vectorised(ts.first(), np.array([genotypes]), ["0"])
 
 
+def warmup_cuda_jit():
+    ts = msprime.sim_ancestry(10, sequence_length=100, random_seed=43)
+    ts = msprime.sim_mutations(ts, rate=.09, random_seed=46)
+    genotypes = ts.genotype_matrix()
+    gpu = numba_cuda_hartigan_parsimony_vectorised(ts.first(), genotypes, ["0"])
+    cpu = numba_hartigan_parsimony_vectorised(ts.first(), genotypes, ["0"])
+    assert(np.array_equal(gpu, cpu))
+
+
 @click.command()
 @click.option("--max-sites", type=int, default=1000)
 @click.option("--chunk-size", type=int, default=1000)
@@ -444,7 +556,7 @@ def benchmark_vectorised(max_sites, chunk_size):
         for impl in [
             benchmark_numba_vectorised,
             benchmark_c_vectorised,
-            benchmark_R,
+            # benchmark_R,
         ]:
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m, chunk_size=min(chunk_size, m)):
@@ -453,6 +565,34 @@ def benchmark_vectorised(max_sites, chunk_size):
             df = pd.DataFrame(perf_data)
             df.to_csv("../data/tree-performance-vectorised.csv")
 
+@click.command()
+@click.option("--max-sites", type=int, default=1000)
+@click.option("--chunk-size", type=int, default=1000000)
+def benchmark_cuda(max_sites, chunk_size):
+    """
+    Benchmark the cuda implementation
+    """
+    print("#######GPU#######")
+    print(cuda.gpus)
+    print("#################")
+
+    warmup_cuda_jit()
+
+    datapath = pathlib.Path("data")
+    perf_data = []
+    for path in sorted(datapath.glob("*.trees")):
+        ts = tskit.load(path)
+        order = "preorder" if "preorder" in str(path) else "msprime"
+        assert ts.num_trees == 1
+        for impl in [
+            benchmark_numba_cuda,
+        ]:
+            m = max_sites if ts.num_samples < 10 ** 6 else 10
+            for datum in impl(path, max_sites=m, chunk_size=min(chunk_size, m)):
+                perf_data.append({"order": order, **datum})
+                print(datum)
+            df = pd.DataFrame(perf_data)
+            df.to_csv("../data/tree-performance-cuda.csv")
 
 @click.command()
 @click.option("--max-sites", type=int, default=100)
@@ -476,6 +616,8 @@ def benchmark_sequential(max_sites):
             benchmark_cpp_sequential,
             benchmark_biopython,
         ]:
+            if impl == benchmark_biopython and ts.num_samples > 100:
+                continue
             print("running", impl)
             m = max_sites if ts.num_samples < 10 ** 6 else 10
             for datum in impl(path, max_sites=m):
@@ -678,6 +820,7 @@ def benchmark_libs():
 cli.add_command(generate_data)
 cli.add_command(benchmark_sequential)
 cli.add_command(benchmark_vectorised)
+cli.add_command(benchmark_cuda)
 cli.add_command(verify)
 cli.add_command(quickbench)
 cli.add_command(benchmark_libs)
