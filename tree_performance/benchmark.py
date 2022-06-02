@@ -206,7 +206,12 @@ def _hartigan_parsimony_cuda(mutations, optimal_set, allele_count, state, root, 
                     optimal_set[site_i, node_j, allele_k] = 1  #TODO CHECK PERF WITH BRANCHLESS
         for allele_k in range(num_alleles):
             allele_count[site_i, parent[node_j], allele_k] += optimal_set[site_i, node_j, allele_k]
-    state[site_i, :] = np.argmax(optimal_set[site_i, root])
+
+    index, max_val = -1, -1
+    for i in range(len(optimal_set[site_i, root])):
+        if optimal_set[site_i, root,i] > max_val:
+            index, max_val = i, optimal_set[site_i, root, i]
+    state[site_i, :] = index
     for node_j in preorder:
         state[site_i, node_j] = state[site_i, parent[node_j]]
         node_optimal_set = optimal_set[site_i, node_j]
