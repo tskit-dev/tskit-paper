@@ -1,0 +1,10 @@
+*.pyc
+__pycache__
+c_sequential
+c_vectorised
+cpp_sequential
+*.o
+kastore
+*.a
+*.so
+tskit

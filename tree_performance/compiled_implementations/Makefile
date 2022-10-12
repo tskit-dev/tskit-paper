@@ -39,7 +39,7 @@ tskit:
 	cd tskit && git checkout C_0.99.13
 
 clean:
-	rm -f *.a *.o $(TARGETS)
+	rm -f *.a *.o *.so $(TARGETS)
 
 mrproper: clean
 	rm -fr tskit kastore example example.trees
