@@ -75,7 +75,7 @@ def run(ts_path, max_sites):
     return util.benchmark_python(
         ts,
         functools.partial(numba_hartigan_parsimony, tree),
-        "py_numba",
+        "py_numba_recursive",
         max_sites=max_sites,
     )
 
