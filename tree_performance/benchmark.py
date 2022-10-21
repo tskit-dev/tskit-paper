@@ -5,8 +5,8 @@ import importlib
 import sys
 import os
 import pathlib
-import benchmarks.numba
-import benchmarks.numba_vectorised
+import benchmarks.numba_recursive
+import benchmarks.numba_recursive_vectorised
 import benchmarks.pythran
 import pandas as pd
 import numpy as np
