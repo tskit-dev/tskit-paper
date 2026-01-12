@@ -1,4 +1,4 @@
-FIGURES=figures/tree-performance.pdf
+FIGURES=
 
 paper.pdf: paper.tex paper.bib ${FIGURES}
 	pdflatex paper.tex

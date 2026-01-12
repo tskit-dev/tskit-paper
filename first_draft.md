@@ -68,7 +68,8 @@ cross-language interfaces, and helps ensure that downstream tools inherit
 performance and correctness properties from a shared core.
 
 The 1.0 release marks the maturity of tskit as a shared community resource,
-with long-term stability of the data model and APIs guaranteed. This
+with long-term stability of the data model and APIs guaranteed.
+This
 stability, and the global community of contributors, ensures that tskit
 can be built upon with confidence and is a suitable format for
 long-term scientific value and will enable tools to interoperate through
