@@ -1,88 +1,96 @@
 # Population scale Ancestral Recombination Graphs with tskit 1.0
 
-Ancestral recombination graphs (ARGs) are a natural representation of
-genome-wide evolutionary history: they connect haplotypes through the sequence
-of local genealogies induced by recombination. For decades, ARGs were
-conceptually central but practically awkward—too large to store, too slow to
-traverse, and too fragile as a software substrate for an expanding ecosystem of
-simulators, inference methods, and downstream statistics. Recent progress in
-inference and simulation has changed that landscape, and the tskit project has
-been a key enabling technology. The release of tskit 1.0 (PyPI 1.0.0 released
-Nov 27, 2025) formalises a long-term stability guarantee for the core
-representation and APIs, turning succinct genealogical data structures into
-durable infrastructure rather than a moving target.
+Ancestral recombination graphs (ARGs) capture the evolutionary
+history of samples in a recombining species.
+ARGs have been a central object in population genetics
+for decades, but were limited in practical terms by the lack of
+scalble inference methods, interchange formats and software infrastructure.
+Recent breakthroughs in simulation and inference have changed that landscape
+and there is now great interest in ARGs and their applications.
+Tskit is the core ARG software library,
+with and efficient interchange format an a rich suite of utilities,
+and has been a key
+catalyst in this ongoing ARG revolution. This paper marks the
+release of tskit 1.0, which formalises long-term stability
+guarantees, ensuring that it remains dependable infrastructure
+for this quickly growing field.
 
-At the heart of tskit is a simple tabular data model: an ARG is stored as nodes
-(ancestral genomes at particular times) and edges (parent–child inheritance
-relationships spanning genomic intervals). This encoding yields a “tree
-sequence”: a sequence of correlated marginal trees along the genome, stored
-compactly by exploiting the fact that adjacent trees share most of their
-structure. Rather than representing each tree independently, tskit stores the
-differences between neighbouring trees, enabling algorithms that stream along
-the genome and update state incrementally. This combination—compact storage
-plus incremental traversal—has repeatedly shifted what is feasible at
-population scale.
+At the heart of tskit is a the ``succinct tree sequence'' data model,
+in which a set of nodes (ancestral genomes at particular times) and
+edges (parent-child inheritance relationships spanning genomic intervals)
+are recorded in a simple tabular format.
+This encoding leads to an efficient way of retrieving the (typically
+small) differences between local trees along the genome, and
+for efficient algorithms that leverage this property. The tskit data
+model also incorporates pedigree and population information, as well
+as supporting arbitrary metadata associated with different apects of the
+data model. Provenance is also built into the data model, ensuring
+that reproducibility.
 
-Case study 1: population genetic statistics at scale. A major early
-demonstration of the tree-sequence advantage was the general framework for
-computing single-site statistics based on a duality between mutations on
-genomes and branch lengths on genealogies. The resulting tskit statistics API
-can compute a broad family of familiar summaries (and their tree-based
-analogues) by iterating through trees and updating accumulators, avoiding
-repeated scanning over variants. This is not only faster; it makes the
-definition of statistics modular and composable, encouraging method development
-that stays close to theory while remaining performant in practice. In a
-Correspondence context, the key point is not one particular statistic, but that
-the same representation supports a general pattern: “write once, run at
-population scale,” because the underlying iteration is proportional to
-genealogical change along the genome, not to the raw size of dense genotype
-matrices.
+The initial application of tskit was in simulation. Introduced initially as
+part of the msprime simulator, the efficient data structures enabled performance
+improvements of up to 6 orders of magnitude over existing approaches.
+Similarly, the methods introduced for recording an ARG forwards in time
+with periodic "simplification" led to up to 50X speedup over the standard approach
+by reducing the need for simulating neutral mutations. It has also enabled
+the simulation of ARGs under complex patterns of geographies and selection
+which was not previously possible (vital ground truth for evaluating
+inference methods). Simulation methods have continued to
+refine and expand, with perhaps the most sophisticated to date being
+a simulated whole-genome ARGs for nearly 1.5 million French-Canadians based on a large pedigree.
+There is now rich and growing ecosystem of simulation tools built
+directly around tskit (Fig 1D).
 
-Case study 2: whole-genome simulation through a real pedigree. The recent
-Science study “On the genes, genealogies, and geographies of Quebec” simulated
-genetic transmission through a pedigree built from ~4 million genealogical
-records and released whole-genome simulated data on nearly 1.5 million
-individuals—numbers that would be implausible without a representation that can
-compress shared ancestry and be traversed efficiently. This example highlights
-a second “scale leap”: tree sequences are not only a storage format, but a
-computational interface for forward- and pedigree-based simulation workflows.
-The same node/edge tables used for coalescent simulations naturally encode
-inheritance through recorded pedigrees, and can be simplified down to the
-subset of samples or genomic regions relevant to an analysis while preserving
-exact genealogical relationships. That ability—simulate richly, then simplify
-aggressively—changes the ergonomics of large simulation studies, enabling
-iterative model-building, rapid quality control, and realistic benchmarking.
+Tskit has also had a significant influence on recent developments in
+ARG inference. Building directly on tskit's data model and with
+efficient incremental algorithms enabled by it, tsinfer was the
+first ARG inference method to scale to hundreds of thousands of
+samples. Tskit is now the de-facto interchange standard among ARG inference
+methods, with output support included in all recently published
+methods. Most recently, the algorithms in tsinfer have been refined
+and extended to infer an ARG for 2.48 million SARS-CoV-2 whole genomes,
+illustrating both the scalability of the approach and the flexibility
+in the underlying model in handling viral genomic data along
+with humans. The ARG requires 32MiB of storage and can be loaded
+into memory in less than a second.
 
-Case study 3: pandemic-scale inference from viral genomes. ARG and
-tree-sequence methods are often mentally compartmentalised: “phylogenetics for
-pathogens” and “population genetics for recombining genomes.” The sc2ts project
-(SARS-CoV-2 to tree sequence) usefully breaks that dichotomy by inferring
-ARG-like structures for SARS-CoV-2 at pandemic scale in tree-sequence form,
-with tooling built around tskit and storage layers such as Zarr. While
-SARS-CoV-2 is not the archetypal recombining diploid dataset, the example is a
-powerful stress test for generality: it shows that a single, stable
-representation can support workflows spanning traditional phylogenetic and
-population-genetic divides, and that “ARG infrastructure” need not be
-restricted to one community’s conventions. In practical terms, it also
-underscores a key virtue of the table-based model: node metadata, mutations,
-and tree topology can be accessed without pointer-heavy object graphs, enabling
-fast queries and scalable storage even when the number of genomes is enormous.
-
-Under the hood, tskit is implemented in C, with widely used frontends in Python
-(and bindings in other languages). Its vectorised, table-first design makes it
-straightforward to expose zero-copy views into the underlying arrays (for
-example through NumPy), supporting high-performance analysis pipelines that
-avoid unnecessary memory duplication. This is a pragmatic but consequential
-design choice: it lowers the cost of interoperability, makes composable
-pipelines easier to build, and helps ensure that downstream tools inherit
+Efficient storage and analysis of large datasets is a key goal of tskit,
+leveraging the underlying data structure for major performance gains. For
+example, single site statistics like Tajima's D can be computed up to 1000
+times faster than is possible from genotype matrix and using much less memory,
+as well as providing a "branch-based" dual. Tskit has a large API with many
+functions spanning statistical calculations to visualisation. The core is
+written in C, with bindings in Python, Rust and R. Its vectorised, table-first
+design makes it straightforward to expose zero-copy views into the underlying
+arrays (for example through NumPy), supporting high-performance analysis
+pipelines that avoid unnecessary memory duplication. This design efficient
+cross-language interfaces, and helps ensure that downstream tools inherit
 performance and correctness properties from a shared core.
 
-The 1.0 release matters because it makes these advantages dependable. Long-term
-stability in the core model and APIs reduces “dependency risk” for downstream
-developers, supports archival of inferred genealogies as durable scientific
-objects, and enables independent tools to interoperate through a common
-exchange format. In combination with an active ecosystem—spanning simulation,
-inference, statistics, and visualisation—tskit 1.0 marks a transition from a
+The 1.0 release marks the maturity of tskit as a shared community resource,
+with long-term stability of the data model and APIs guaranteed. This
+stability, and the global community of contributors, ensures that tskit
+can be built upon with confidence and is a suitable format for
+long-term scientific value and will enable tools to interoperate through
+a common exchange format.
+In combination with an active ecosystem (spanning simulation,
+inference, statistics, and visualisation) tskit 1.0 marks a transition from a
 successful library to stable infrastructure for population-scale genealogical
 analysis.
+
+
+
+Citations:
+
+- wong2024general
+- brandt2024promise
+- lewanski2024era
+- nielsen2024inference
+- kelleher2016efficient
+- kelleher2016efficient
+- kelleher2019inferring
+- ralph2020efficiently
+- andersontrocme2023genes
+- zhan2025pandemic
+
 
