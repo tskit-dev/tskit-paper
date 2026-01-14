@@ -1,5 +1,12 @@
 
 - name: lineagekit
+  repo: https://github.com/juntyr/necsim-rust
+  interface: Rust
+  type: simulator
+  package: cargo
+  publication: https://doi.org/10.48550/arXiv.2108.05815
+
+- name: lineagekit
   repo: https://github.com/lineagekit/lineagekit
   interface: python
   type: misc
