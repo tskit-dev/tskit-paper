@@ -1,14 +1,124 @@
 
+- name: lineagekit
+  repo: https://github.com/lineagekit/lineagekit
+  interface: python
+  type: misc
+  package: pypi
+  note: Unclear if there's much functionality here yet
+
+- name: gaia
+  repo: https://github.com/blueraleigh/gaia
+  interface: C
+  type: parameter_inference
+  publication: https://doi.org/10.1126/science.adp4642
+
+- name: gaiapy
+  repo: https://github.com/chris-a-talbot/gaiapy
+  package: pypi
+  interface: python
+  type: parameter_inference
+  note: Reimplementation of gaia R package.
+
+- name: espalier
+  repo: https://github.com/davidrasm/Espalier
+  package: pypi
+  interface: Python
+  type: arg_inference
+  publication: https://doi.org/10.1093/sysbio/syad040
+
+- name: GADMA
+  repo: https://github.com/ctlab/gadma
+  package: pypi
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1093/gigascience/giad059
+
+- name: spaceprime
+  repo: https://github.com/connor-french/spaceprime
+  package: pypi
+  interface: Python
+  type: simulation
+
+- name: arg-lmm
+  repo: https://github.com/PalamaraLab/arg-lmm
+  package: pypi
+  interface: Python
+  type: statgen
+  publication: https://doi.org/10.1016/j.xgen.2025.101072
+
+- name: transmission
+  repo: https://github.com/mpjuers/transmission
+  package: pypi
+  interface: Python
+  type: parameter_inference
+
+- name: ReLERNN
+  repo: https://github.com/kr-colab/ReLERNN
+  package: pypi
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1093/molbev/msaa038
+
+- name: momi2
+  repo: https://github.com/popgenmethods/momi2
+  package: pypi
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1080/01621459.2019.1635482
+
+- name: dnadna
+  repo: https://gitlab.com/mlgenetics/dnadna
+  package: pypi, conda
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1093/bioinformatics/btac765
+
+- name: dinf
+  repo: https://github.com/racimolab/dinf
+  package: pypi
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1101/2023.04.27.538386
+
+- name: DISMaL
+  repo: https://github.com/simonharnqvist/DISMaL
+  package: pypi
+  interface: Python
+  type: parameter_inference
+  publication:  https://doi.org/10.1016/j.tpb.2021.03.001
+
+- name: disperseNN2
+  repo: https://github.com/kr-colab/disperseNN2
+  package: pypi
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1186/s12859-023-05522-7
+
+- name: adnator
+  repo: https://github.com/jazpy/adnator
+  package: pypi
+  interface: Python
+  type: simulation
+
+- name: cnasim
+  repo: https://github.com/samsonweiner/cnasim
+  package: pypi
+  interface: Python
+  type: simulation
+  publication: https://doi.org/10.1093/bioinformatics/btad434
+
 - name: msprime
   homepage: https://tskit.dev/msprime
   publication: https://doi.org/10.1093/genetics/iyab229
   interface: C, Python
+  package: pypi, conda
   type: simulation
 
 - name: pyslim
-  homepage: https://tskit.dev/pyslim
+  repo: https://github.com/tskit-dev/pyslim
   publication: https://doi.org/10.1101/2025.09.30.679676
   type: simulation
+  package: pypi
   interface: Python
 
 - name: tstrait
@@ -26,161 +136,210 @@
 - name: fwdpy11
   homepage: https://github.com/molpopgen/fwdpy11
   publication: https://doi.org/10.1534/genetics.119.302662
+  interface: C, Python
   type: simulation
 
 - name: stdpopsim
-  homepage: https://github.com/popsim-consortium/stdpopsim
+  repo: https://github.com/popsim-consortium/stdpopsim
   publication: https://doi.org/10.7554/eLife.54967
+  interface: Python
+  package: pypi
   type: simulation
 
 - name: RADinitio
   homepage: https://catchenlab.life.illinois.edu/radinitio/
   publication: https://doi.org/10.1111/1755-0998.13163
+  interface: Python
+  package: pypi
   type: simulation
 
 - name: slendr
   homepage: https://bodkan.net/slendr/
   publication: https://peercommunityjournal.org/articles/10.24072/pcjournal.354/
+  interface: Python
   type: simulation
 
 - name: gridCoal
   homepage: https://github.com/Trubenova/gridCoal
   publication: https://doi.org/10.1111/1755-0998.13676
+  interface: Python
   type: simulation
 
 - name: Geonomics
-  homepage: https://github.com/erthward/geonomics
-  publication: https://academic.oup.com/mbe/article/38/10/4634/6297222
+  repo: https://github.com/drewhart/geonomics
+  publication: https://doi.org/10.1093/molbev/msab175
+  interface: Python
+  package: pypi
   type: simulation
 
 - name: TwisstNTern
   homepage: https://github.com/HilaLifchitz/TwisstNTern
   publication: https://doi.org/10.32942/X29941
   type: simulation
+  interface: Python
   notes: Not primarly simulator, but includes a frontend for running msprime simulations.
 
 
 - name: tsinfer
-  homepage: https://tskit.dev/tsinfer
+  repo: https://github.com/tskit-dev/tsinfer
   publication: https://www.nature.com/articles/s41588-019-0483-y
+  interface: C, Python
+  package: pypi, conda
   type: arg_inference
 
 - name: sc2ts
-  homepage: https://tskit.dev/sc2ts
+  repo: https://github.com/tskit-dev/sc2ts
   publication: https://www.biorxiv.org/content/10.1101/2023.06.08.544212v3
+  interface: Python
+  package: pypi
   type: arg_inference
 
 - name: tsdate
   homepage: https://tskit.dev/tsdate
   publication: https://www.science.org/doi/10.1126/science.abi8264
+  interface: Python
   type: arg_inference
 
 - name: Relate
   homepage: https://myersgroup.github.io/relate/
   publication: https://www.nature.com/articles/s41588-019-0484-x
   type: arg_inference
+  interface: C
   notes: Strictly, relate_lib converts to tskit, but seems like hair-splitting
 
 - name: ARGneedle
   homepage: https://palamaralab.github.io/software/argneedle/
+  repo: https://github.com/palamaralab/arg_needle
   publication: https://www.nature.com/articles/s41588-023-01379-x
+  interface: Python
+  package: pypi
   type: arg_inference
 
 - name: Threads
-  homepage: https://palamaralab.github.io/software/threads/
+  repo: https://github.com/palamaralab/threads
   publication: https://doi.org/10.1101/2024.08.31.610248
+  interface: Python
+  package: pypi
   type: arg_inference
 
 - name: sticcs
   homepage: https://github.com/simonhmartin/sticcs
   publication: https://academic.oup.com/genetics/article/232/1/iyaf181/8248911
+  interface: Python
   type: arg_inference
 
 - name: ARGinfer
   homepage: https://github.com/alimahmoudi29/arginfer
+  repo: https://github.com/alimahmoudi29/arginfer
   publication: https://doi.org/10.1371/journal.pcbi.1009960
+  interface: Python
+  package: pypi
   type: arg_inference
 
 - name: SINGER
   homepage: https://github.com/popgenmethods/SINGER
   publication: https://www.nature.com/articles/s41588-025-02317-9
+  interface: Python
   type: arg_inference
 
 - name: POLEGON
   homepage: https://github.com/YunDeng98/POLEGON
   publication: https://www.pnas.org/doi/10.1073/pnas.2504461122
   type: arg_inference
-
+  interface: Python
 
 - name: mrpast
-  homepage: https://github.com/aprilweilab/mrpast
+  repo: https://github.com/aprilweilab/mrpast
   publication: https://doi.org/10.1101/2025.10.07.680347
-  type: demographic_inference
-
+  type: parameter_inference
+  package: pypi
+  interface: Python
 
 - name: phlash
   homepage: https://github.com/jthlab/phlash
-  publication: https://www.nature.com/articles/s41588-025-02323-x
-  type: demographic_inference
+  publication: https://doi.org/10.1038/s41588-025-02323-x
+  type: parameter_inference
+  package: pypi
+  interface: Python
 
 - name: spacetrees
   homepage: https://github.com/osmond-lab/spacetrees
   publication: https://elifesciences.org/articles/72177
-  type: demographic_inference
+  type: parameter_inference
+  interface: Python
 
 - name: sparg
-  homepage: https://github.com/osmond-lab/sparg
+  repo: https://github.com/osmond-lab/sparg
   publication: https://doi.org/10.1093/g3journal/jkaf214
-  type: demographic_inference
+  type: parameter_inference
+  package: pypi
+  interface: Python
 
+- name: mapNN
+  homepage: https://github.com/kr-colab/mapNN
+  publication: https://doi.org/10.1111/1755-0998.14005
+  type: parameter_inference
+  interface: Python
 
 
 - name: tsbrowse
-  homepage: https://tskit.dev/tsbrowse
+  repo: https://github.com/tskit-dev/tsinfer
   publication: https://doi.org/10.1093/bioinformatics/btaf393
   type: visualisation
+  package: pypi
+  interface: Python
 
-- name: tskit\_arg\_visualizer
-  homepage: https://github.com/kitchensjn/tskit_arg_visualizer
+- name: tskit-arg-visualizer
+  repo: https://github.com/kitchensjn/tskit_arg_visualizer
   publication: https://doi.org/10.1093/bioadv/vbaf302
   type: visualisation
+  package: pypi
+  interface: Python
 
 - name: ARGscape
   homepage: https://www.argscape.com
   publication: https://doi.org/10.48550/arXiv.2510.07255
   type: visualisation
+  package: pypi
+  interface: Python
 
 
 - name: tscompare
   homepage: https://tskit.dev/tsbrowse
   publication: https://doi.org/10.1093/genetics/iyaf198
   type: analysis
+  interface: Python
 
 - name: tspop
   homepage: https://tspop.readthedocs.io/
   publication: https://doi.org/10.1093/bioadv/vbad163
   type: analysis
+  interface: Python
 
 - name: twisst2
   homepage: https://github.com/simonhmartin/twisst2
   publication: https://academic.oup.com/genetics/article/232/1/iyaf181/8248911
   type: analysis
+  interface: Python
 
 
 - name: egrm
   homepage: https://github.com/Ephraim-usc/egrm
   publication: https://doi.org/10.1016/j.ajhg.2022.03.016
   type: statgen
+  interface: Python
 
 - name: as-eGRM
   homepage: https://github.com/jitang-github/asegrm
   publication: https://doi.org/10.1016/j.ajhg.2025.06.016
   type: statgen
+  interface: Python
 
 - name: lgdm
   homepage: https://github.com/awohns/ldgm
   publication: https://www.nature.com/articles/s41588-023-01487-8
   type: arg_inference
+  interface: Python
 
 
 
