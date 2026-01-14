@@ -1,5 +1,37 @@
+# Gathered using a mixture of
+# - looking up deps.dev for tskit/msprime
+# - inspecting GitHub dependents graph
+# - looking up conda dependents using script conda_lookup.py
+#
 
-- name: lineagekit
+- name: bio2zarr
+  repo: https://github.com/sgkit-dev/bio2zarr
+  interface: python
+  type: format_conversion
+  package: pypi, conda
+  publication: https://doi.org/10.1093/gigascience/giaf049
+
+- name: gIMble
+  repo: https://github.com/LohseLab/gIMble
+  interface: python
+  type: parameter_inference
+  package: conda
+  publication: https://doi.org/10.1371/journal.pgen.1010999
+
+- name: ipcoal
+  repo: https://github.com/eaton-lab/ipcoal
+  interface: python
+  type: simulator
+  package: conda
+  publication: https://doi.org/10.1093/bioinformatics/btaa486
+
+- name: shadie
+  repo: https://github.com/elissasoroj/shadie
+  interface: python
+  type: simulator
+  package: conda
+
+- name: necsim-rust
   repo: https://github.com/juntyr/necsim-rust
   interface: Rust
   type: simulator
@@ -125,7 +157,7 @@
   repo: https://github.com/tskit-dev/pyslim
   publication: https://doi.org/10.1101/2025.09.30.679676
   type: simulation
-  package: pypi
+  package: pypi, conda
   interface: Python
 
 - name: tstrait
@@ -150,7 +182,7 @@
   repo: https://github.com/popsim-consortium/stdpopsim
   publication: https://doi.org/10.7554/eLife.54967
   interface: Python
-  package: pypi
+  package: pypi, conda
   type: simulation
 
 - name: RADinitio
