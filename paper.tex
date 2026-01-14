@@ -6,9 +6,7 @@
 % \bibliographystyle{naturemag}
 \bibliographystyle{plain}
 
-\usepackage{geometry}%
-\usepackage{color}
-\usepackage{graphicx}
+\usepackage{booktabs}%
 
 
 \begin{document}
@@ -92,6 +90,11 @@ pipelines that avoid unnecessary memory duplication. This design efficient
 cross-language interfaces, and helps ensure that downstream tools inherit
 performance and correctness properties from a shared core.
 
+Tskit is now foundational infrastructure for the field. Table 1
+shows 56 published software tools that rely on tskit software,
+spanning population genetic and statistical genetic inference,
+through basic utilities, and a rapidly growing suite of inference
+methods.
 The 1.0 release marks the maturity of tskit as a shared community resource,
 with long-term stability of the data model and APIs guaranteed.
 This
@@ -105,33 +108,94 @@ successful library to stable infrastructure for population-scale genealogical
 analysis.
 
 
-\begin{figure}
-\begin{tabular}{cccc}
-ARG picture &
-Tables encoding &
-C, Python, R, Rust logos &
-\begin{tabular}{ll}
-\textbf{Simulation} & \textbf{Inference} \\
-msprime & tsinfer \\
-SLiM & tsdate \\
-fwdpy11 &  \\
-stdpopsim &  sc2ts \\
-tstrait &  mrpast \\
-pyslim & \\
-RADinitio &  \\
-slendr &  \\
-gridCoal &  \\
-\textbf{Analysis} & \textbf{Visualisation} \\
-TWISSTNTERN & tsbrowse \\
-tscompare & ARGScape \\
+\begin{table}
+\caption{The tskit software ecosystem. * data not available on OpenAlex}
+\begin{scriptsize}
+\begin{center}
+\begin{tabular}{lllrr}
+\toprule
+name & interface & package & year & citations \\
+\midrule
+\multicolumn{5}{c}{\textsc{Simulation}} \\
+\midrule
+pyslim & Python & pypi, conda & 2025 & 1 \\
+TwisstNTern & Python &  & 2025 & 0 \\
+tstrait & Python & pypi, conda & 2024 & 8 \\
+slendr & Python & CRAN & 2023 & 15 \\
+cnasim & Python & pypi & 2023 & 10 \\
+gridCoal & Python &  & 2022 & 5 \\
+Geonomics & Python & pypi & 2021 & 20 \\
+stdpopsim & Python & pypi, conda & 2020 & 233 \\
+RADinitio & Python & pypi & 2020 & 49 \\
+fwdpy11 & C, Python & pypi, conda & 2019 & 74 \\
+SLiM & C &  & 2018 & 860 \\
+msprime & C, Python & pypi, conda & 2016 & 806 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{ARG Inference}} \\
+\midrule
+SINGER & Python &  & 2025 & 12 \\
+sticcs & Python &  & 2025 & 0 \\
+POLEGON & Python &  & 2025 & 0 \\
+Threads & Python & pypi & 2024 & 22 \\
+espalier & Python & pypi & 2023 & 14 \\
+sc2ts & Python & pypi & 2023 & 14 \\
+tsdate & Python & pypi, conda & 2022 & 187 \\
+ARGinfer & Python & pypi & 2022 & 37 \\
+Relate & C &  & 2019 & 562 \\
+tsinfer & C, Python & pypi, conda & 2019 & 373 \\
+ARGneedle & Python & pypi & * &  \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Population Genetic Inference}} \\
+\midrule
+gaia & C &  & 2025 & 8 \\
+mrpast & Python & pypi & 2025 & 0 \\
+phlash & Python & pypi & 2025 & 0 \\
+sparg & Python & pypi & 2025 & 0 \\
+spacetrees & Python &  & 2024 & 18 \\
+mapNN & Python &  & 2024 & 4 \\
+gIMble & Python & conda & 2023 & 33 \\
+disperseNN2 & Python & pypi & 2023 & 10 \\
+dinf & Python & pypi & 2023 & 8 \\
+GADMA & Python & pypi & 2022 & 23 \\
+dnadna & Python & pypi, conda & 2022 & 8 \\
+DISMaL & Python & pypi & 2021 & 7 \\
+ReLERNN & Python & pypi & 2020 & 166 \\
+momi2 & Python & pypi & 2019 & 170 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Statistical Genetic Inference}} \\
+\midrule
+as-eGRM & Python &  & 2025 & 1 \\
+arg-lmm & Python & pypi & 2025 & 0 \\
+tslmm & Python &  &  &  \\
+lgdm & Python & pypi & 2023 & 38 \\
+egrm & Python & pip & 2022 & 44 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Visualisation}} \\
+\midrule
+tsbrowse & Python & pypi & 2025 & 0 \\
+ARGscape & Python & pypi & 2025 & 0 \\
+tskit-arg-visualizer & Python & pypi & 2024 & 0 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Data processing}} \\
+\midrule
+bio2zarr & python & pypi, conda & 2025 & 0 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Analysis}} \\
+\midrule
+tscompare & Python & pypi & 2025 & 1 \\
+twisst2 & Python &  & 2025 & 0 \\
+tspop & Python & pypi & 2023 & 12 \\
+\bottomrule
 \end{tabular}
-\end{tabular}
-\caption{Tskit provides a lossless and 
-general encoding of Ancestral Recombination Graphs through
-a simple tabular data model. Multiple efficient language
-bindings to the core C library have enabled a thriving 
-ecosystem of downstream tools.}
-\end{figure}
+\end{center}
+\end{scriptsize}
+\end{table}
 
 
 % Citations:

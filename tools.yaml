@@ -4,43 +4,49 @@
 # - looking up conda dependents using script conda_lookup.py
 #
 
+- name: tslmm
+  repo: https://github.com/hanbin973/tslmm
+  interface: Python
+  type: statgen
+  publication: https://doi.org/10.1101/2025.07.14.664631v1
+
 - name: bio2zarr
   repo: https://github.com/sgkit-dev/bio2zarr
-  interface: python
+  interface: Python
   type: format_conversion
   package: pypi, conda
   publication: https://doi.org/10.1093/gigascience/giaf049
 
 - name: gIMble
   repo: https://github.com/LohseLab/gIMble
-  interface: python
+  interface: Python
   type: parameter_inference
   package: conda
   publication: https://doi.org/10.1371/journal.pgen.1010999
 
 - name: ipcoal
   repo: https://github.com/eaton-lab/ipcoal
-  interface: python
-  type: simulator
+  interface: Python
+  type: similation
   package: conda
   publication: https://doi.org/10.1093/bioinformatics/btaa486
 
 - name: shadie
   repo: https://github.com/elissasoroj/shadie
-  interface: python
-  type: simulator
+  interface: Python
+  type: similation
   package: conda
 
 - name: necsim-rust
   repo: https://github.com/juntyr/necsim-rust
   interface: Rust
-  type: simulator
+  type: similation
   package: cargo
   publication: https://doi.org/10.48550/arXiv.2108.05815
 
 - name: lineagekit
   repo: https://github.com/lineagekit/lineagekit
-  interface: python
+  interface: Python
   type: misc
   package: pypi
   note: Unclear if there's much functionality here yet
@@ -54,7 +60,7 @@
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
   package: pypi
-  interface: python
+  interface: Python
   type: parameter_inference
   note: Reimplementation of gaia R package.
 
@@ -147,8 +153,9 @@
   publication: https://doi.org/10.1093/bioinformatics/btad434
 
 - name: msprime
-  homepage: https://tskit.dev/msprime
-  publication: https://doi.org/10.1093/genetics/iyab229
+  repo: https://github.com/tskit-dev/msprime
+  # publication: https://doi.org/10.1093/genetics/iyab229
+  publication: https://doi.org/10.1371/journal.pcbi.1004842
   interface: C, Python
   package: pypi, conda
   type: simulation
@@ -161,21 +168,23 @@
   interface: Python
 
 - name: tstrait
-  homepage: https://tskit.dev/tstrait
+  repo: https://github.com/tskit-dev/tstrait
   publication: https://doi.org/10.1093/bioinformatics/btae334
   interface: Python
   type: simulation
+  package: pypi, conda
 
 - name: SLiM
-  homepage: https://github.com/MesserLab/SLiM
+  repo: https://github.com/MesserLab/SLiM
   publication: https://doi.org/10.1093/molbev/msy228
   interface: C
   type: simulation
 
 - name: fwdpy11
-  homepage: https://github.com/molpopgen/fwdpy11
+  repo: https://github.com/molpopgen/fwdpy11
   publication: https://doi.org/10.1534/genetics.119.302662
   interface: C, Python
+  package: pypi, conda
   type: simulation
 
 - name: stdpopsim
@@ -186,20 +195,21 @@
   type: simulation
 
 - name: RADinitio
-  homepage: https://catchenlab.life.illinois.edu/radinitio/
   publication: https://doi.org/10.1111/1755-0998.13163
   interface: Python
   package: pypi
   type: simulation
+  note: No repo, homepage https://catchenlab.life.illinois.edu/radinitio/
 
 - name: slendr
-  homepage: https://bodkan.net/slendr/
-  publication: https://peercommunityjournal.org/articles/10.24072/pcjournal.354/
+  repo: https://github.com/bodkan/slendr/
+  publication: https://doi.org/10.24072/pcjournal.354
   interface: Python
+  package: CRAN
   type: simulation
 
 - name: gridCoal
-  homepage: https://github.com/Trubenova/gridCoal
+  repo: https://github.com/Trubenova/gridCoal
   publication: https://doi.org/10.1111/1755-0998.13676
   interface: Python
   type: simulation
@@ -212,7 +222,7 @@
   type: simulation
 
 - name: TwisstNTern
-  homepage: https://github.com/HilaLifchitz/TwisstNTern
+  repo: https://github.com/HilaLifchitz/TwisstNTern
   publication: https://doi.org/10.32942/X29941
   type: simulation
   interface: Python
@@ -221,38 +231,39 @@
 
 - name: tsinfer
   repo: https://github.com/tskit-dev/tsinfer
-  publication: https://www.nature.com/articles/s41588-019-0483-y
+  publication: https://doi.org/10.1038/s41588-019-0483-y
   interface: C, Python
   package: pypi, conda
   type: arg_inference
 
 - name: sc2ts
   repo: https://github.com/tskit-dev/sc2ts
-  publication: https://www.biorxiv.org/content/10.1101/2023.06.08.544212v3
+  publication: https://doi.org/10.1101/2023.06.08.544212
   interface: Python
   package: pypi
   type: arg_inference
 
 - name: tsdate
-  homepage: https://tskit.dev/tsdate
-  publication: https://www.science.org/doi/10.1126/science.abi8264
+  repo: https://github.com/tskit-dev/tsdate
+  publication: https://doi.org/10.1126/science.abi8264
   interface: Python
   type: arg_inference
+  package: pypi, conda
 
 - name: Relate
-  homepage: https://myersgroup.github.io/relate/
-  publication: https://www.nature.com/articles/s41588-019-0484-x
+  repo: https://github.com/MyersGroup/relate
+  publication: https://doi.org/10.1038/s41588-019-0484-x
   type: arg_inference
   interface: C
   notes: Strictly, relate_lib converts to tskit, but seems like hair-splitting
 
 - name: ARGneedle
-  homepage: https://palamaralab.github.io/software/argneedle/
   repo: https://github.com/palamaralab/arg_needle
-  publication: https://www.nature.com/articles/s41588-023-01379-x
+  publication: https://doi.org/10.1038/s41588-023-01379-x
   interface: Python
   package: pypi
   type: arg_inference
+  note: Work doesn't seem to be on openalex for some reason
 
 - name: Threads
   repo: https://github.com/palamaralab/threads
@@ -262,13 +273,12 @@
   type: arg_inference
 
 - name: sticcs
-  homepage: https://github.com/simonhmartin/sticcs
-  publication: https://academic.oup.com/genetics/article/232/1/iyaf181/8248911
+  repo: https://github.com/simonhmartin/sticcs
+  publication: https://doi.org/10.1093/genetics/iyaf181
   interface: Python
   type: arg_inference
 
 - name: ARGinfer
-  homepage: https://github.com/alimahmoudi29/arginfer
   repo: https://github.com/alimahmoudi29/arginfer
   publication: https://doi.org/10.1371/journal.pcbi.1009960
   interface: Python
@@ -276,14 +286,14 @@
   type: arg_inference
 
 - name: SINGER
-  homepage: https://github.com/popgenmethods/SINGER
-  publication: https://www.nature.com/articles/s41588-025-02317-9
+  repo: https://github.com/popgenmethods/SINGER
+  publication: https://doi.org/10.1038/s41588-025-02317-9
   interface: Python
   type: arg_inference
 
 - name: POLEGON
-  homepage: https://github.com/YunDeng98/POLEGON
-  publication: https://www.pnas.org/doi/10.1073/pnas.2504461122
+  repo: https://github.com/YunDeng98/POLEGON
+  publication: https://doi.org/10.1073/pnas.2504461122
   type: arg_inference
   interface: Python
 
@@ -295,15 +305,15 @@
   interface: Python
 
 - name: phlash
-  homepage: https://github.com/jthlab/phlash
+  repo: https://github.com/jthlab/phlash
   publication: https://doi.org/10.1038/s41588-025-02323-x
   type: parameter_inference
   package: pypi
   interface: Python
 
 - name: spacetrees
-  homepage: https://github.com/osmond-lab/spacetrees
-  publication: https://elifesciences.org/articles/72177
+  repo: https://github.com/osmond-lab/spacetrees
+  publication: https://doi.org/10.7554/eLife.72177
   type: parameter_inference
   interface: Python
 
@@ -315,11 +325,10 @@
   interface: Python
 
 - name: mapNN
-  homepage: https://github.com/kr-colab/mapNN
+  repo: https://github.com/kr-colab/mapNN
   publication: https://doi.org/10.1111/1755-0998.14005
   type: parameter_inference
   interface: Python
-
 
 - name: tsbrowse
   repo: https://github.com/tskit-dev/tsinfer
@@ -336,49 +345,49 @@
   interface: Python
 
 - name: ARGscape
-  homepage: https://www.argscape.com
+  repo: https://github.com/chris-a-talbot/argscape
   publication: https://doi.org/10.48550/arXiv.2510.07255
   type: visualisation
   package: pypi
   interface: Python
 
-
 - name: tscompare
-  homepage: https://tskit.dev/tsbrowse
+  repo: https://github.com/tskit-dev/tsbrowse
   publication: https://doi.org/10.1093/genetics/iyaf198
   type: analysis
+  package: pypi
   interface: Python
 
 - name: tspop
-  homepage: https://tspop.readthedocs.io/
+  repo: https://github.com/gtsambos/tspop
   publication: https://doi.org/10.1093/bioadv/vbad163
   type: analysis
+  package: pypi
   interface: Python
 
 - name: twisst2
-  homepage: https://github.com/simonhmartin/twisst2
-  publication: https://academic.oup.com/genetics/article/232/1/iyaf181/8248911
+  repo: https://github.com/simonhmartin/twisst2
+  publication: https://doi.org/10.1093/genetics/iyaf181
   type: analysis
   interface: Python
 
-
 - name: egrm
-  homepage: https://github.com/Ephraim-usc/egrm
+  repo: https://github.com/Ephraim-usc/egrm
   publication: https://doi.org/10.1016/j.ajhg.2022.03.016
   type: statgen
+  package: pip
   interface: Python
 
 - name: as-eGRM
-  homepage: https://github.com/jitang-github/asegrm
+  repo: https://github.com/jitang-github/asegrm
   publication: https://doi.org/10.1016/j.ajhg.2025.06.016
   type: statgen
   interface: Python
 
 - name: lgdm
-  homepage: https://github.com/awohns/ldgm
-  publication: https://www.nature.com/articles/s41588-023-01487-8
-  type: arg_inference
+  repo: https://github.com/awohns/ldgm
+  publication: https://doi.org/10.1038/s41588-023-01487-8
+  type: statgen
+  package: pypi
   interface: Python
-
-
 
