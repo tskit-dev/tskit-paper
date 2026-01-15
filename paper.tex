@@ -119,19 +119,21 @@ well-tested core.
 % tskit 1.0 formalises this ecosystem as stable, long-term scientific
 % infrastructure.
 
-Tskit is now established as foundational infrastructure for population-scale
-genealogical analysis. Table 1 summarises 56 published software tools that rely
-on tskit, spanning simulation, inference, statistical genetics, visualisation,
-and data processing. The release of tskit 1.0 marks the maturity of this
-ecosystem and introduces explicit guarantees of long-term stability for the
-data model and APIs. These guarantees, together with a global community of
-contributors, allow tskit to be adopted with confidence as a durable scientific
-resource and a common interchange format. As the field continues to develop,
-challenges such as incorporating structural variation will require extensions
-to the data model, but these will be pursued in a way that preserves stability
-and interoperability. In this context, tskit 1.0 represents a transition from a
-successful software library to stable infrastructure supporting
-population-scale analyses of ancestry and recombination.
+The goal of tskit is to provide a shared technical foundation, centred on
+efficient and well-tested primitive operations on genealogical data, rather
+than to directly implement end-user workflows. This design principle has
+enabled a broad ecosystem of downstream software (Table 1) and has established
+tskit as foundational infrastructure for population-scale genealogical
+analysis. With the release of tskit 1.0, long-term stability of the data model
+and APIs is explicitly guaranteed, reflecting a commitment to maintain this
+minimal and composable core as the project evolves. By focusing on stable
+primitives rather than prescribing analytical pipelines, tskit enables
+methodological innovation to concentrate on modelling, inference, and
+interpretation rather than bespoke data formats and tooling. In this way, tskit
+1.0 provides a common and extensible foundation that supports the continued
+expansion of ARG-based analyses as datasets, methods, and applications continue
+to grow.
+
 
 
 \begin{table}
@@ -170,7 +172,7 @@ tsdate & Python & pypi, conda & 2022 & 187 \\
 ARGinfer & Python & pypi & 2022 & 37 \\
 Relate & C &  & 2019 & 562 \\
 tsinfer & C, Python & pypi, conda & 2019 & 373 \\
-ARGneedle & Python & pypi & * &  \\
+ARGneedle & Python & pypi & * & * \\
 
 \midrule
 \multicolumn{5}{c}{\textsc{Population Genetic Inference}} \\
