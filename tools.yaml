@@ -3,6 +3,11 @@
 # - inspecting GitHub dependents graph
 # - looking up conda dependents using script conda_lookup.py
 #
+- name: tskibd
+  repo: https://github.com/bguo068/tskibd
+  interface: C
+  type: analysis
+  publication: https://doi.org/10.1038/s41467-024-46659-0
 
 - name: tslmm
   repo: https://github.com/hanbin973/tslmm
