@@ -234,7 +234,7 @@ def git_clone_and_compute_stats(owner: str, repo: str) -> Dict[str, dict]:
 
         # 1) commit counts + names/emails from shortlog
         # format: "<count>\t<Name> <email>"
-        shortlog = _run(["git", "shortlog", "-sne", "--all"], cwd=td)
+        shortlog = _run(["git", "shortlog", "-sne"], cwd=td)
         for line in shortlog.splitlines():
             line = line.strip()
             if not line:
@@ -256,7 +256,7 @@ def git_clone_and_compute_stats(owner: str, repo: str) -> Dict[str, dict]:
         # We print the email once per commit (pretty), then numstat lines follow.
         # We'll aggregate all numstat lines until next email marker.
         log_out = _run(
-            ["git", "log", "--all", "--pretty=format:__EMAIL__%ae", "--numstat"], cwd=td
+            ["git", "log", "--pretty=format:__EMAIL__%ae", "--numstat"], cwd=td
         )
 
         current_email: Optional[str] = None
