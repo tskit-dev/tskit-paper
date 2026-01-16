@@ -1,26 +1,27 @@
 repository: tskit-dev/tskit
-generated_at_utc: '2026-01-15T14:15:33Z'
+generated_at_utc: '2026-01-15T15:50:47Z'
 note: GitHub user emails are typically unavailable unless public. Commit-observed
   emails may be noreply addresses. Line +/- counts come from git log --numstat and
   may differ from GitHub UI.
+
 contributors:
 
 - github_username: jeromekelleher
   emails:
   - jk@well.ox.ac.uk
   commits: 824
-  lines_added: 357963
-  lines_deleted: 154945
-  lines_net: 203018
+  lines_added: 180670
+  lines_deleted: 55309
+  lines_net: 125361
 
 - github_username: benjeffery
   emails:
   - ben.jeffery@bdi.ox.ac.uk
   - ben.jeffery@gmail.com
   commits: 677
-  lines_added: 85637
-  lines_deleted: 62538
-  lines_net: 23099
+  lines_added: 84926
+  lines_deleted: 55382
+  lines_net: 29544
 
 - github_username: hyanwong
   emails:
@@ -28,17 +29,17 @@ contributors:
   - yan@pixie.org.uk
   - yan@yanwong.me
   commits: 375
-  lines_added: 50940
-  lines_deleted: 36658
-  lines_net: 14282
+  lines_added: 50920
+  lines_deleted: 36639
+  lines_net: 14281
 
 - github_username: petrelharp
   emails:
   - petrel.harp@gmail.com
   commits: 124
-  lines_added: 29875
-  lines_deleted: 10579
-  lines_net: 19296
+  lines_added: 18670
+  lines_deleted: 5653
+  lines_net: 13017
 
 - github_username: gtsambos
   emails:
@@ -61,9 +62,9 @@ contributors:
   emails:
   - krthornt@uci.edu
   commits: 18
-  lines_added: 904
-  lines_deleted: 320
-  lines_net: 584
+  lines_added: 880
+  lines_deleted: 317
+  lines_net: 563
 
 - github_username: daniel-goldstein
   emails:
@@ -94,17 +95,17 @@ contributors:
   - duncan.robertson@well.ox.ac.uk
   - duncanr19@gmail.com
   commits: 10
-  lines_added: 1168
-  lines_deleted: 546
-  lines_net: 622
+  lines_added: 1137
+  lines_deleted: 522
+  lines_net: 615
 
 - github_username: awohns
   emails:
   - awohns@gmail.com
-  commits: 10
-  lines_added: 1283
+  commits: 11
+  lines_added: 1902
   lines_deleted: 47
-  lines_net: 1236
+  lines_net: 1855
 
 - github_username: andrewkern
   emails:
@@ -116,6 +117,7 @@ contributors:
 
 - github_username: brianzhang01
   emails:
+  - brianzhang01@users.noreply.github.com
   - zhang.brian@gmail.com
   commits: 6
   lines_added: 371
@@ -236,12 +238,14 @@ contributors:
 - github_username: maz-mckellar
   emails: []
   commits: 2
-  lines_added: 0
-  lines_deleted: 0
-  lines_net: 0
+  lines_added: 348
+  lines_deleted: 8
+  lines_net: 340
+
 
 - github_username: minesrebollo
-  emails: []
+  emails:
+  - 44417944+minesrebollo@users.noreply.github.com
   commits: 2
   lines_added: 19
   lines_deleted: 18
@@ -273,8 +277,7 @@ contributors:
   lines_net: 2
 
 - github_username: alxsimon
-  emails:
-  - alxsimon@users.noreply.github.com
+  emails: []
   commits: 1
   lines_added: 1
   lines_deleted: 1
@@ -283,10 +286,12 @@ contributors:
 - github_username: brieuclehmann
   emails:
   - b.lehmann@ucl.ac.uk
-  commits: 1
-  lines_added: 214
-  lines_deleted: 6
-  lines_net: 208
+  - brieuc.lehmann@bdi.ox.ac.uk
+  commits: 14
+  lines_added: 1363
+  lines_deleted: 636
+  lines_net: 727
+  notes: manually merged contributions from two email addresses
 
 - github_username: chriscrsmith
   emails:
@@ -370,14 +375,9 @@ contributors:
   emails:
   - terhorst@gmail.com
   commits: 1
-  lines_added: 61
-  lines_deleted: 3
-  lines_net: 58
-
-######################
-# Some manual tweaking and verification here as various things
-# are a bit messy in the log.
-######################
+  lines_added: 44
+  lines_deleted: 0
+  lines_net: 44
 
 - github_username: winni2k
   emails:
@@ -397,65 +397,4 @@ contributors:
   lines_added: 2
   lines_deleted: 2
   lines_net: 0
-
-######################
-# Not sure what's going on here. Not getting some these
-# these like Dom at all when I look at GitHub or git logs.
-######################
-
-- github_username: null
-  emails:
-  - nelson.dominic@gmail.com
-  commits: 39
-  lines_added: 1971
-  lines_deleted: 1372
-  lines_net: 599
-
-- github_username: null
-  emails:
-  - jashander@ucdavis.edu
-  commits: 26
-  lines_added: 639
-  lines_deleted: 219
-  lines_net: 420
-
-- github_username: null
-  emails:
-  - sha.joe.zhu@gmail.com
-  commits: 13
-  lines_added: 3160
-  lines_deleted: 376
-  lines_net: 2784
-
-- github_username: null
-  emails:
-  - koelling@users.noreply.github.com
-  commits: 4
-  lines_added: 4
-  lines_deleted: 3
-  lines_net: 1
-
-- github_username: null
-  emails:
-  - ashander@users.noreply.github.com
-  commits: 2
-  lines_added: 18
-  lines_deleted: 14
-  lines_net: 4
-
-- github_username: null
-  emails:
-  - 37187502+marianne-aspbury@users.noreply.github.com
-  commits: 2
-  lines_added: 348
-  lines_deleted: 8
-  lines_net: 340
-
-- github_username: null
-  emails:
-  - desai.tariq@gmail.com
-  commits: 2
-  lines_added: 90
-  lines_deleted: 7
-  lines_net: 83
 
