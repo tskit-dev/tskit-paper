@@ -1,0 +1,400 @@
+repository: tskit-dev/tskit
+generated_at_utc: '2026-01-15T15:50:47Z'
+note: GitHub user emails are typically unavailable unless public. Commit-observed
+  emails may be noreply addresses. Line +/- counts come from git log --numstat and
+  may differ from GitHub UI.
+
+contributors:
+
+- github_username: jeromekelleher
+  emails:
+  - jk@well.ox.ac.uk
+  commits: 824
+  lines_added: 180670
+  lines_deleted: 55309
+  lines_net: 125361
+
+- github_username: benjeffery
+  emails:
+  - ben.jeffery@bdi.ox.ac.uk
+  - ben.jeffery@gmail.com
+  commits: 677
+  lines_added: 84926
+  lines_deleted: 55382
+  lines_net: 29544
+
+- github_username: hyanwong
+  emails:
+  - yan.wong@bdi.ox.ac.uk
+  - yan@pixie.org.uk
+  - yan@yanwong.me
+  commits: 375
+  lines_added: 50920
+  lines_deleted: 36639
+  lines_net: 14281
+
+- github_username: petrelharp
+  emails:
+  - petrel.harp@gmail.com
+  commits: 124
+  lines_added: 18670
+  lines_deleted: 5653
+  lines_net: 13017
+
+- github_username: gtsambos
+  emails:
+  - g.tsambos@gmail.com
+  - gtsambos@student.unimelb.edu.au
+  commits: 36
+  lines_added: 7378
+  lines_deleted: 2777
+  lines_net: 4601
+
+- github_username: szhan
+  emails:
+  - shing.zhan@gmail.com
+  commits: 19
+  lines_added: 1668
+  lines_deleted: 488
+  lines_net: 1180
+
+- github_username: molpopgen
+  emails:
+  - krthornt@uci.edu
+  commits: 18
+  lines_added: 880
+  lines_deleted: 317
+  lines_net: 563
+
+- github_username: daniel-goldstein
+  emails:
+  - danielgold95@gmail.com
+  commits: 16
+  lines_added: 4897
+  lines_deleted: 772
+  lines_net: 4125
+
+- github_username: nspope
+  emails:
+  - nspope@utexas.edu
+  commits: 15
+  lines_added: 6972
+  lines_deleted: 2789
+  lines_net: 4183
+
+- github_username: lkirk
+  emails:
+  - kirklloyd@gmail.com
+  commits: 14
+  lines_added: 8611
+  lines_deleted: 1864
+  lines_net: 6747
+
+- github_username: Duncan-JR
+  emails:
+  - duncan.robertson@well.ox.ac.uk
+  - duncanr19@gmail.com
+  commits: 10
+  lines_added: 1137
+  lines_deleted: 522
+  lines_net: 615
+
+- github_username: awohns
+  emails:
+  - awohns@gmail.com
+  commits: 11
+  lines_added: 1902
+  lines_deleted: 47
+  lines_net: 1855
+
+- github_username: andrewkern
+  emails:
+  - adkern@uoregon.edu
+  commits: 7
+  lines_added: 619
+  lines_deleted: 445
+  lines_net: 174
+
+- github_username: brianzhang01
+  emails:
+  - brianzhang01@users.noreply.github.com
+  - zhang.brian@gmail.com
+  commits: 6
+  lines_added: 371
+  lines_deleted: 28
+  lines_net: 343
+
+- github_username: grahamgower
+  emails:
+  - graham.gower@gmail.com
+  commits: 6
+  lines_added: 33
+  lines_deleted: 14
+  lines_net: 19
+
+- github_username: hugovk
+  emails: []
+  commits: 6
+  lines_added: 242
+  lines_deleted: 434
+  lines_net: -192
+
+- github_username: mufernando
+  emails:
+  - murillofer.rodrigues@gmail.com
+  commits: 6
+  lines_added: 2382
+  lines_deleted: 149
+  lines_net: 2233
+
+- github_username: GertjanBisschop
+  emails:
+  - gertjanbisschop@gmail.com
+  commits: 5
+  lines_added: 437
+  lines_deleted: 46
+  lines_net: 391
+
+- github_username: astheeggeggs
+  emails:
+  - duncan.stuart.palmer@gmail.com
+  commits: 5
+  lines_added: 3246
+  lines_deleted: 1934
+  lines_net: 1312
+
+- github_username: castedo
+  emails:
+  - castedo@castedo.com
+  commits: 5
+  lines_added: 770
+  lines_deleted: 711
+  lines_net: 59
+
+- github_username: clwgg
+  emails:
+  - clw.genomics@gmail.com
+  commits: 5
+  lines_added: 737
+  lines_deleted: 133
+  lines_net: 604
+
+- github_username: hossam26644
+  emails:
+  - hossam26644@live.com
+  commits: 5
+  lines_added: 112
+  lines_deleted: 999
+  lines_net: -887
+
+- github_username: jeremyguez
+  emails:
+  - jeremy.guez@outlook.fr
+  commits: 4
+  lines_added: 357
+  lines_deleted: 9
+  lines_net: 348
+
+- github_username: agladstein
+  emails:
+  - algladstein@gmail.com
+  commits: 3
+  lines_added: 106
+  lines_deleted: 34
+  lines_net: 72
+
+- github_username: hanbin973
+  emails:
+  - hanbin973@gmail.com
+  commits: 3
+  lines_added: 957
+  lines_deleted: 5
+  lines_net: 952
+
+- github_username: savitakartik
+  emails:
+  - savitakartik@gmail.com
+  commits: 3
+  lines_added: 46
+  lines_deleted: 9
+  lines_net: 37
+
+- github_username: Billyzhang1229
+  emails:
+  - billyzhang1229@gmail.com
+  commits: 2
+  lines_added: 304
+  lines_deleted: 1
+  lines_net: 303
+
+- github_username: gregorgorjanc
+  emails:
+  - gregor.gorjanc@gmail.com
+  commits: 2
+  lines_added: 12
+  lines_deleted: 6
+  lines_net: 6
+
+- github_username: maz-mckellar
+  emails: []
+  commits: 2
+  lines_added: 348
+  lines_deleted: 8
+  lines_net: 340
+
+
+- github_username: minesrebollo
+  emails:
+  - 44417944+minesrebollo@users.noreply.github.com
+  commits: 2
+  lines_added: 19
+  lines_deleted: 18
+  lines_net: 1
+
+- github_username: saurabhbelsare
+  emails:
+  - saurabhmbelsare@gmail.com
+  - smbelsare@gmail.com
+  commits: 2
+  lines_added: 474
+  lines_deleted: 0
+  lines_net: 474
+
+- github_username: LukeAndersonTrocme
+  emails:
+  - luke.anderson.trocme@gmail.com
+  commits: 1
+  lines_added: 1
+  lines_deleted: 1
+  lines_net: 0
+
+- github_username: PalashLalwani
+  emails:
+  - palash.lalwani04@gmail.com
+  commits: 1
+  lines_added: 4
+  lines_deleted: 2
+  lines_net: 2
+
+- github_username: alxsimon
+  emails: []
+  commits: 1
+  lines_added: 1
+  lines_deleted: 1
+  lines_net: 0
+
+- github_username: brieuclehmann
+  emails:
+  - b.lehmann@ucl.ac.uk
+  - brieuc.lehmann@bdi.ox.ac.uk
+  commits: 14
+  lines_added: 1363
+  lines_deleted: 636
+  lines_net: 727
+  notes: manually merged contributions from two email addresses
+
+- github_username: chriscrsmith
+  emails:
+  - chriscs@colorado.edu
+  commits: 1
+  lines_added: 37
+  lines_deleted: 2
+  lines_net: 35
+
+- github_username: currocam
+  emails:
+  - campuzanocurro@gmail.com
+  commits: 1
+  lines_added: 29
+  lines_deleted: 1
+  lines_net: 28
+
+- github_username: daikitag
+  emails: []
+  commits: 1
+  lines_added: 3
+  lines_deleted: 0
+  lines_net: 3
+
+- github_username: hfr1tz3
+  emails: []
+  commits: 1
+  lines_added: 2027
+  lines_deleted: 922
+  lines_net: 1105
+
+- github_username: ivan-krukov
+  emails:
+  - ivan.o.kryukov@gmail.com
+  commits: 1
+  lines_added: 476
+  lines_deleted: 112
+  lines_net: 364
+
+- github_username: jeetsukumaran
+  emails:
+  - jeetsukumaran@gmail.com
+  commits: 1
+  lines_added: 2
+  lines_deleted: 1
+  lines_net: 1
+
+- github_username: mmosmond
+  emails:
+  - mm.osmond@utoronto.ca
+  commits: 1
+  lines_added: 897
+  lines_deleted: 217
+  lines_net: 680
+
+- github_username: nikbaya
+  emails:
+  - nikolasbaya@gmail.com
+  commits: 1
+  lines_added: 339
+  lines_deleted: 0
+  lines_net: 339
+
+- github_username: roohy
+  emails:
+  - shemirani.r@gmail.com
+  commits: 1
+  lines_added: 26
+  lines_deleted: 2
+  lines_net: 24
+
+- github_username: saunack
+  emails:
+  - kr.saunack@gmail.com
+  commits: 1
+  lines_added: 123
+  lines_deleted: 23
+  lines_net: 100
+
+- github_username: terhorst
+  emails:
+  - terhorst@gmail.com
+  commits: 1
+  lines_added: 44
+  lines_deleted: 0
+  lines_net: 44
+
+- github_username: winni2k
+  emails:
+  - warren.kretzschmar@ki.se
+  commits: 2
+  lines_added: 421
+  lines_deleted: 1
+  lines_net: 420
+
+- github_username: bguo068
+  # Minor packaging change
+  # https://github.com/tskit-dev/tskit/commit/13499ff071ce8b4c97f5edca3bf9b19f9a922299
+  emails:
+  - gbinux@gmail.com
+  - bing.guo@Bings-MacBook-Pro.local
+  commits: 1
+  lines_added: 2
+  lines_deleted: 2
+  lines_net: 0
+

@@ -1,115 +1,247 @@
 \documentclass{article}
-\usepackage[round]{natbib}
-\usepackage{listings}
-\usepackage[english]{babel}%
-\usepackage[T1]{fontenc}%
-\usepackage[utf8]{inputenc}%
-\usepackage{amsmath,amssymb,amsfonts}%
-\usepackage{geometry}%
-\usepackage{color}
-\usepackage{graphicx}
-\usepackage{dsfont}
-\usepackage{verbatim}%
-\usepackage{environ}%
-\usepackage[right]{lineno}%
-\usepackage{nameref}
-%\usepackage{showkeys}
 
-% local definitions
-\newcommand{\msprime}[0]{\texttt{msprime}}
-\newcommand{\tskit}[0]{\texttt{tskit}}
-\newcommand{\SLiM}[0]{\texttt{SLiM}}
-\newcommand{\fwdpy}[0]{\texttt{fwdpy11}}
 
-\newcommand{\jkcomment}[1]{\textcolor{red}{#1}}
+\usepackage[superscript,biblabel]{cite}
+% \usepackage[super,numbers]{natbib}
+\bibliographystyle{naturemag}
+% \bibliographystyle{plain}
+
+\usepackage{booktabs}%
+
 
 \begin{document}
 
-\title{Tskit: a portable library for population scale genealogical analysis}
-\author{Author list to be filled in
-}
-% \address{
-
-%%Affiliations:
-% Franz Baumdicker:
-% Cluster of Excellence "Controlling Microbes to Fight Infections", Mathematical and Computational Population Genetics, University of Tübingen, Germany
-
-
-% \section*{Contact:} \href{jerome.kelleher@bdi.ox.ac.uk}{jerome.kelleher@bdi.ox.ac.uk}
-
+\title{Population scale Ancestral Recombination Graphs with tskit 1.0}
+\author{Author list to be filled in}
 \maketitle
 
-\begin{abstract}
-The ability to store and analyse related genetic sequences is an
-essential requirement for simulation, inference and analysis in both
-population genetics and phlyogenetics. The recent introduction of the
-succinct tree sequence data structure has provided a way to achieve
-this at population scale. Here we present the \tskit\ software,
-a high-performance, portable, open-source, community-driven library.
-\tskit\ allows the creation, manipulation and analysis of succinct tree
-sequences, with first-class support for provenance and user-defined metadata.
-\tskit\ enables a common foundation across software projects that use
-succinct tree sequences, which results in unprecedented interoperability,
-reproducibility and maintainability.
-\end{abstract}
+% ARGs are now practical, and tskit is the infrastructure enabling their use.
+
+\noindent
+Ancestral recombination graphs (ARGs) capture the full genealogical history of
+samples from a recombining species. 
+Although ARGs have been a central
+theoretical object in population genetics for decades, their practical use was
+constrained by the lack of scalable inference methods, standard
+interchange formats, and software infrastructure. Recent breakthroughs in
+simulation and inference have substantially changed this landscape, 
+leading to renewed interest in ARG-based analyses across population and statistical
+genetics~\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
+The tskit library has played a key enabling role in this shift
+and has become foundational infrastructure for working with ARGs at scale. 
+This paper marks the release of tskit 1.0, which formalises long-term stability
+guarantees for its data model and APIs.
+
+% The succinct tree sequence is a complete, lossless encoding of ARGs.
+At the core of tskit is the succinct tree sequence data model, which 
+defines a set of nodes (ancestral genomes at particular times) and 
+edges (parent-child inheritance relationships spanning genomic intervals) 
+in a simple tabular form\cite{kelleher2018efficient}.
+This encoding provides a lossless representation of a general class of
+ancestral recombination graphs, 
+establishing a precise and machine-readable
+definition of ARGs suitable for large-scale computation\cite{wong2024general}. 
+The data model also incorporates site, mutation, population, and pedigree 
+information and supports arbitrary
+metadata associated with different components of the ARG. 
+Provenance information is recorded natively, enhancing reproducibility 
+and transparency.
+Together, these features make tskit a semantically complete and interoperable
+representation of ARGs that serves as a common foundation across diverse
+analytical workflows.
+
+% This encoding first proved itself by transforming population-genetic
+% simulation.
+
+Simulation is a fundamental tool in population genomics, and 
+was the first domain in which the tskit data model demonstrated its impact.
+Introduced initially as part of the msprime simulator,
+the use of succinct tree sequences enabled performance improvements of 
+several orders of magnitude
+over previous coalescent simulation approaches\cite{kelleher2016efficient}. 
+The same representation later
+enabled efficient forward-time simulation of ARGs
+and yielded substantial speedups by avoiding
+explicit simulation of neutral mutations\cite{kelleher2018efficient}.
+Because these forward-time and coalescent
+simulators share a common underlying representation, their complementary
+strengths can be combined within a single workflow. This has made it possible
+to simulate ARGs under complex demographic scenarios involving geography and
+selection that were previously infeasible, providing essential ground truth for
+method evaluation. Simulation capabilities have continued to expand,
+culminating in whole-genome ARG simulations for nearly 1.5 million individuals
+based on a large human pedigree~\cite{andersontrocme2023genes}. 
+A growing ecosystem of simulation tools now builds directly on tskit
+(Table 1).
 
 
-\textbf{Keywords:} Tree sequences, Python
+% Inference methods interoperate through tskit, enabling evaluation and reuse
+% without imposing design choices.
 
-\section*{Introduction}
-
-\citep{kelleher2018efficient}
-
-\section*{Results}
-
-\subsection*{Datamodel}
-\jkcomment{Describe the tree sequence data model and the Tables API, with diagram}
-
-\subsection*{In-memory data structures}
-\jkcomment{Explain the quintuply linked tree and give an example and reasons for it's
-efficiency, with possible comparisons}
-
-\subsection*{Metadata and provenance}
-\jkcomment{Describe the metadata implementation and how it solves common issues with both
-separate metadata files and how the schema allows for self-describing data. Explain the
-provenance mechanisms and how they promote traceability and reproducibility}
-
-\subsection*{APIs}
-\jkcomment{Briefly describe each of the C, Rust and Python APIs and their uses}
-
-\subsection*{Efficiency working with large trees}
-\jkcomment{Show use of tskit working with a large covid tree, with possible comparison
-to usher}
+The lack of scalable inference methods has been a major obstacle 
+to practical application of ARG inference methods. Although there 
+are many inference methods (see Wong et al.\cite{wong2024general}\ for a review),
+tsinfer was the first to scale to hundreds of thousands of samples,
+directly leveraging the tree sequence data
+representation\cite{kelleher2019inferring}.
+Many recent ARG inference methods have chosen to support tskit 
+as an output format, in addition to their
+own native representations (Table 1). 
+This shared output layer enables inferred ARGs to
+interoperate directly with simulators, facilitating systematic evaluation and
+benchmarking against known ground truth. It also shifts the burden of format
+conversion away from downstream users, who can instead rely on inference tools
+to emit results in a common, well-defined representation. The scalability and
+flexibility of this approach are illustrated by the recent inference of an ARG
+for 2.48 million SARS-CoV-2 whole genomes, which occupies 32 MiB of storage and
+can be loaded into memory in under a second\cite{zhan2025pandemic}.
 
 
-\section*{Discussion}
+% Shared representation unlocks fast, correct, and reusable downstream
+% analysis.
+
+Efficient storage and analysis of large genealogical datasets is a central
+design goal of tskit, and the tree sequence representation enables substantial
+performance gains in downstream analyses. 
+For example, single-site 
+population genetic statistics can be computed orders of magnitude faster than from
+genotype matrices while using far less memory by operating 
+on the underlying genealogical structure\cite{ralph2020efficiently}.
+Tskit exposes a large API spanning statistical calculations 
+and visualisation, with a
+performance-critical core implemented in C and bindings available in Python,
+Rust, and R. Its vectorised, table-first design allows zero-copy access to
+underlying arrays, supporting high-performance analysis pipelines. 
+As a result,
+downstream tools inherit performance and correctness properties from a shared,
+well-tested core.
+
+% tskit 1.0 formalises this ecosystem as stable, long-term scientific
+% infrastructure.
+
+The goal of tskit is to provide a shared technical foundation, centred on
+efficient and well-tested primitive operations on genealogical data, rather
+than to directly implement end-user workflows. This design principle has
+enabled a broad ecosystem of downstream software (Table 1) and has established
+tskit as foundational infrastructure for population-scale genealogical
+analysis. With the release of tskit 1.0, long-term stability of the data model
+and APIs is explicitly guaranteed, reflecting a commitment to maintain this
+minimal and composable core as the project evolves. By focusing on stable
+primitives rather than prescribing analytical pipelines, tskit enables
+methodological innovation to concentrate on modelling, inference, and
+interpretation rather than bespoke data formats and tooling. In this way, tskit
+1.0 provides a common and extensible foundation that supports the continued
+expansion of ARG-based analyses as datasets, methods, and applications continue
+to grow.
+
+
+
+\begin{table}
+\caption{The tskit software ecosystem. * data not available on OpenAlex}
+\begin{scriptsize}
+\begin{center}
+\begin{tabular}{lllrr}
+\toprule
+name & interface & package & year & citations \\
+\midrule
+\multicolumn{5}{c}{\textsc{Simulation}} \\
+\midrule
+pyslim & Python & pypi, conda & 2025 & 1 \\
+TwisstNTern & Python &  & 2025 & 0 \\
+tstrait & Python & pypi, conda & 2024 & 8 \\
+slendr & Python & CRAN & 2023 & 15 \\
+cnasim & Python & pypi & 2023 & 10 \\
+gridCoal & Python &  & 2022 & 5 \\
+Geonomics & Python & pypi & 2021 & 20 \\
+stdpopsim & Python & pypi, conda & 2020 & 233 \\
+RADinitio & Python & pypi & 2020 & 49 \\
+fwdpy11 & C, Python & pypi, conda & 2019 & 74 \\
+SLiM & C &  & 2018 & 860 \\
+msprime & C, Python & pypi, conda & 2016 & 806 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{ARG Inference}} \\
+\midrule
+SINGER & Python &  & 2025 & 12 \\
+sticcs & Python &  & 2025 & 0 \\
+POLEGON & Python &  & 2025 & 0 \\
+Threads & Python & pypi & 2024 & 22 \\
+espalier & Python & pypi & 2023 & 14 \\
+sc2ts & Python & pypi & 2023 & 14 \\
+tsdate & Python & pypi, conda & 2022 & 187 \\
+ARGinfer & Python & pypi & 2022 & 37 \\
+Relate & C &  & 2019 & 562 \\
+tsinfer & C, Python & pypi, conda & 2019 & 373 \\
+ARGneedle & Python & pypi & * & * \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Population Genetic Inference}} \\
+\midrule
+gaia & C &  & 2025 & 8 \\
+mrpast & Python & pypi & 2025 & 0 \\
+phlash & Python & pypi & 2025 & 0 \\
+sparg & Python & pypi & 2025 & 0 \\
+spacetrees & Python &  & 2024 & 18 \\
+mapNN & Python &  & 2024 & 4 \\
+gIMble & Python & conda & 2023 & 33 \\
+disperseNN2 & Python & pypi & 2023 & 10 \\
+dinf & Python & pypi & 2023 & 8 \\
+GADMA & Python & pypi & 2022 & 23 \\
+dnadna & Python & pypi, conda & 2022 & 8 \\
+DISMaL & Python & pypi & 2021 & 7 \\
+ReLERNN & Python & pypi & 2020 & 166 \\
+momi2 & Python & pypi & 2019 & 170 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Statistical Genetic Inference}} \\
+\midrule
+as-eGRM & Python &  & 2025 & 1 \\
+arg-lmm & Python & pypi & 2025 & 0 \\
+tslmm & Python &  &  &  \\
+lgdm & Python & pypi & 2023 & 38 \\
+egrm & Python & pip & 2022 & 44 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Visualisation}} \\
+\midrule
+tsbrowse & Python & pypi & 2025 & 0 \\
+ARGscape & Python & pypi & 2025 & 0 \\
+tskit-arg-visualizer & Python & pypi & 2024 & 0 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Data processing}} \\
+\midrule
+bio2zarr & python & pypi, conda & 2025 & 0 \\
+
+\midrule
+\multicolumn{5}{c}{\textsc{Analysis}} \\
+\midrule
+tscompare & Python & pypi & 2025 & 1 \\
+twisst2 & Python &  & 2025 & 0 \\
+tspop & Python & pypi & 2023 & 12 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{scriptsize}
+\end{table}
+
+
+% Citations:
+
+% - wong2024general
+% - brandt2024promise
+% - lewanski2024era
+% - nielsen2024inference
+% - kelleher2016efficient
+% - kelleher2019inferring
+% - ralph2020efficiently
+% - andersontrocme2023genes
+% - zhan2025pandemic
+
 
 \section*{Acknowledgments}
 
-\bibliographystyle{plainnat}
 \bibliography{paper}
 
-
-%% local definitions for section multiple merger coalescents
- \newcommand{\be}{\begin{equation}}
- \newcommand{\ee}{\end{equation}}
- \newcommand{\bd}{\begin{displaymath}}
- \newcommand{\ed}{\end{displaymath}}
-\newcommand{\IN}{\ensuremath{\mathds{N}}}%
-\newcommand{\EE}[1]{\ensuremath{\mathds{E}\left[ #1 \right]}}%
-\newcommand{\one}[1]{\ensuremath{\mathds{1}_{\left\{ #1 \right\}}}}%
-\newcommand{\prb}[1]{\ensuremath{\mathds{P}\left( #1 \right) } }%
-
-\NewEnviron{esplit}[1]{%
-\begin{equation}
-\label{#1}
-\begin{split}
-  \BODY
-\end{split}\end{equation}
-}
-
-\setcounter{secnumdepth}{2} % Print out appendix section numbers
-
-\appendix
 
 \end{document}
