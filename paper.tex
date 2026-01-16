@@ -26,7 +26,8 @@ constrained by the lack of scalable inference methods, standard
 interchange formats, and software infrastructure. Recent breakthroughs in
 simulation and inference have substantially changed this landscape,
 leading to renewed interest in ARG-based analyses across population and statistical
-genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
+%genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
+genetics\cite{lewanski2024era}.
 The tskit library has played a key enabling role in this shift
 and has become foundational infrastructure for working with ARGs at scale.
 This paper marks the release of tskit 1.0, which formalises long-term stability
@@ -72,7 +73,7 @@ method evaluation. Simulation capabilities have continued to expand,
 culminating in whole-genome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}
 and recently the complete human genome,
-including sex chromosomes and mitochondrial DNA\cite{Haller2025}.
+including sex chromosomes and mitochondrial DNA\cite{haller2025simHumanity}.
 A growing ecosystem of simulation tools now builds directly on tskit
 (Table 1).
 
@@ -224,21 +225,24 @@ tspop & Python & pypi & 2023 & 12 \\
 \end{scriptsize}
 \end{table}
 
-% Citations:
+% There is a hard limit of 10 references for this type of article!
+% Citations (sorted alphabetically here for ease of editing):
 
-% - wong2024general
-% - brandt2024promise
-% - lewanski2024era
-% - nielsen2024inference
-% - kelleher2016efficient
-% - kelleher2019inferring
-% - ralph2020efficiently
-% - andersontrocme2023genes
-% - zhan2025pandemic
+% 1 - andersontrocme2023genes
+% X - brandt2024promise The Promise of Inferring the Past Using the Ancestral Recombination Graph
+% 2 - haller2025simHumanity
+% 3 - lewanski2024era The era of the ARG: An introduction to ancestral recombination graphs and their significance in empirical evolutionary genomics
+% X - nielsen2024inference Inference and applications of ancestral recombination graphs
+% 4 - kelleher2016efficient
+% 5 - kelleher2018efficient
+% 6 - kelleher2019inferring
+% 7 - ralph2020efficiently
+% 8 - wohns2022unified or pope2026tracing TODO: pick one of these two
+% 9 - wong2024general
+% 10 - zhan2025pandemic
 
 \section*{Acknowledgments}
 
 \bibliography{paper}
-
 
 \end{document}
