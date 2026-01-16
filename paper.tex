@@ -18,33 +18,33 @@
 % ARGs are now practical, and tskit is the infrastructure enabling their use.
 
 \noindent
-Ancestral recombination graphs (ARGs) capture the full genealogical history of
-samples from a recombining species. 
+Ancestral recombination graphs (ARGs) capture the full genetic history of
+samples from a recombining species.
 Although ARGs have been a central
 theoretical object in population genetics for decades, their practical use was
 constrained by the lack of scalable inference methods, standard
 interchange formats, and software infrastructure. Recent breakthroughs in
-simulation and inference have substantially changed this landscape, 
+simulation and inference have substantially changed this landscape,
 leading to renewed interest in ARG-based analyses across population and statistical
-genetics~\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
+genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
 The tskit library has played a key enabling role in this shift
-and has become foundational infrastructure for working with ARGs at scale. 
+and has become foundational infrastructure for working with ARGs at scale.
 This paper marks the release of tskit 1.0, which formalises long-term stability
 guarantees for its data model and APIs.
 
 % The succinct tree sequence is a complete, lossless encoding of ARGs.
-At the core of tskit is the succinct tree sequence data model, which 
-defines a set of nodes (ancestral genomes at particular times) and 
-edges (parent-child inheritance relationships spanning genomic intervals) 
+At the core of tskit is the succinct tree sequence data model, which
+defines a set of nodes (genomes at particular times) and
+edges (parent-child inheritance relationships spanning genomic intervals)
 in a simple tabular form\cite{kelleher2018efficient}.
 This encoding provides a lossless representation of a general class of
-ancestral recombination graphs, 
+ancestral recombination graphs,
 establishing a precise and machine-readable
-definition of ARGs suitable for large-scale computation\cite{wong2024general}. 
-The data model also incorporates site, mutation, population, and pedigree 
+definition of ARGs suitable for large-scale computation\cite{wong2024general}.
+The data model also incorporates site, mutation, population, and pedigree
 information and supports arbitrary
-metadata associated with different components of the ARG. 
-Provenance information is recorded natively, enhancing reproducibility 
+metadata associated with different components of the ARG.
+Provenance information is recorded natively, enhancing reproducibility
 and transparency.
 Together, these features make tskit a semantically complete and interoperable
 representation of ARGs that serves as a common foundation across diverse
@@ -53,12 +53,12 @@ analytical workflows.
 % This encoding first proved itself by transforming population-genetic
 % simulation.
 
-Simulation is a fundamental tool in population genomics, and 
+Simulation is a fundamental tool in population genomics, and
 was the first domain in which the tskit data model demonstrated its impact.
 Introduced initially as part of the msprime simulator,
-the use of succinct tree sequences enabled performance improvements of 
+the use of succinct tree sequences enabled performance improvements of
 several orders of magnitude
-over previous coalescent simulation approaches\cite{kelleher2016efficient}. 
+over previous coalescent simulation approaches\cite{kelleher2016efficient}.
 The same representation later
 enabled efficient forward-time simulation of ARGs
 and yielded substantial speedups by avoiding
@@ -70,23 +70,24 @@ to simulate ARGs under complex demographic scenarios involving geography and
 selection that were previously infeasible, providing essential ground truth for
 method evaluation. Simulation capabilities have continued to expand,
 culminating in whole-genome ARG simulations for nearly 1.5 million individuals
-based on a large human pedigree~\cite{andersontrocme2023genes}. 
+based on a large human pedigree\cite{andersontrocme2023genes}
+and recently the complete human genome,
+including sex chromosomes and mitochondrial DNA\cite{Haller2025}.
 A growing ecosystem of simulation tools now builds directly on tskit
 (Table 1).
-
 
 % Inference methods interoperate through tskit, enabling evaluation and reuse
 % without imposing design choices.
 
-The lack of scalable inference methods has been a major obstacle 
-to practical application of ARG inference methods. Although there 
+The lack of scalable inference methods has been a major obstacle
+to practical application of ARG inference methods. Although there
 are many inference methods (see Wong et al.\cite{wong2024general}\ for a review),
 tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tree sequence data
 representation\cite{kelleher2019inferring}.
-Many recent ARG inference methods have chosen to support tskit 
+Many recent ARG inference methods have chosen to support tskit
 as an output format, in addition to their
-own native representations (Table 1). 
+own native representations (Table 1).
 This shared output layer enables inferred ARGs to
 interoperate directly with simulators, facilitating systematic evaluation and
 benchmarking against known ground truth. It also shifts the burden of format
@@ -96,22 +97,21 @@ flexibility of this approach are illustrated by the recent inference of an ARG
 for 2.48 million SARS-CoV-2 whole genomes, which occupies 32 MiB of storage and
 can be loaded into memory in under a second\cite{zhan2025pandemic}.
 
-
 % Shared representation unlocks fast, correct, and reusable downstream
 % analysis.
 
-Efficient storage and analysis of large genealogical datasets is a central
+Efficient storage and analysis of large genetic datasets is a central
 design goal of tskit, and the tree sequence representation enables substantial
-performance gains in downstream analyses. 
-For example, single-site 
+performance gains in downstream analyses.
+For example, single-site
 population genetic statistics can be computed orders of magnitude faster than from
-genotype matrices while using far less memory by operating 
-on the underlying genealogical structure\cite{ralph2020efficiently}.
-Tskit exposes a large API spanning statistical calculations 
+genotype matrices while using far less memory by operating
+on the underlying ARG structure\cite{ralph2020efficiently}.
+Tskit exposes a large API spanning statistical calculations
 and visualisation, with a
-performance-critical core implemented in C and bindings available in Python,
+performance-critical core implemented in C and bindings available for Python,
 Rust, and R. Its vectorised, table-first design allows zero-copy access to
-underlying arrays, supporting high-performance analysis pipelines. 
+underlying arrays, supporting high-performance analysis pipelines.
 As a result,
 downstream tools inherit performance and correctness properties from a shared,
 well-tested core.
@@ -120,10 +120,10 @@ well-tested core.
 % infrastructure.
 
 The goal of tskit is to provide a shared technical foundation, centred on
-efficient and well-tested primitive operations on genealogical data, rather
+efficient, well-tested, and documented primitive operations on ARGs, rather
 than to directly implement end-user workflows. This design principle has
 enabled a broad ecosystem of downstream software (Table 1) and has established
-tskit as foundational infrastructure for population-scale genealogical
+tskit as foundational infrastructure for population-scale genetic
 analysis. With the release of tskit 1.0, long-term stability of the data model
 and APIs is explicitly guaranteed, reflecting a commitment to maintain this
 minimal and composable core as the project evolves. By focusing on stable
@@ -133,8 +133,7 @@ interpretation rather than bespoke data formats and tooling. In this way, tskit
 1.0 provides a common and extensible foundation that supports the continued
 expansion of ARG-based analyses as datasets, methods, and applications continue
 to grow.
-
-
+Documentation, tutorials, and other tskit information is available at \url{https://tskit.dev}.
 
 \begin{table}
 \caption{The tskit software ecosystem. * data not available on OpenAlex}
@@ -211,7 +210,7 @@ tskit-arg-visualizer & Python & pypi & 2024 & 0 \\
 \midrule
 \multicolumn{5}{c}{\textsc{Data processing}} \\
 \midrule
-bio2zarr & python & pypi, conda & 2025 & 0 \\
+bio2zarr & Python & pypi, conda & 2025 & 0 \\
 
 \midrule
 \multicolumn{5}{c}{\textsc{Analysis}} \\
@@ -225,7 +224,6 @@ tspop & Python & pypi & 2023 & 12 \\
 \end{scriptsize}
 \end{table}
 
-
 % Citations:
 
 % - wong2024general
@@ -237,7 +235,6 @@ tspop & Python & pypi & 2023 & 12 \\
 % - ralph2020efficiently
 % - andersontrocme2023genes
 % - zhan2025pandemic
-
 
 \section*{Acknowledgments}
 
