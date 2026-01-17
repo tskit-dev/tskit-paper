@@ -1,6 +1,7 @@
 \documentclass{article}
 
 
+\usepackage{hyperref}
 \usepackage[superscript,biblabel]{cite}
 % \usepackage[super,numbers]{natbib}
 \bibliographystyle{naturemag}
@@ -26,8 +27,8 @@ constrained by the lack of scalable inference methods, standard
 interchange formats, and software infrastructure. Recent breakthroughs in
 simulation and inference have substantially changed this landscape,
 leading to renewed interest in ARG-based analyses across population and statistical
-%genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
-genetics\cite{lewanski2024era}.
+genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
+% genetics\cite{lewanski2024era}.
 The tskit library has played a key enabling role in this shift
 and has become foundational infrastructure for working with ARGs at scale.
 This paper marks the release of tskit 1.0, which formalises long-term stability
@@ -70,10 +71,10 @@ strengths can be combined within a single workflow. This has made it possible
 to simulate ARGs under complex demographic scenarios involving geography and
 selection that were previously infeasible, providing essential ground truth for
 method evaluation. Simulation capabilities have continued to expand,
-culminating in whole-genome ARG simulations for nearly 1.5 million individuals
-based on a large human pedigree\cite{andersontrocme2023genes}
-and recently the complete human genome,
-including sex chromosomes and mitochondrial DNA\cite{haller2025simHumanity}.
+including whole-genome ARG simulations for nearly 1.5 million individuals
+based on a large human pedigree\cite{andersontrocme2023genes}.
+% and recently the complete human genome,
+% including sex chromosomes and mitochondrial DNA\cite{haller2025simHumanity}.
 A growing ecosystem of simulation tools now builds directly on tskit
 (Table 1).
 
