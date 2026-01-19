@@ -1,8 +1,9 @@
 repository: tskit-dev/tskit
 generated_at_utc: '2026-01-15T15:50:47Z'
-note: GitHub user emails are typically unavailable unless public. Commit-observed
-  emails may be noreply addresses. Line +/- counts come from git log --numstat and
-  may differ from GitHub UI.
+note: This is curated by first looking at Git commits from the tskit-dev/tskit
+  repository (using the script fetch_contributors.py) as a first pass, and
+  then trying to informally add contributions from tszip, tskit-rust,
+  and tutorials repos.
 
 contributors:
 
@@ -13,6 +14,7 @@ contributors:
   lines_added: 180670
   lines_deleted: 55309
   lines_net: 125361
+  contribution: major
 
 - github_username: benjeffery
   emails:
@@ -22,6 +24,7 @@ contributors:
   lines_added: 84926
   lines_deleted: 55382
   lines_net: 29544
+  contribution: major
 
 - github_username: hyanwong
   emails:
@@ -32,6 +35,7 @@ contributors:
   lines_added: 50920
   lines_deleted: 36639
   lines_net: 14281
+  contribution: major
 
 - github_username: petrelharp
   emails:
@@ -40,6 +44,7 @@ contributors:
   lines_added: 18670
   lines_deleted: 5653
   lines_net: 13017
+  contribution: major
 
 - github_username: gtsambos
   emails:
@@ -49,14 +54,7 @@ contributors:
   lines_added: 7378
   lines_deleted: 2777
   lines_net: 4601
-
-- github_username: szhan
-  emails:
-  - shing.zhan@gmail.com
-  commits: 19
-  lines_added: 1668
-  lines_deleted: 488
-  lines_net: 1180
+  contribution: major
 
 - github_username: molpopgen
   emails:
@@ -65,6 +63,16 @@ contributors:
   lines_added: 880
   lines_deleted: 317
   lines_net: 563
+  contribution: major
+
+- github_username: szhan
+  emails:
+  - shing.zhan@gmail.com
+  commits: 19
+  lines_added: 1668
+  lines_deleted: 488
+  lines_net: 1180
+  contribution: substantial
 
 - github_username: daniel-goldstein
   emails:
@@ -73,6 +81,7 @@ contributors:
   lines_added: 4897
   lines_deleted: 772
   lines_net: 4125
+  contribution: substantial
 
 - github_username: nspope
   emails:
@@ -81,6 +90,7 @@ contributors:
   lines_added: 6972
   lines_deleted: 2789
   lines_net: 4183
+  contribution: substantial
 
 - github_username: lkirk
   emails:
@@ -89,6 +99,7 @@ contributors:
   lines_added: 8611
   lines_deleted: 1864
   lines_net: 6747
+  contribution: substantial
 
 - github_username: Duncan-JR
   emails:
@@ -98,6 +109,7 @@ contributors:
   lines_added: 1137
   lines_deleted: 522
   lines_net: 615
+  contribution: substantial
 
 - github_username: awohns
   emails:
@@ -106,6 +118,7 @@ contributors:
   lines_added: 1902
   lines_deleted: 47
   lines_net: 1855
+  contribution: substantial
 
 - github_username: andrewkern
   emails:
@@ -114,6 +127,7 @@ contributors:
   lines_added: 619
   lines_deleted: 445
   lines_net: 174
+  contribution: substantial
 
 - github_username: brianzhang01
   emails:
@@ -123,6 +137,7 @@ contributors:
   lines_added: 371
   lines_deleted: 28
   lines_net: 343
+  contribution: substantial
 
 - github_username: grahamgower
   emails:
@@ -131,6 +146,7 @@ contributors:
   lines_added: 33
   lines_deleted: 14
   lines_net: 19
+  contribution: substantial
 
 - github_username: hugovk
   emails: []
@@ -138,6 +154,7 @@ contributors:
   lines_added: 242
   lines_deleted: 434
   lines_net: -192
+  contribution: substantial
 
 - github_username: mufernando
   emails:
@@ -146,6 +163,7 @@ contributors:
   lines_added: 2382
   lines_deleted: 149
   lines_net: 2233
+  contribution: substantial
 
 - github_username: GertjanBisschop
   emails:
@@ -154,6 +172,7 @@ contributors:
   lines_added: 437
   lines_deleted: 46
   lines_net: 391
+  contribution: substantial
 
 - github_username: astheeggeggs
   emails:
@@ -162,6 +181,7 @@ contributors:
   lines_added: 3246
   lines_deleted: 1934
   lines_net: 1312
+  contribution: substantial
 
 - github_username: castedo
   emails:
@@ -170,6 +190,7 @@ contributors:
   lines_added: 770
   lines_deleted: 711
   lines_net: 59
+  contribution: substantial
 
 - github_username: clwgg
   emails:
@@ -178,6 +199,7 @@ contributors:
   lines_added: 737
   lines_deleted: 133
   lines_net: 604
+  contribution: substantial
 
 - github_username: hossam26644
   emails:
@@ -186,6 +208,7 @@ contributors:
   lines_added: 112
   lines_deleted: 999
   lines_net: -887
+  contribution: substantial
 
 - github_username: jeremyguez
   emails:
@@ -194,6 +217,7 @@ contributors:
   lines_added: 357
   lines_deleted: 9
   lines_net: 348
+  contribution: substantial
 
 - github_username: agladstein
   emails:
@@ -202,6 +226,10 @@ contributors:
   lines_added: 106
   lines_deleted: 34
   lines_net: 72
+  contribution: minor
+  notes: |
+    Code contributions are small documentation edits, but sustained
+    ecosystem contributions.
 
 - github_username: hanbin973
   emails:
@@ -210,6 +238,7 @@ contributors:
   lines_added: 957
   lines_deleted: 5
   lines_net: 952
+  contribution: substantial
 
 - github_username: savitakartik
   emails:
@@ -218,6 +247,7 @@ contributors:
   lines_added: 46
   lines_deleted: 9
   lines_net: 37
+  contribution: minor
 
 - github_username: Billyzhang1229
   emails:
@@ -226,6 +256,7 @@ contributors:
   lines_added: 304
   lines_deleted: 1
   lines_net: 303
+  contribution: minor
 
 - github_username: gregorgorjanc
   emails:
@@ -234,6 +265,8 @@ contributors:
   lines_added: 12
   lines_deleted: 6
   lines_net: 6
+  contribution: substantial
+  notes: Minor to tskit repo, but leadership, ecosystem & tskitR.
 
 - github_username: maz-mckellar
   emails: []
@@ -241,7 +274,7 @@ contributors:
   lines_added: 348
   lines_deleted: 8
   lines_net: 340
-
+  contribution: minor
 
 - github_username: minesrebollo
   emails:
@@ -250,6 +283,7 @@ contributors:
   lines_added: 19
   lines_deleted: 18
   lines_net: 1
+  contribution: minor
 
 - github_username: saurabhbelsare
   emails:
@@ -259,6 +293,7 @@ contributors:
   lines_added: 474
   lines_deleted: 0
   lines_net: 474
+  contribution: minor
 
 - github_username: LukeAndersonTrocme
   emails:
@@ -267,6 +302,7 @@ contributors:
   lines_added: 1
   lines_deleted: 1
   lines_net: 0
+  contribution: trivial
 
 - github_username: PalashLalwani
   emails:
@@ -275,13 +311,7 @@ contributors:
   lines_added: 4
   lines_deleted: 2
   lines_net: 2
-
-- github_username: alxsimon
-  emails: []
-  commits: 1
-  lines_added: 1
-  lines_deleted: 1
-  lines_net: 0
+  contribution: trivial
 
 - github_username: brieuclehmann
   emails:
@@ -292,6 +322,7 @@ contributors:
   lines_deleted: 636
   lines_net: 727
   notes: manually merged contributions from two email addresses
+  contribution: substantial
 
 - github_username: chriscrsmith
   emails:
@@ -300,6 +331,7 @@ contributors:
   lines_added: 37
   lines_deleted: 2
   lines_net: 35
+  contribution: minor
 
 - github_username: currocam
   emails:
@@ -308,6 +340,7 @@ contributors:
   lines_added: 29
   lines_deleted: 1
   lines_net: 28
+  contribution: minor
 
 - github_username: daikitag
   emails: []
@@ -315,6 +348,7 @@ contributors:
   lines_added: 3
   lines_deleted: 0
   lines_net: 3
+  contribution: trivial
 
 - github_username: hfr1tz3
   emails: []
@@ -330,6 +364,7 @@ contributors:
   lines_added: 476
   lines_deleted: 112
   lines_net: 364
+  contribution: significant
 
 - github_username: jeetsukumaran
   emails:
@@ -338,6 +373,9 @@ contributors:
   lines_added: 2
   lines_deleted: 1
   lines_net: 1
+  contribution: minor
+  note: The diff looks trivial, but it fixes a significant issue and
+    involved some real debugging.
 
 - github_username: mmosmond
   emails:
@@ -346,6 +384,7 @@ contributors:
   lines_added: 897
   lines_deleted: 217
   lines_net: 680
+  contribution: significant
 
 - github_username: nikbaya
   emails:
@@ -354,6 +393,7 @@ contributors:
   lines_added: 339
   lines_deleted: 0
   lines_net: 339
+  contribution: minor
 
 - github_username: roohy
   emails:
@@ -362,6 +402,7 @@ contributors:
   lines_added: 26
   lines_deleted: 2
   lines_net: 24
+  contribution: minor
 
 - github_username: saunack
   emails:
@@ -370,6 +411,7 @@ contributors:
   lines_added: 123
   lines_deleted: 23
   lines_net: 100
+  contribution: minor
 
 - github_username: terhorst
   emails:
@@ -378,6 +420,7 @@ contributors:
   lines_added: 44
   lines_deleted: 0
   lines_net: 44
+  contribution: minor
 
 - github_username: winni2k
   emails:
@@ -386,10 +429,10 @@ contributors:
   lines_added: 421
   lines_deleted: 1
   lines_net: 420
+  contribution: minor
+  notes: Doesn't show up on GitHub UI. Added macs output support.
 
 - github_username: bguo068
-  # Minor packaging change
-  # https://github.com/tskit-dev/tskit/commit/13499ff071ce8b4c97f5edca3bf9b19f9a922299
   emails:
   - gbinux@gmail.com
   - bing.guo@Bings-MacBook-Pro.local
@@ -397,4 +440,22 @@ contributors:
   lines_added: 2
   lines_deleted: 2
   lines_net: 0
+  contribution: minor
+  notes: Minor packaging change to tskit, but contributed more substantially to tskit-rust
+
+
+- github_username: alxsimon
+  emails: []
+  commits: 1
+  lines_added: 1
+  lines_deleted: 1
+  lines_net: 0
+  contribution: trivial
+  notes: Currently trivial contribution but update to minor after PR 3366
+
+
+- github_username: aabiddanda
+  name: Arjun Biddanda
+  contribution: minor
+  notes: Added better support for streams in tszip
 
