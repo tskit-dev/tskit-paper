@@ -1,11 +1,11 @@
 \documentclass{article}
 
 
-\usepackage{hyperref}
 \usepackage[superscript,biblabel]{cite}
 % \usepackage[super,numbers]{natbib}
 \bibliographystyle{naturemag}
 % \bibliographystyle{plain}
+\usepackage[hidelinks]{hyperref}
 
 \usepackage{booktabs}%
 
@@ -32,10 +32,10 @@ genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
 The tskit library has played a key enabling role in this shift
 and has become foundational infrastructure for working with ARGs at scale.
 This paper marks the release of tskit 1.0, which formalises long-term stability
-guarantees for its data model and APIs.
+guarantees for its data formats and APIs.
 
 % The succinct tree sequence is a complete, lossless encoding of ARGs.
-At the core of tskit is the succinct tree sequence data model, which
+At the core of tskit is the succinct tree sequence data model which
 defines a set of nodes (genomes at particular times) and
 edges (parent-child inheritance relationships spanning genomic intervals)
 in a simple tabular form\cite{kelleher2018efficient}.
@@ -48,7 +48,8 @@ information and supports arbitrary
 metadata associated with different components of the ARG.
 Provenance information is recorded natively, enhancing reproducibility
 and transparency.
-Together, these features make tskit a semantically complete and interoperable
+Together, these features make the tskit data model a 
+semantically complete and interoperable
 representation of ARGs that serves as a common foundation across diverse
 analytical workflows.
 
@@ -58,7 +59,7 @@ analytical workflows.
 Simulation is a fundamental tool in population genomics, and
 was the first domain in which the tskit data model demonstrated its impact.
 Introduced initially as part of the msprime simulator,
-the use of succinct tree sequences enabled performance improvements of
+the tskit data model enabled performance improvements of
 several orders of magnitude
 over previous coalescent simulation approaches\cite{kelleher2016efficient}.
 The same representation later
@@ -71,10 +72,8 @@ strengths can be combined within a single workflow. This has made it possible
 to simulate ARGs under complex demographic scenarios involving geography and
 selection that were previously infeasible, providing essential ground truth for
 method evaluation. Simulation capabilities have continued to expand,
-including whole-genome ARG simulations for nearly 1.5 million individuals
+including whole-autosome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}.
-% and recently the complete human genome,
-% including sex chromosomes and mitochondrial DNA\cite{haller2025simHumanity}.
 A growing ecosystem of simulation tools now builds directly on tskit
 (Table 1).
 
@@ -85,8 +84,7 @@ The lack of scalable inference methods has been a major obstacle
 to practical application of ARG inference methods. Although there
 are many inference methods (see Wong et al.\cite{wong2024general}\ for a review),
 tsinfer was the first to scale to hundreds of thousands of samples,
-directly leveraging the tree sequence data
-representation\cite{kelleher2019inferring}.
+directly leveraging the tskit data model\cite{kelleher2019inferring}.
 Many recent ARG inference methods have chosen to support tskit
 as an output format, in addition to their
 own native representations (Table 1).
@@ -103,7 +101,7 @@ can be loaded into memory in under a second\cite{zhan2025pandemic}.
 % analysis.
 
 Efficient storage and analysis of large genetic datasets is a central
-design goal of tskit, and the tree sequence representation enables substantial
+design goal of tskit, and the data model has enabled substantial
 performance gains in downstream analyses.
 For example, single-site
 population genetic statistics can be computed orders of magnitude faster than from
@@ -135,7 +133,8 @@ interpretation rather than bespoke data formats and tooling. In this way, tskit
 1.0 provides a common and extensible foundation that supports the continued
 expansion of ARG-based analyses as datasets, methods, and applications continue
 to grow.
-Documentation, tutorials, and other tskit information is available at \url{https://tskit.dev}.
+Extensive documentation, tutorials, and other information are available 
+at \url{https://tskit.dev}.
 
 \begin{table}
 \caption{The tskit software ecosystem. * data not available on OpenAlex}
