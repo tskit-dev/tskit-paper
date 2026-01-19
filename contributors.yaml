@@ -8,6 +8,7 @@ note: This is curated by first looking at Git commits from the tskit-dev/tskit
 contributors:
 
 - github_username: jeromekelleher
+  name: Kelleher, Jerome
   emails:
   - jk@well.ox.ac.uk
   commits: 824
@@ -17,6 +18,7 @@ contributors:
   contribution: major
 
 - github_username: benjeffery
+  name: Jeffery, Ben
   emails:
   - ben.jeffery@bdi.ox.ac.uk
   - ben.jeffery@gmail.com
@@ -27,6 +29,7 @@ contributors:
   contribution: major
 
 - github_username: hyanwong
+  name: Wong, Yan
   emails:
   - yan.wong@bdi.ox.ac.uk
   - yan@pixie.org.uk
@@ -38,6 +41,7 @@ contributors:
   contribution: major
 
 - github_username: petrelharp
+  name: Ralph, Peter
   emails:
   - petrel.harp@gmail.com
   commits: 124
@@ -47,6 +51,7 @@ contributors:
   contribution: major
 
 - github_username: gtsambos
+  name: Tsambos, Georgia
   emails:
   - g.tsambos@gmail.com
   - gtsambos@student.unimelb.edu.au
@@ -57,6 +62,7 @@ contributors:
   contribution: major
 
 - github_username: molpopgen
+  name: Thornton, Kevin
   emails:
   - krthornt@uci.edu
   commits: 18
@@ -66,6 +72,7 @@ contributors:
   contribution: major
 
 - github_username: szhan
+  name: Zhan, Shing H
   emails:
   - shing.zhan@gmail.com
   commits: 19
@@ -75,6 +82,7 @@ contributors:
   contribution: substantial
 
 - github_username: daniel-goldstein
+  name: Goldstein, Daniel
   emails:
   - danielgold95@gmail.com
   commits: 16
@@ -84,6 +92,7 @@ contributors:
   contribution: substantial
 
 - github_username: nspope
+  name: Pope, Nathaniel S
   emails:
   - nspope@utexas.edu
   commits: 15
@@ -93,6 +102,7 @@ contributors:
   contribution: substantial
 
 - github_username: lkirk
+  name: Kirk, Lloyd
   emails:
   - kirklloyd@gmail.com
   commits: 14
@@ -102,6 +112,7 @@ contributors:
   contribution: substantial
 
 - github_username: Duncan-JR
+  name: Robertson, Duncan
   emails:
   - duncan.robertson@well.ox.ac.uk
   - duncanr19@gmail.com
@@ -112,6 +123,7 @@ contributors:
   contribution: substantial
 
 - github_username: awohns
+  name: Wohns, Anthony Wilder
   emails:
   - awohns@gmail.com
   commits: 11
@@ -121,6 +133,7 @@ contributors:
   contribution: substantial
 
 - github_username: andrewkern
+  name: Kern, Andrew D.
   emails:
   - adkern@uoregon.edu
   commits: 7
@@ -130,6 +143,7 @@ contributors:
   contribution: substantial
 
 - github_username: brianzhang01
+  name: Zhang, Brian
   emails:
   - brianzhang01@users.noreply.github.com
   - zhang.brian@gmail.com
@@ -140,6 +154,7 @@ contributors:
   contribution: substantial
 
 - github_username: grahamgower
+  name: Gower, Graham
   emails:
   - graham.gower@gmail.com
   commits: 6
@@ -149,6 +164,7 @@ contributors:
   contribution: substantial
 
 - github_username: hugovk
+  name: van Kemenade, Hugo
   emails: []
   commits: 6
   lines_added: 242
@@ -157,6 +173,7 @@ contributors:
   contribution: substantial
 
 - github_username: mufernando
+  name: Rodrigues, Murillo F
   emails:
   - murillofer.rodrigues@gmail.com
   commits: 6
@@ -166,6 +183,7 @@ contributors:
   contribution: substantial
 
 - github_username: GertjanBisschop
+  name: Bisschop, Gertjan
   emails:
   - gertjanbisschop@gmail.com
   commits: 5
@@ -175,6 +193,7 @@ contributors:
   contribution: substantial
 
 - github_username: astheeggeggs
+  name: Palmer, Duncan S
   emails:
   - duncan.stuart.palmer@gmail.com
   commits: 5
@@ -184,6 +203,7 @@ contributors:
   contribution: substantial
 
 - github_username: castedo
+  name: Ellerman, E Castedo
   emails:
   - castedo@castedo.com
   commits: 5
@@ -193,6 +213,7 @@ contributors:
   contribution: substantial
 
 - github_username: clwgg
+  name: Weiss, Clemens
   emails:
   - clw.genomics@gmail.com
   commits: 5
@@ -202,6 +223,7 @@ contributors:
   contribution: substantial
 
 - github_username: hossam26644
+  name: Ali, Hossameldin
   emails:
   - hossam26644@live.com
   commits: 5
@@ -211,6 +233,7 @@ contributors:
   contribution: substantial
 
 - github_username: jeremyguez
+  name: Guez, Jeremy
   emails:
   - jeremy.guez@outlook.fr
   commits: 4
@@ -220,6 +243,7 @@ contributors:
   contribution: substantial
 
 - github_username: agladstein
+  name: Gladstein, Ariella
   emails:
   - algladstein@gmail.com
   commits: 3
@@ -228,10 +252,11 @@ contributors:
   lines_net: 72
   contribution: minor
   notes: |
-    Code contributions are small documentation edits, but sustained
+    Code contributions are small documentation edits, but also sustained
     ecosystem contributions.
 
 - github_username: hanbin973
+  name: Lee, Hanbin
   emails:
   - hanbin973@gmail.com
   commits: 3
@@ -241,6 +266,7 @@ contributors:
   contribution: substantial
 
 - github_username: savitakartik
+  name: Karthikeyan, Savita
   emails:
   - savitakartik@gmail.com
   commits: 3
@@ -250,6 +276,7 @@ contributors:
   contribution: minor
 
 - github_username: Billyzhang1229
+  name: Zhang, Ao
   emails:
   - billyzhang1229@gmail.com
   commits: 2
@@ -259,6 +286,7 @@ contributors:
   contribution: minor
 
 - github_username: gregorgorjanc
+  name: Gorjanc, Gregor
   emails:
   - gregor.gorjanc@gmail.com
   commits: 2
@@ -269,6 +297,7 @@ contributors:
   notes: Minor to tskit repo, but leadership, ecosystem & tskitR.
 
 - github_username: maz-mckellar
+  name: Aspbury, Maz
   emails: []
   commits: 2
   lines_added: 348
@@ -277,8 +306,7 @@ contributors:
   contribution: minor
 
 - github_username: minesrebollo
-  emails:
-  - 44417944+minesrebollo@users.noreply.github.com
+  name: Rebollo, Inés
   commits: 2
   lines_added: 19
   lines_deleted: 18
@@ -286,6 +314,7 @@ contributors:
   contribution: minor
 
 - github_username: saurabhbelsare
+  name: Belsare, Saurabh
   emails:
   - saurabhmbelsare@gmail.com
   - smbelsare@gmail.com
@@ -314,6 +343,7 @@ contributors:
   contribution: trivial
 
 - github_username: brieuclehmann
+  name: Lehmann, Brieuc
   emails:
   - b.lehmann@ucl.ac.uk
   - brieuc.lehmann@bdi.ox.ac.uk
@@ -325,6 +355,7 @@ contributors:
   contribution: substantial
 
 - github_username: chriscrsmith
+  name: Smith, Chris
   emails:
   - chriscs@colorado.edu
   commits: 1
@@ -334,6 +365,7 @@ contributors:
   contribution: minor
 
 - github_username: currocam
+  name: Campuzano, Curro
   emails:
   - campuzanocurro@gmail.com
   commits: 1
@@ -351,6 +383,7 @@ contributors:
   contribution: trivial
 
 - github_username: hfr1tz3
+  name: Fritze, Halley
   emails: []
   commits: 1
   lines_added: 2027
@@ -358,15 +391,17 @@ contributors:
   lines_net: 1105
 
 - github_username: ivan-krukov
+  name: Krukov, Ivan
   emails:
   - ivan.o.kryukov@gmail.com
   commits: 1
   lines_added: 476
   lines_deleted: 112
   lines_net: 364
-  contribution: significant
+  contribution: substantial
 
 - github_username: jeetsukumaran
+  name: Sukumaran, Jeet
   emails:
   - jeetsukumaran@gmail.com
   commits: 1
@@ -374,19 +409,21 @@ contributors:
   lines_deleted: 1
   lines_net: 1
   contribution: minor
-  note: The diff looks trivial, but it fixes a significant issue and
+  note: The diff looks trivial, but it fixes a substantial issue and
     involved some real debugging.
 
 - github_username: mmosmond
+  name: Osmond, Matthew M
   emails:
   - mm.osmond@utoronto.ca
   commits: 1
   lines_added: 897
   lines_deleted: 217
   lines_net: 680
-  contribution: significant
+  contribution: substantial
 
 - github_username: nikbaya
+  name: Baya, Nik
   emails:
   - nikolasbaya@gmail.com
   commits: 1
@@ -396,6 +433,7 @@ contributors:
   contribution: minor
 
 - github_username: roohy
+  name: Shemirani, Ruhollah
   emails:
   - shemirani.r@gmail.com
   commits: 1
@@ -405,6 +443,7 @@ contributors:
   contribution: minor
 
 - github_username: saunack
+  name: Saunack, Kumar
   emails:
   - kr.saunack@gmail.com
   commits: 1
@@ -414,6 +453,7 @@ contributors:
   contribution: minor
 
 - github_username: terhorst
+  name: Terhorst, Jonathan
   emails:
   - terhorst@gmail.com
   commits: 1
@@ -423,6 +463,7 @@ contributors:
   contribution: minor
 
 - github_username: winni2k
+  name: Kretzschumar, Warren W
   emails:
   - warren.kretzschmar@ki.se
   commits: 2
@@ -433,9 +474,9 @@ contributors:
   notes: Doesn't show up on GitHub UI. Added macs output support.
 
 - github_username: bguo068
+  name: Guo, Bing
   emails:
   - gbinux@gmail.com
-  - bing.guo@Bings-MacBook-Pro.local
   commits: 1
   lines_added: 2
   lines_deleted: 2
@@ -443,19 +484,38 @@ contributors:
   contribution: minor
   notes: Minor packaging change to tskit, but contributed more substantially to tskit-rust
 
-
 - github_username: alxsimon
+  name: Simon, Alexis
   emails: []
   commits: 1
   lines_added: 1
   lines_deleted: 1
   lines_net: 0
-  contribution: trivial
+  contribution: minor
   notes: Currently trivial contribution but update to minor after PR 3366
 
-
 - github_username: aabiddanda
-  name: Arjun Biddanda
+  name: Biddanda, Arjun
   contribution: minor
   notes: Added better support for streams in tszip
+
+- github_username: sgravel
+  name: Gravel, Simon
+  contribution: substantial
+  notes: Leadership, pedigree support
+
+- github_username: apragsdale
+  name: Ragsdale, Aaron
+  contribution: substantial
+  notes: LD stats design and implementation
+
+- github_username: YunDeng98
+  name: Deng, Yun
+  contribution: substantial
+  notes: Community organisation
+
+- github_username: bhaller
+  name: Haller, Ben
+  contribution: substantial
+  notes: Input into tskit API and data model design
 
