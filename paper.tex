@@ -6,14 +6,117 @@
 \bibliographystyle{naturemag}
 % \bibliographystyle{plain}
 \usepackage[hidelinks]{hyperref}
+\usepackage{authblk}
+\usepackage{booktabs}
 
-\usepackage{booktabs}%
+% Make affiliations run inline
+\renewcommand\Affilfont{\small}
+\renewcommand\Authfont{\normalsize}
 
+% Key change: make affiliations run inline
+\makeatletter
+\renewcommand\AB@affilsepx{;\hspace{0.6em}\protect\Affilfont}
+\makeatother
 
 \begin{document}
 
 \title{Population scale Ancestral Recombination Graphs with tskit 1.0}
-\author{Author list to be filled in}
+
+% NOTE: generated from contributors.yaml using python contributors.py.
+% Please update the YAML file to correct errors.
+
+\author[1,$\ast$]{ Ben Jeffery}
+\author[1,$\ast$]{ Yan Wong}
+\author[2,$\ast$]{ Kevin Thornton}
+\author[3,$\ast$]{ Georgia Tsambos}
+\author[1,$\dagger$]{ Hossameldin Ali}
+\author[1,$\dagger$]{ Gertjan Bisschop}
+\author[4,$\dagger$]{ Yun Deng}
+\author[5,$\dagger$]{ E Castedo Ellerman}
+\author[6,$\dagger$]{ Halley Fritze}
+\author[7,$\dagger$]{ Daniel Goldstein}
+\author[8,$\dagger$]{ Gregor Gorjanc}
+\author[9,$\dagger$]{ Graham Gower}
+\author[10,$\dagger$]{ Simon Gravel}
+\author[11,$\dagger$]{ Jeremy Guez}
+\author[12,$\dagger$]{ Ben Haller}
+\author[6,$\dagger$]{ Andrew D. Kern}
+\author[13,$\dagger$]{ Lloyd Kirk}
+\author[10,$\dagger$]{ Ivan Krukov}
+\author[14,$\dagger$]{ Hanbin Lee}
+\author[1,$\dagger$]{ Brieuc Lehmann}
+\author[4,$\dagger$]{ Matthew M Osmond}
+\author[1,$\dagger$]{ Duncan S Palmer}
+\author[6,$\dagger$]{ Nathaniel S Pope}
+\author[13,$\dagger$]{ Aaron Ragsdale}
+\author[1,$\dagger$]{ Duncan Robertson}
+\author[6,$\dagger$]{ Murillo F Rodrigues}
+\author[4,$\dagger$]{ Clemens Weiss}
+\author[1,$\dagger$]{ Anthony Wilder Wohns}
+\author[1,$\dagger$]{ Shing H Zhan}
+\author[15,$\dagger$]{ Brian Zhang}
+\author[16,$\dagger$]{ Hugo van Kemenade}
+\author[4]{ Maz Aspbury}
+\author[1]{ Nik Baya}
+\author[4]{ Saurabh Belsare}
+\author[4]{ Arjun Biddanda}
+\author[4]{ Curro Campuzano}
+\author[17]{ Ariella Gladstein}
+\author[18]{ Bing Guo}
+\author[1]{ Savita Karthikeyan}
+\author[19]{ Warren W Kretzschumar}
+\author[4]{ Inés Rebollo}
+\author[20]{ Kumar Saunack}
+\author[4]{ Ruhollah Shemirani}
+\author[4]{ Alexis Simon}
+\author[4]{ Chris Smith}
+\author[4]{ Jeet Sukumaran}
+\author[14]{ Jonathan Terhorst}
+\author[1]{ Ao Zhang}
+\author[6,21,$\ddagger$]{ Peter Ralph}
+\author[1,$\ddagger$]{ Jerome Kelleher}
+\affil[1]{Big Data Institute, Li Ka Shing Centre for Health Information and
+Discovery, University of Oxford, OX3 7LF, UK}
+\affil[2]{Ecology and Evolutionary Biology, University of California, Irvine,
+CA 92697, USA}
+\affil[3]{Melbourne Integrative Genomics, School of Mathematics and Statistics,
+University of Melbourne, Victoria, 3010, Australia}
+\affil[4]{Unknown}
+\affil[5]{Fresh Pond Research Institute, Cambridge, MA 02140, USA}
+\affil[6]{Institute of Ecology and Evolution, University of Oregon, Eugene OR
+97402, USA}
+\affil[7]{Khoury College of Computer Sciences, Northeastern University, MA
+02115, USA}
+\affil[8]{The Roslin Institute and Royal (Dick) School of Veterinary Studies,
+University of Edinburgh, EH25 9RG, UK}
+\affil[9]{Lundbeck GeoGenetics Centre, Globe Institute, University of
+Copenhagen, 1350 Copenhagen K, Denmark}
+\affil[10]{Department of Human Genetics, McGill University, Montr\'eal, QC H3A
+0C7, Canada}
+\affil[11]{Program in Medical and Population Genetics, Broad Institute of MIT
+and Harvard, Cambridge, Massachusetts 02142, USA}
+\affil[12]{Dept. of Computational Biology, Cornell University, Ithaca, NY
+14850, USA.}
+\affil[13]{Department of Integrative Biology, University of Wisconsin--Madison,
+WI 53706, USA}
+\affil[14]{Department of Statistics, University of Michigan, Ann Arbor, MI,
+48109, USA}
+\affil[15]{Department of Statistics, University of Oxford, OX1 3LB, UK}
+\affil[16]{Independent researcher}
+\affil[17]{Department of Genetics, University of North Carolina at Chapel Hill,
+NC 27599-7264, USA}
+\affil[18]{Institute for Genome Sciences, University of Maryland School of
+Medicine, Baltimore, MD, 21201, USA}
+\affil[19]{Center for Hematology and Regenerative Medicine, Karolinska
+Institute, 141 83 Huddinge, Sweden}
+\affil[20]{IIT Bombay, Powai, Mumbai 400 076, Maharashtra, India}
+\affil[21]{Department of Data Science, University of Oregon, Eugene OR 97402,
+USA}
+\affil[$\ast$]{Joint first author}
+\affil[$\dagger$]{Joint second author}
+\affil[$\ddagger$]{Joint senior author}
+
+
 \maketitle
 
 % ARGs are now practical, and tskit is the infrastructure enabling their use.
@@ -136,8 +239,17 @@ to grow.
 Extensive documentation, tutorials, and other information are available 
 at \url{https://tskit.dev}.
 
+% NOTE: generated from the data in tools.yaml using python tools.py.
+% Please correct an errors in the Yaml file
+
 \begin{table}
-\caption{The tskit software ecosystem. * data not available on OpenAlex}
+\caption{The tskit software ecosystem. Named software tools 
+that have been described in a publication that depend on tskit 
+are listed. For each tool we show the interface used, how the 
+tool is packaged, the year of the corresponding publication 
+and the number of citations according to data from OpenAlex
+(\url{https://openalex.org}). Entries marked with
+`*' did not have data available on OpenAlex.}
 \begin{scriptsize}
 \begin{center}
 \begin{tabular}{lllrr}
