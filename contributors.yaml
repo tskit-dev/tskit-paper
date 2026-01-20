@@ -16,6 +16,9 @@ contributors:
   lines_deleted: 55309
   lines_net: 125361
   contribution: major
+  class: last
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: benjeffery
   name: Jeffery, Ben
@@ -27,6 +30,9 @@ contributors:
   lines_deleted: 55382
   lines_net: 29544
   contribution: major
+  class: first
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: hyanwong
   name: Wong, Yan
@@ -39,6 +45,9 @@ contributors:
   lines_deleted: 36639
   lines_net: 14281
   contribution: major
+  class: first
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: petrelharp
   name: Ralph, Peter
@@ -49,6 +58,10 @@ contributors:
   lines_deleted: 5653
   lines_net: 13017
   contribution: major
+  class: last
+  affiliations:
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
+  - Department of Data Science, University of Oregon, Eugene OR 97402, USA
 
 - github_username: gtsambos
   name: Tsambos, Georgia
@@ -60,6 +73,9 @@ contributors:
   lines_deleted: 2777
   lines_net: 4601
   contribution: major
+  class: first
+  affiliations:
+    - Melbourne Integrative Genomics, School of Mathematics and Statistics, University of Melbourne, Victoria, 3010, Australia
 
 - github_username: molpopgen
   name: Thornton, Kevin
@@ -70,6 +86,9 @@ contributors:
   lines_deleted: 317
   lines_net: 563
   contribution: major
+  class: first
+  affiliations:
+  - Ecology and Evolutionary Biology, University of California, Irvine, CA 92697, USA
 
 - github_username: szhan
   name: Zhan, Shing H
@@ -80,6 +99,8 @@ contributors:
   lines_deleted: 488
   lines_net: 1180
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: daniel-goldstein
   name: Goldstein, Daniel
@@ -90,6 +111,8 @@ contributors:
   lines_deleted: 772
   lines_net: 4125
   contribution: substantial
+  affiliations:
+  - Khoury College of Computer Sciences, Northeastern University, MA 02115, USA
 
 - github_username: nspope
   name: Pope, Nathaniel S
@@ -100,6 +123,8 @@ contributors:
   lines_deleted: 2789
   lines_net: 4183
   contribution: substantial
+  affiliations:
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: lkirk
   name: Kirk, Lloyd
@@ -121,6 +146,8 @@ contributors:
   lines_deleted: 522
   lines_net: 615
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: awohns
   name: Wohns, Anthony Wilder
@@ -131,6 +158,8 @@ contributors:
   lines_deleted: 47
   lines_net: 1855
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: andrewkern
   name: Kern, Andrew D.
@@ -141,6 +170,8 @@ contributors:
   lines_deleted: 445
   lines_net: 174
   contribution: substantial
+  affiliations:
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: brianzhang01
   name: Zhang, Brian
@@ -152,6 +183,8 @@ contributors:
   lines_deleted: 28
   lines_net: 343
   contribution: substantial
+  affiliations:
+  - Department of Statistics, University of Oxford, OX1 3LB, UK
 
 - github_username: grahamgower
   name: Gower, Graham
@@ -162,6 +195,8 @@ contributors:
   lines_deleted: 14
   lines_net: 19
   contribution: substantial
+  affiliations:
+  - Lundbeck GeoGenetics Centre, Globe Institute, University of Copenhagen, 1350 Copenhagen K, Denmark
 
 - github_username: hugovk
   name: van Kemenade, Hugo
@@ -171,6 +206,8 @@ contributors:
   lines_deleted: 434
   lines_net: -192
   contribution: substantial
+  affiliations:
+  - Independent researcher
 
 - github_username: mufernando
   name: Rodrigues, Murillo F
@@ -191,6 +228,8 @@ contributors:
   lines_deleted: 46
   lines_net: 391
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: astheeggeggs
   name: Palmer, Duncan S
@@ -201,6 +240,8 @@ contributors:
   lines_deleted: 1934
   lines_net: 1312
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: castedo
   name: Ellerman, E Castedo
@@ -211,6 +252,8 @@ contributors:
   lines_deleted: 711
   lines_net: 59
   contribution: substantial
+  affiliations:
+  - Fresh Pond Research Institute, Cambridge, MA 02140, USA
 
 - github_username: clwgg
   name: Weiss, Clemens
@@ -231,6 +274,8 @@ contributors:
   lines_deleted: 999
   lines_net: -887
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: jeremyguez
   name: Guez, Jeremy
@@ -254,6 +299,8 @@ contributors:
   notes: |
     Code contributions are small documentation edits, but also sustained
     ecosystem contributions.
+  affiliations:
+  - Department of Genetics, University of North Carolina at Chapel Hill, NC 27599-7264, USA
 
 - github_username: hanbin973
   name: Lee, Hanbin
@@ -274,6 +321,8 @@ contributors:
   lines_deleted: 9
   lines_net: 37
   contribution: minor
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: Billyzhang1229
   name: Zhang, Ao
@@ -284,6 +333,8 @@ contributors:
   lines_deleted: 1
   lines_net: 303
   contribution: minor
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: gregorgorjanc
   name: Gorjanc, Gregor
@@ -295,6 +346,8 @@ contributors:
   lines_net: 6
   contribution: substantial
   notes: Minor to tskit repo, but leadership, ecosystem & tskitR.
+  affiliations:
+  - The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, EH25 9RG, UK
 
 - github_username: maz-mckellar
   name: Aspbury, Maz
@@ -353,6 +406,8 @@ contributors:
   lines_net: 727
   notes: manually merged contributions from two email addresses
   contribution: substantial
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: chriscrsmith
   name: Smith, Chris
@@ -389,6 +444,8 @@ contributors:
   lines_added: 2027
   lines_deleted: 922
   lines_net: 1105
+  affiliations:
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: ivan-krukov
   name: Krukov, Ivan
@@ -399,6 +456,8 @@ contributors:
   lines_deleted: 112
   lines_net: 364
   contribution: substantial
+  affiliations:
+  - Department of Human Genetics, McGill University, Montr\'eal, QC H3A 0C7, Canada
 
 - github_username: jeetsukumaran
   name: Sukumaran, Jeet
@@ -409,7 +468,7 @@ contributors:
   lines_deleted: 1
   lines_net: 1
   contribution: minor
-  note: The diff looks trivial, but it fixes a substantial issue and
+  notes: The diff looks trivial, but it fixes a substantial issue and
     involved some real debugging.
 
 - github_username: mmosmond
@@ -431,6 +490,8 @@ contributors:
   lines_deleted: 0
   lines_net: 339
   contribution: minor
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: roohy
   name: Shemirani, Ruhollah
@@ -472,6 +533,8 @@ contributors:
   lines_net: 420
   contribution: minor
   notes: Doesn't show up on GitHub UI. Added macs output support.
+  affiliations:
+  - Center for Hematology and Regenerative Medicine, Karolinska Institute, 141 83 Huddinge, Sweden
 
 - github_username: bguo068
   name: Guo, Bing
@@ -483,6 +546,8 @@ contributors:
   lines_net: 0
   contribution: minor
   notes: Minor packaging change to tskit, but contributed more substantially to tskit-rust
+  affiliations:
+  - Institute for Genome Sciences, University of Maryland School of Medicine, Baltimore, MD, 21201, USA
 
 - github_username: alxsimon
   name: Simon, Alexis
@@ -503,11 +568,15 @@ contributors:
   name: Gravel, Simon
   contribution: substantial
   notes: Leadership, pedigree support
+  affiliations:
+  - Department of Human Genetics, McGill University, Montr\'eal, QC H3A 0C7, Canada
 
 - github_username: apragsdale
   name: Ragsdale, Aaron
   contribution: substantial
   notes: LD stats design and implementation
+  affiliations:
+  - Department of Integrative Biology, University of Wisconsin--Madison, WI 53706, USA
 
 - github_username: YunDeng98
   name: Deng, Yun
