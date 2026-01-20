@@ -9,12 +9,21 @@
 \usepackage{authblk}
 \usepackage{booktabs}
 
+% Make affiliations run inline
+\renewcommand\Affilfont{\small}
+\renewcommand\Authfont{\normalsize}
+
+% Key change: make affiliations run inline
+\makeatletter
+\renewcommand\AB@affilsepx{;\hspace{0.6em}\protect\Affilfont}
+\makeatother
 
 \begin{document}
 
 \title{Population scale Ancestral Recombination Graphs with tskit 1.0}
 
-
+% NOTE: generated from contributors.yaml using python contributors.py.
+% Please update the YAML file to correct errors.
 
 \author[1,$\ast$]{ Ben Jeffery}
 \author[1,$\ast$]{ Yan Wong}
@@ -230,8 +239,17 @@ to grow.
 Extensive documentation, tutorials, and other information are available 
 at \url{https://tskit.dev}.
 
+% NOTE: generated from the data in tools.yaml using python tools.py.
+% Please correct an errors in the Yaml file
+
 \begin{table}
-\caption{The tskit software ecosystem. * data not available on OpenAlex}
+\caption{The tskit software ecosystem. Named software tools 
+that have been described in a publication that depend on tskit 
+are listed. For each tool we show the interface used, how the 
+tool is packaged, the year of the corresponding publication 
+and the number of citations according to data from OpenAlex
+(\url{https://openalex.org}). Entries marked with
+`*' did not have data available on OpenAlex.}
 \begin{scriptsize}
 \begin{center}
 \begin{tabular}{lllrr}
