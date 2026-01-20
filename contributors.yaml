@@ -7,19 +7,6 @@ note: This is curated by first looking at Git commits from the tskit-dev/tskit
 
 contributors:
 
-- github_username: jeromekelleher
-  name: Kelleher, Jerome
-  emails:
-  - jk@well.ox.ac.uk
-  commits: 824
-  lines_added: 180670
-  lines_deleted: 55309
-  lines_net: 125361
-  contribution: major
-  class: last
-  affiliations:
-  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
-
 - github_username: benjeffery
   name: Jeffery, Ben
   emails:
@@ -49,19 +36,19 @@ contributors:
   affiliations:
   - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
-- github_username: petrelharp
-  name: Ralph, Peter
+- github_username: molpopgen
+  name: Thornton, Kevin
   emails:
-  - petrel.harp@gmail.com
-  commits: 124
-  lines_added: 18670
-  lines_deleted: 5653
-  lines_net: 13017
+  - krthornt@uci.edu
+  commits: 18
+  lines_added: 880
+  lines_deleted: 317
+  lines_net: 563
   contribution: major
-  class: last
+  notes: Primary developer of tskit-rust also
+  class: first
   affiliations:
-  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
-  - Department of Data Science, University of Oregon, Eugene OR 97402, USA
+  - Ecology and Evolutionary Biology, University of California, Irvine, CA 92697, USA
 
 - github_username: gtsambos
   name: Tsambos, Georgia
@@ -77,18 +64,34 @@ contributors:
   affiliations:
     - Melbourne Integrative Genomics, School of Mathematics and Statistics, University of Melbourne, Victoria, 3010, Australia
 
-- github_username: molpopgen
-  name: Thornton, Kevin
+- github_username: petrelharp
+  name: Ralph, Peter
   emails:
-  - krthornt@uci.edu
-  commits: 18
-  lines_added: 880
-  lines_deleted: 317
-  lines_net: 563
+  - petrel.harp@gmail.com
+  commits: 124
+  lines_added: 18670
+  lines_deleted: 5653
+  lines_net: 13017
   contribution: major
-  class: first
+  class: last
   affiliations:
-  - Ecology and Evolutionary Biology, University of California, Irvine, CA 92697, USA
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
+  - Department of Data Science, University of Oregon, Eugene OR 97402, USA
+
+- github_username: jeromekelleher
+  name: Kelleher, Jerome
+  emails:
+  - jk@well.ox.ac.uk
+  commits: 824
+  lines_added: 180670
+  lines_deleted: 55309
+  lines_net: 125361
+  contribution: major
+  class: last
+  affiliations:
+  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
+
+# End of "major" contributors
 
 - github_username: szhan
   name: Zhan, Shing H
@@ -135,6 +138,8 @@ contributors:
   lines_deleted: 1864
   lines_net: 6747
   contribution: substantial
+  affiliations:
+  - Department of Integrative Biology, University of Wisconsin--Madison, WI 53706, USA
 
 - github_username: Duncan-JR
   name: Robertson, Duncan
@@ -218,6 +223,8 @@ contributors:
   lines_deleted: 149
   lines_net: 2233
   contribution: substantial
+  affiliations:
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: GertjanBisschop
   name: Bisschop, Gertjan
@@ -264,6 +271,8 @@ contributors:
   lines_deleted: 133
   lines_net: 604
   contribution: substantial
+  affiliations:
+  - Unknown
 
 - github_username: hossam26644
   name: Ali, Hossameldin
@@ -286,6 +295,8 @@ contributors:
   lines_deleted: 9
   lines_net: 348
   contribution: substantial
+  affiliations:
+  - Program in Medical and Population Genetics, Broad Institute of MIT and Harvard, Cambridge, Massachusetts 02142, USA
 
 - github_username: agladstein
   name: Gladstein, Ariella
@@ -311,6 +322,8 @@ contributors:
   lines_deleted: 5
   lines_net: 952
   contribution: substantial
+  affiliations:
+  - Department of Statistics, University of Michigan, Ann Arbor, MI, 48109, USA
 
 - github_username: savitakartik
   name: Karthikeyan, Savita
@@ -357,6 +370,8 @@ contributors:
   lines_deleted: 8
   lines_net: 340
   contribution: minor
+  affiliations:
+  - Unknown
 
 - github_username: minesrebollo
   name: Rebollo, Inés
@@ -365,6 +380,8 @@ contributors:
   lines_deleted: 18
   lines_net: 1
   contribution: minor
+  affiliations:
+  - Unknown
 
 - github_username: saurabhbelsare
   name: Belsare, Saurabh
@@ -376,6 +393,8 @@ contributors:
   lines_deleted: 0
   lines_net: 474
   contribution: minor
+  affiliations:
+  - Unknown
 
 - github_username: LukeAndersonTrocme
   emails:
@@ -418,6 +437,8 @@ contributors:
   lines_deleted: 2
   lines_net: 35
   contribution: minor
+  affiliations:
+  - Unknown
 
 - github_username: currocam
   name: Campuzano, Curro
@@ -428,6 +449,8 @@ contributors:
   lines_deleted: 1
   lines_net: 28
   contribution: minor
+  affiliations:
+  - Unknown
 
 - github_username: daikitag
   emails: []
@@ -444,6 +467,7 @@ contributors:
   lines_added: 2027
   lines_deleted: 922
   lines_net: 1105
+  contribution: substantial
   affiliations:
   - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
@@ -470,6 +494,8 @@ contributors:
   contribution: minor
   notes: The diff looks trivial, but it fixes a substantial issue and
     involved some real debugging.
+  affiliations:
+  - Unknown
 
 - github_username: mmosmond
   name: Osmond, Matthew M
@@ -480,6 +506,8 @@ contributors:
   lines_deleted: 217
   lines_net: 680
   contribution: substantial
+  affiliations:
+  - Unknown
 
 - github_username: nikbaya
   name: Baya, Nik
@@ -502,6 +530,8 @@ contributors:
   lines_deleted: 2
   lines_net: 24
   contribution: minor
+  affiliations:
+  - Unknown
 
 - github_username: saunack
   name: Saunack, Kumar
@@ -512,6 +542,8 @@ contributors:
   lines_deleted: 23
   lines_net: 100
   contribution: minor
+  affiliations:
+  - IIT Bombay, Powai, Mumbai 400 076, Maharashtra, India
 
 - github_username: terhorst
   name: Terhorst, Jonathan
@@ -522,6 +554,8 @@ contributors:
   lines_deleted: 0
   lines_net: 44
   contribution: minor
+  affiliations:
+  - Department of Statistics, University of Michigan, Ann Arbor, MI, 48109, USA
 
 - github_username: winni2k
   name: Kretzschumar, Warren W
@@ -558,11 +592,15 @@ contributors:
   lines_net: 0
   contribution: minor
   notes: Currently trivial contribution but update to minor after PR 3366
+  affiliations:
+  - Unknown
 
 - github_username: aabiddanda
   name: Biddanda, Arjun
   contribution: minor
   notes: Added better support for streams in tszip
+  affiliations:
+  - Unknown
 
 - github_username: sgravel
   name: Gravel, Simon
@@ -582,9 +620,13 @@ contributors:
   name: Deng, Yun
   contribution: substantial
   notes: Community organisation
+  affiliations:
+  - Unknown
 
 - github_username: bhaller
   name: Haller, Ben
   contribution: substantial
   notes: Input into tskit API and data model design
+  affiliations:
+  - Dept. of Computational Biology, Cornell University, Ithaca, NY 14850, USA.
 
