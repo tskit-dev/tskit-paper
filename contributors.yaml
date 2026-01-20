@@ -598,11 +598,11 @@ contributors:
   - Unknown
 
 - github_username: bhaller
-  name: Haller, Ben
+  name: Haller, Benjamin C.
   contribution: substantial
   notes: Input into tskit API and data model design
   affiliations:
-  - Dept. of Computational Biology, Cornell University, Ithaca, NY 14850, USA.
+  - Dept. of Computational Biology, Cornell University, Ithaca, NY 14853, USA.
 
 
 # Trivial contributions
