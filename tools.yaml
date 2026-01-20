@@ -32,7 +32,7 @@
   repo: https://github.com/sgkit-dev/bio2zarr
   interface: Python
   type: format_conversion
-  package: pypi, conda
+  package: pypi, conda, guix
   publication: https://doi.org/10.1093/gigascience/giaf049
 
 - name: gIMble
@@ -77,7 +77,7 @@
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
-  package: pypi
+  package: pypi, guix
   interface: Python
   type: parameter_inference
   note: Reimplementation of gaia R package.
@@ -175,14 +175,14 @@
   # publication: https://doi.org/10.1093/genetics/iyab229
   publication: https://doi.org/10.1371/journal.pcbi.1004842
   interface: C, Python
-  package: pypi, conda
+  package: pypi, conda, guix
   type: simulation
 
 - name: pyslim
   repo: https://github.com/tskit-dev/pyslim
   publication: https://doi.org/10.1101/2025.09.30.679676
   type: simulation
-  package: pypi, conda
+  package: pypi, conda, guix
   interface: Python
 
 - name: tstrait
@@ -190,26 +190,27 @@
   publication: https://doi.org/10.1093/bioinformatics/btae334
   interface: Python
   type: simulation
-  package: pypi, conda
+  package: pypi, conda, guix
 
 - name: SLiM
   repo: https://github.com/MesserLab/SLiM
   publication: https://doi.org/10.1093/molbev/msy228
   interface: C
   type: simulation
+  package: conda, guix
 
 - name: fwdpy11
   repo: https://github.com/molpopgen/fwdpy11
   publication: https://doi.org/10.1534/genetics.119.302662
   interface: C, Python
-  package: pypi, conda
+  package: pypi, conda, guix
   type: simulation
 
 - name: stdpopsim
   repo: https://github.com/popsim-consortium/stdpopsim
   publication: https://doi.org/10.7554/eLife.54967
   interface: Python
-  package: pypi, conda
+  package: pypi, conda, guix
   type: simulation
 
 - name: RADinitio
@@ -245,13 +246,14 @@
   type: simulation
   interface: Python
   notes: Not primarly simulator, but includes a frontend for running msprime simulations.
+  package: guix
 
 
 - name: tsinfer
   repo: https://github.com/tskit-dev/tsinfer
   publication: https://doi.org/10.1038/s41588-019-0483-y
   interface: C, Python
-  package: pypi, conda
+  package: pypi, conda, guix
   type: arg_inference
 
 - name: sc2ts
@@ -266,7 +268,7 @@
   publication: https://doi.org/10.1126/science.abi8264
   interface: Python
   type: arg_inference
-  package: pypi, conda
+  package: pypi, conda, guix
 
 - name: Relate
   repo: https://github.com/MyersGroup/relate
@@ -274,6 +276,7 @@
   type: arg_inference
   interface: C
   notes: Strictly, relate_lib converts to tskit, but seems like hair-splitting
+  package: guix
 
 - name: ARGneedle
   repo: https://github.com/palamaralab/arg_needle
@@ -287,7 +290,7 @@
   repo: https://github.com/palamaralab/threads
   publication: https://doi.org/10.1101/2024.08.31.610248
   interface: Python
-  package: pypi
+  package: pypi, guix
   type: arg_inference
 
 - name: sticcs
@@ -308,12 +311,14 @@
   publication: https://doi.org/10.1038/s41588-025-02317-9
   interface: Python
   type: arg_inference
+  package: guix
 
 - name: POLEGON
   repo: https://github.com/YunDeng98/POLEGON
   publication: https://doi.org/10.1073/pnas.2504461122
   type: arg_inference
   interface: Python
+  package: guix
 
 - name: mrpast
   repo: https://github.com/aprilweilab/mrpast
@@ -339,7 +344,7 @@
   repo: https://github.com/osmond-lab/sparg
   publication: https://doi.org/10.1093/g3journal/jkaf214
   type: parameter_inference
-  package: pypi
+  package: pypi, guix
   interface: Python
 
 - name: mapNN
@@ -352,35 +357,35 @@
   repo: https://github.com/tskit-dev/tsinfer
   publication: https://doi.org/10.1093/bioinformatics/btaf393
   type: visualisation
-  package: pypi
+  package: pypi, guix
   interface: Python
 
 - name: tskit-arg-visualizer
   repo: https://github.com/kitchensjn/tskit_arg_visualizer
   publication: https://doi.org/10.1093/bioadv/vbaf302
   type: visualisation
-  package: pypi
+  package: pypi, guix
   interface: Python
 
 - name: ARGscape
   repo: https://github.com/chris-a-talbot/argscape
   publication: https://doi.org/10.48550/arXiv.2510.07255
   type: visualisation
-  package: pypi
+  package: pypi, guix
   interface: Python
 
 - name: tscompare
   repo: https://github.com/tskit-dev/tsbrowse
   publication: https://doi.org/10.1093/genetics/iyaf198
   type: analysis
-  package: pypi
+  package: pypi, guix
   interface: Python
 
 - name: tspop
   repo: https://github.com/gtsambos/tspop
   publication: https://doi.org/10.1093/bioadv/vbad163
   type: analysis
-  package: pypi
+  package: pypi, guix
   interface: Python
 
 - name: twisst2
