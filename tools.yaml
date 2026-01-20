@@ -2,7 +2,14 @@
 # - looking up deps.dev for tskit/msprime
 # - inspecting GitHub dependents graph
 # - looking up conda dependents using script conda_lookup.py
-#
+
+- name: CLUES2
+  repo: https://github.com/avaughn271/CLUES2
+  interface: Python
+  type: parameter_inference
+  publication: https://doi.org/10.1371/journal.pgen.1008384
+  note: tskit is only used to convert SINGER output to CLUES format.
+
 - name: tskibd
   repo: https://github.com/bguo068/tskibd
   interface: C
