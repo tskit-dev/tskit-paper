@@ -396,24 +396,6 @@ contributors:
   affiliations:
   - Unknown
 
-- github_username: LukeAndersonTrocme
-  emails:
-  - luke.anderson.trocme@gmail.com
-  commits: 1
-  lines_added: 1
-  lines_deleted: 1
-  lines_net: 0
-  contribution: trivial
-
-- github_username: PalashLalwani
-  emails:
-  - palash.lalwani04@gmail.com
-  commits: 1
-  lines_added: 4
-  lines_deleted: 2
-  lines_net: 2
-  contribution: trivial
-
 - github_username: brieuclehmann
   name: Lehmann, Brieuc
   emails:
@@ -451,14 +433,6 @@ contributors:
   contribution: minor
   affiliations:
   - Unknown
-
-- github_username: daikitag
-  emails: []
-  commits: 1
-  lines_added: 3
-  lines_deleted: 0
-  lines_net: 3
-  contribution: trivial
 
 - github_username: hfr1tz3
   name: Fritze, Halley
@@ -629,4 +603,33 @@ contributors:
   notes: Input into tskit API and data model design
   affiliations:
   - Dept. of Computational Biology, Cornell University, Ithaca, NY 14850, USA.
+
+
+# Trivial contributions
+
+- github_username: LukeAndersonTrocme
+  emails:
+  - luke.anderson.trocme@gmail.com
+  commits: 1
+  lines_added: 1
+  lines_deleted: 1
+  lines_net: 0
+  contribution: trivial
+
+- github_username: PalashLalwani
+  emails:
+  - palash.lalwani04@gmail.com
+  commits: 1
+  lines_added: 4
+  lines_deleted: 2
+  lines_net: 2
+  contribution: trivial
+
+- github_username: daikitag
+  emails: []
+  commits: 1
+  lines_added: 3
+  lines_deleted: 0
+  lines_net: 3
+  contribution: trivial
 
