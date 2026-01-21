@@ -627,10 +627,13 @@ contributors:
 
 - github_username: YunDeng98
   name: Deng, Yun
+  emails: 
+  - yundeng@stanford.edu
+  orcid: https://orcid.org/0000-0003-2802-2546
   contribution: substantial
   notes: Community organisation
-  affiliations:
-  - Unknown
+  affiliations: 
+  - Department of Genetics, Stanford University, Stanford, CA 94305, USA
 
 - github_username: bhaller
   name: Haller, Benjamin C.
