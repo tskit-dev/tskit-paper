@@ -409,14 +409,14 @@ contributors:
   name: Belsare, Saurabh
   emails:
   - saurabhmbelsare@gmail.com
-  - smbelsare@gmail.com
+  orcid: https://orcid.org/0000-0002-8148-1867
   commits: 2
   lines_added: 474
   lines_deleted: 0
   lines_net: 474
   contribution: minor
   affiliations:
-  - Unknown
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: brieuclehmann
   name: Lehmann, Brieuc
