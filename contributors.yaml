@@ -312,6 +312,7 @@ contributors:
   name: Gladstein, Ariella
   emails:
   - algladstein@gmail.com
+  orcid: https://orcid.org/0000-0001-7735-2336
   commits: 3
   lines_added: 106
   lines_deleted: 34
@@ -321,7 +322,7 @@ contributors:
     Code contributions are small documentation edits, but also sustained
     ecosystem contributions.
   affiliations:
-  - Department of Genetics, University of North Carolina at Chapel Hill, NC 27599-7264, USA
+  - Department of Human Genetics, University of California, Los Angeles, CA 90095, USA
 
 - github_username: hanbin973
   name: Lee, Hanbin
