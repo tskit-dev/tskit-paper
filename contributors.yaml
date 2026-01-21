@@ -640,10 +640,12 @@ contributors:
   - Department of Cell and Molecular Biology, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Uppsala University, Husargatan 3, SE-752 37 Uppsala, Sweden
 
 - github_username: tforest
-  name: Forest, Thomas
+  name: Forest, Thomas B.
+  emails:
+    - thomas@frst.tf
   orcid: https://orcid.org/0000-0003-3911-5705
   contribution: substantial
-  notes: Contributed PR on AFS time windows (https://github.com/tskit-dev/tskit/pull/3266). Commits squashed out by petrelharp?
+  notes: Contributed PR on AFS time windows (https://github.com/tskit-dev/tskit/pull/3266). Commits squashed out by petrelharp? Yes
   affiliations:
   - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
