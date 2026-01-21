@@ -11,7 +11,7 @@ contributors:
   name: Jeffery, Ben
   emails:
   - ben.jeffery@bdi.ox.ac.uk
-  - ben.jeffery@gmail.com
+  orcid: https://orcid.org/0000-0002-1982-6801
   commits: 677
   lines_added: 84926
   lines_deleted: 55382
@@ -25,8 +25,6 @@ contributors:
   name: Wong, Yan
   emails:
   - yan.wong@bdi.ox.ac.uk
-  - yan@pixie.org.uk
-  - yan@yanwong.me
   commits: 375
   lines_added: 50920
   lines_deleted: 36639
@@ -62,7 +60,7 @@ contributors:
   contribution: major
   class: first
   affiliations:
-    - Melbourne Integrative Genomics, School of Mathematics and Statistics, University of Melbourne, Victoria, 3010, Australia
+  - Melbourne Integrative Genomics, School of Mathematics and Statistics, University of Melbourne, Victoria, 3010, Australia
 
 - github_username: petrelharp
   name: Ralph, Peter
@@ -82,6 +80,7 @@ contributors:
   name: Kelleher, Jerome
   emails:
   - jk@well.ox.ac.uk
+  orcid: https://orcid.org/0000-0002-7894-5253
   commits: 824
   lines_added: 180670
   lines_deleted: 55309
@@ -603,6 +602,14 @@ contributors:
   notes: Input into tskit API and data model design
   affiliations:
   - Dept. of Computational Biology, Cornell University, Ithaca, NY 14853, USA.
+
+- github_username: percyfal
+  name: Unneberg, Per
+  orcid: https://orcid.org/0000-0001-5735-3315
+  contribution: minor
+  notes: Instrumental for several tskit workshops, e.g. https://ebp-nor.github.io/GARG/
+  affiliations:
+  - Department of Cell and Molecular Biology, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Uppsala University, Uppsala, Sweden}
 
 
 # Trivial contributions
