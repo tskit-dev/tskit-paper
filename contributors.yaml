@@ -513,13 +513,14 @@ contributors:
   name: Shemirani, Ruhollah
   emails:
   - shemirani.r@gmail.com
+  orcid: https://orcid.org/0000-0003-1065-7244
   commits: 1
   lines_added: 26
   lines_deleted: 2
   lines_net: 24
   contribution: minor
   affiliations:
-  - Unknown
+  - Institute for Genomic Health, Icahn School of Medicine at Mount Sinai, NY, 10029, US
 
 - github_username: saunack
   name: Saunack, Kumar
