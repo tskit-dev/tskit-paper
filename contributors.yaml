@@ -567,8 +567,10 @@ contributors:
   lines_deleted: 2
   lines_net: 0
   contribution: minor
+  orcid: https://orcid.org/0000-0002-3998-5981
   notes: Minor packaging change to tskit, but contributed more substantially to tskit-rust
   affiliations:
+  - Center for Vaccine Development and Global Health, University of Maryland School of Medicine, Baltimore, MD, 21201, USA
   - Institute for Genome Sciences, University of Maryland School of Medicine, Baltimore, MD, 21201, USA
 
 - github_username: alxsimon
