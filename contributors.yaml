@@ -599,10 +599,13 @@ contributors:
 
 - github_username: bhaller
   name: Haller, Benjamin C.
+  emails:
+  - bhaller@mac.com
+  orcid: https://orcid.org/0000-0003-1874-8327
   contribution: substantial
   notes: Input into tskit API and data model design
   affiliations:
-  - Dept. of Computational Biology, Cornell University, Ithaca, NY 14853, USA.
+  - Dept. of Computational Biology, Cornell University, Ithaca, NY 14853, USA
 
 - github_username: percyfal
   name: Unneberg, Per
