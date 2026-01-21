@@ -429,14 +429,15 @@ contributors:
 - github_username: chriscrsmith
   name: Smith, Chris
   emails:
-  - chriscs@colorado.edu
+  - chriscs@iu.edu
+  orcid: https://orcid.org/0000-0002-6470-3413
   commits: 1
   lines_added: 37
   lines_deleted: 2
   lines_net: 35
   contribution: minor
   affiliations:
-  - Unknown
+  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: currocam
   name: Campuzano, Curro
