@@ -616,11 +616,13 @@ contributors:
 
 - github_username: percyfal
   name: Unneberg, Per
+  emails:
+    - per.unneberg@scilifelab.se
   orcid: https://orcid.org/0000-0001-5735-3315
   contribution: minor
   notes: Instrumental for several tskit workshops, e.g. https://ebp-nor.github.io/GARG/
   affiliations:
-  - Department of Cell and Molecular Biology, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Uppsala University, Uppsala, Sweden
+  - Department of Cell and Molecular Biology, National Bioinformatics Infrastructure Sweden, Science for Life Laboratory, Uppsala University, Husargatan 3, SE-752 37 Uppsala, Sweden
 
 - github_username: tforest
   name: Forest, Thomas
