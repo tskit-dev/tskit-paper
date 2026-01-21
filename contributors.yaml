@@ -356,12 +356,13 @@ contributors:
   name: Gorjanc, Gregor
   emails:
   - gregor.gorjanc@gmail.com
+  orcid: https://orcid.org/0000-0001-8008-2787
   commits: 2
   lines_added: 12
   lines_deleted: 6
   lines_net: 6
   contribution: substantial
-  notes: Minor to tskit repo, but leadership, ecosystem & tskitR.
+  notes: Minor to tskit repo, but leadership, ecosystem & RcppTskit.
   affiliations:
   - The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, EH25 9RG, UK
 
@@ -378,13 +379,17 @@ contributors:
 
 - github_username: minesrebollo
   name: Rebollo, Inés
+  email:
+  - minesrebollo@gmail.com
+  orcid: https://orcid.org/0000-0002-9899-0801
   commits: 2
   lines_added: 19
   lines_deleted: 18
   lines_net: 1
   contribution: minor
   affiliations:
-  - Unknown
+  - Instituto Nacional de Investigación Agropecuaria (INIA), Estación Experimental Las Brujas, Ruta 48 km 10, Canelones, Uruguay
+  - Department of Statistics, Universidad de la República, College of Agriculture, Garzón 780, Montevideo, Uruguay
 
 - github_username: saurabhbelsare
   name: Belsare, Saurabh
