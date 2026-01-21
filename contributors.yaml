@@ -375,15 +375,17 @@ contributors:
   - The Roslin Institute and Royal (Dick) School of Veterinary Studies, University of Edinburgh, EH25 9RG, UK
 
 - github_username: maz-mckellar
-  name: Aspbury, Maz
-  emails: []
+  name: Aspbury, Marianne
+  emails:
+  - maz.aspbury@gmail.com
+  orcid: https://orcid.org/0000-0002-4476-3005
   commits: 2
   lines_added: 348
   lines_deleted: 8
   lines_net: 340
   contribution: minor
   affiliations:
-  - Unknown
+  - Department of Paediatrics, University of Oxford, Oxford, UK
 
 - github_username: minesrebollo
   name: Rebollo, Inés
