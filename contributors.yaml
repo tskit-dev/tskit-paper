@@ -572,9 +572,12 @@ contributors:
 - github_username: aabiddanda
   name: Biddanda, Arjun
   contribution: minor
+  emails:
+    - aabiddanda@gmail.com
+  orcid: https://orcid.org/0000-0003-1861-1523
   notes: Added better support for streams in tszip
   affiliations:
-  - Unknown
+  - Department of Biology, Johns Hopkins University, Baltimore, MD, 21218, USA
 
 - github_username: sgravel
   name: Gravel, Simon
