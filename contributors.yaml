@@ -493,9 +493,10 @@ contributors:
   - Unknown
 
 - github_username: nikbaya
-  name: Baya, Nik
+  name: Baya, Nikolas A
   emails:
   - nikolasbaya@gmail.com
+  orcid: https://orcid.org/0000-0002-4681-374X
   commits: 1
   lines_added: 339
   lines_deleted: 0
