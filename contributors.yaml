@@ -318,13 +318,14 @@ contributors:
   name: Lee, Hanbin
   emails:
   - hanbin973@gmail.com
+  orcid: https://orcid.org/0000-0002-4545-0027
   commits: 3
   lines_added: 957
   lines_deleted: 5
   lines_net: 952
   contribution: substantial
   affiliations:
-  - Department of Statistics, University of Michigan, Ann Arbor, MI, 48109, USA
+  - Department of Statistics, University of Michigan, Ann Arbor, MI 48109, USA
 
 - github_username: savitakartik
   name: Karthikeyan, Savita
