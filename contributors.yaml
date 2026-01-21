@@ -98,6 +98,7 @@ contributors:
   name: Zhan, Shing H
   emails:
   - shing.zhan@gmail.com
+  orcid: https://orcid.org/0000-0002-6351-8873
   commits: 19
   lines_added: 1668
   lines_deleted: 488
@@ -105,6 +106,7 @@ contributors:
   contribution: substantial
   affiliations:
   - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
+  - Infectious Disease Epidemiology Unit (IDEU), Nuffield Department of Population Health, University of Oxford, OX3 7LF, UK
 
 - github_username: daniel-goldstein
   name: Goldstein, Daniel
