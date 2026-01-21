@@ -410,7 +410,7 @@ contributors:
   name: Lehmann, Brieuc
   emails:
   - b.lehmann@ucl.ac.uk
-  - brieuc.lehmann@bdi.ox.ac.uk
+  orcid: https://orcid.org/0000-0002-7302-4391
   commits: 14
   lines_added: 1363
   lines_deleted: 636
@@ -418,7 +418,7 @@ contributors:
   notes: manually merged contributions from two email addresses
   contribution: substantial
   affiliations:
-  - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
+  - Department of Statistical Science, University College London, London, WC1E 7HB, UK
 
 - github_username: chriscrsmith
   name: Smith, Chris
