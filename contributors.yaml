@@ -437,14 +437,16 @@ contributors:
 
 - github_username: hfr1tz3
   name: Fritze, Halley
-  emails: []
+  emails: 
+  - halley.fritze@gmail.com
+  orcid: https://orcid.org/0000-0002-1171-2068
   commits: 1
   lines_added: 2027
   lines_deleted: 922
   lines_net: 1105
   contribution: substantial
   affiliations:
-  - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
+  - Department of Statistics, University of Michigan, Ann Arbor, MI, 48109, USA
 
 - github_username: ivan-krukov
   name: Krukov, Ivan
