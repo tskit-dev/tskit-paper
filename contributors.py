@@ -31,6 +31,9 @@ def main():
     df = df[df["contribution"] != "trivial"]
     print("Total authors = ", df.shape[0])
 
+    # for _, row in df.sort_values("name").iterrows():
+    #     print(f"- [] {row['github_username']}")
+
     authors = []
     # first authors
     dfs = df[df["class"] == "first"]  # Keep the first author sorting
