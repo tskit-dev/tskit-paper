@@ -584,7 +584,10 @@ contributors:
   - Department of Human Genetics, McGill University, Montr\'eal, QC H3A 0C7, Canada
 
 - github_username: apragsdale
-  name: Ragsdale, Aaron
+  name: Ragsdale, Aaron P.
+  emails:
+  - apragsdale@wisc.edu
+  orcid: https://orcid.org/0000-0003-0715-3432
   contribution: substantial
   notes: LD stats design and implementation
   affiliations:
