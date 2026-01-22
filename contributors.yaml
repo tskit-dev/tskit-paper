@@ -594,7 +594,9 @@ contributors:
 
 - github_username: alxsimon
   name: Simon, Alexis
-  emails: []
+  emails:
+    - alexis.simon@normalesup.org
+  orcid: https://orcid.org/0000-0002-6176-5045
   commits: 1
   lines_added: 1
   lines_deleted: 1
@@ -602,7 +604,7 @@ contributors:
   contribution: minor
   notes: Currently trivial contribution but update to minor after PR 3366
   affiliations:
-  - Unknown
+  - Sorbonne Université, CNRS, UMR 7144 AD2M, DiSEEM, Station Biologique de Roscoff, France
 
 - github_username: aabiddanda
   name: Biddanda, Arjun
