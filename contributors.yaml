@@ -544,6 +544,8 @@ contributors:
   lines_deleted: 23
   lines_net: 100
   contribution: minor
+  affiliations:
+  - Independent researcher
 
 - github_username: terhorst
   name: Terhorst, Jonathan
