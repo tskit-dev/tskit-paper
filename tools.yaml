@@ -89,7 +89,7 @@
   repo: https://github.com/lineagekit/lineagekit
   interface: Python
   type: analysis
-  package: pypi
+  package: pip
   note: Unclear if there's much functionality here yet
 
 - name: gaia
@@ -100,101 +100,101 @@
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
-  package: pypi, guix
+  package: pip, guix
   interface: Python
   type: popgen_inf
   note: Reimplementation of gaia R package.
 
 - name: fastgaia
   repo: https://github.com/chris-a-talbot/fastgaia
-  package: pypi, guix
+  package: pip, guix
   interface: Python
   type: popgen_inf
 
 - name: espalier
   repo: https://github.com/davidrasm/Espalier
-  package: pypi
+  package: pip
   interface: Python
   type: arg_inference
   publication: https://doi.org/10.1093/sysbio/syad040
 
 - name: GADMA
   repo: https://github.com/ctlab/gadma
-  package: pypi
+  package: pip
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/gigascience/giad059
 
 - name: spaceprime
   repo: https://github.com/connor-french/spaceprime
-  package: pypi
+  package: pip
   interface: Python
   type: simulation
 
 - name: arg-lmm
   repo: https://github.com/PalamaraLab/arg-lmm
-  package: pypi
+  package: pip
   interface: Python
   type: statgen_inf
   publication: https://doi.org/10.1016/j.xgen.2025.101072
 
 - name: transmission
   repo: https://github.com/mpjuers/transmission
-  package: pypi
+  package: pip
   interface: Python
   type: popgen_inf
 
 - name: ReLERNN
   repo: https://github.com/kr-colab/ReLERNN
-  package: pypi
+  package: pip
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/molbev/msaa038
 
 - name: momi2
   repo: https://github.com/popgenmethods/momi2
-  package: pypi
+  package: pip
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1080/01621459.2019.1635482
 
 - name: dnadna
   repo: https://gitlab.com/mlgenetics/dnadna
-  package: pypi, conda
+  package: pip, conda
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/bioinformatics/btac765
 
 - name: dinf
   repo: https://github.com/racimolab/dinf
-  package: pypi, conda
+  package: pip, conda
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1101/2023.04.27.538386
 
 - name: DISMaL
   repo: https://github.com/simonharnqvist/DISMaL
-  package: pypi
+  package: pip
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1016/j.tpb.2021.03.001
 
 - name: disperseNN2
   repo: https://github.com/kr-colab/disperseNN2
-  package: pypi
+  package: pip
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1186/s12859-023-05522-7
 
 - name: adnator
   repo: https://github.com/jazpy/adnator
-  package: pypi
+  package: pip
   interface: Python
   type: simulation
 
 - name: cnasim
   repo: https://github.com/samsonweiner/cnasim
-  package: pypi
+  package: pip
   interface: Python
   type: simulation
   publication: https://doi.org/10.1093/bioinformatics/btad434
@@ -204,14 +204,14 @@
   # publication: https://doi.org/10.1093/genetics/iyab229
   publication: https://doi.org/10.1371/journal.pcbi.1004842
   interface: C, Python
-  package: pypi, conda, guix
+  package: pip, conda, guix
   type: simulation
 
 - name: pyslim
   repo: https://github.com/tskit-dev/pyslim
   publication: https://doi.org/10.1101/2025.09.30.679676
   type: simulation
-  package: pypi, conda, guix
+  package: pip, conda, guix
   interface: Python
 
 - name: tstrait
@@ -219,7 +219,7 @@
   publication: https://doi.org/10.1093/bioinformatics/btae334
   interface: Python
   type: simulation
-  package: pypi, conda, guix
+  package: pip, conda, guix
 
 - name: SLiM
   repo: https://github.com/MesserLab/SLiM
@@ -232,20 +232,20 @@
   repo: https://github.com/molpopgen/fwdpy11
   publication: https://doi.org/10.1534/genetics.119.302662
   interface: C, Python
-  package: pypi, conda, guix
+  package: pip, conda, guix
   type: simulation
 
 - name: stdpopsim
   repo: https://github.com/popsim-consortium/stdpopsim
   publication: https://doi.org/10.7554/eLife.54967
   interface: Python
-  package: pypi, conda, guix
+  package: pip, conda, guix
   type: simulation
 
 - name: RADinitio
   publication: https://doi.org/10.1111/1755-0998.13163
   interface: Python
-  package: pypi
+  package: pip
   type: simulation
   note: No repo, homepage https://catchenlab.life.illinois.edu/radinitio/
 
@@ -266,7 +266,7 @@
   repo: https://github.com/drewhart/geonomics
   publication: https://doi.org/10.1093/molbev/msab175
   interface: Python
-  package: pypi
+  package: pip
   type: simulation
 
 - name: TwisstNTern
@@ -281,14 +281,14 @@
   repo: https://github.com/tskit-dev/tsinfer
   publication: https://doi.org/10.1038/s41588-019-0483-y
   interface: C, Python
-  package: pypi, conda, guix
+  package: pip, conda, guix
   type: arg_inference
 
 - name: sc2ts
   repo: https://github.com/tskit-dev/sc2ts
   publication: https://doi.org/10.1101/2023.06.08.544212
   interface: Python
-  package: pypi
+  package: pip
   type: arg_inference
 
 - name: tsdate
@@ -296,7 +296,7 @@
   publication: https://doi.org/10.1126/science.abi8264
   interface: Python
   type: arg_inference
-  package: pypi, conda, guix
+  package: pip, conda, guix
 
 - name: Relate
   repo: https://github.com/MyersGroup/relate
@@ -317,7 +317,7 @@
   repo: https://github.com/palamaralab/arg_needle
   publication: https://doi.org/10.1038/s41588-023-01379-x
   interface: Python
-  package: pypi
+  package: pip
   type: arg_inference
   note: Work doesn't seem to be on openalex for some reason
 
@@ -325,7 +325,7 @@
   repo: https://github.com/palamaralab/threads
   publication: https://doi.org/10.1101/2024.08.31.610248
   interface: Python
-  package: pypi, guix
+  package: pip, guix
   type: arg_inference
 
 - name: sticcs
@@ -338,7 +338,7 @@
   repo: https://github.com/alimahmoudi29/arginfer
   publication: https://doi.org/10.1371/journal.pcbi.1009960
   interface: Python
-  package: pypi
+  package: pip
   type: arg_inference
 
 - name: SINGER
@@ -359,14 +359,14 @@
   repo: https://github.com/aprilweilab/mrpast
   publication: https://doi.org/10.1101/2025.10.07.680347
   type: popgen_inf
-  package: pypi
+  package: pip
   interface: Python
 
 - name: phlash
   repo: https://github.com/jthlab/phlash
   publication: https://doi.org/10.1038/s41588-025-02323-x
   type: popgen_inf
-  package: pypi
+  package: pip
   interface: Python
 
 - name: spacetrees
@@ -379,7 +379,7 @@
   repo: https://github.com/osmond-lab/sparg
   publication: https://doi.org/10.1093/g3journal/jkaf214
   type: popgen_inf
-  package: pypi, guix
+  package: pip, guix
   interface: Python
 
 - name: mapNN
@@ -392,35 +392,35 @@
   repo: https://github.com/tskit-dev/tsbrowse
   publication: https://doi.org/10.1093/bioinformatics/btaf393
   type: visualisation
-  package: pypi, guix
+  package: pip, guix
   interface: Python
 
 - name: tskit-arg-visualizer
   repo: https://github.com/kitchensjn/tskit_arg_visualizer
   publication: https://doi.org/10.1093/bioadv/vbaf302
   type: visualisation
-  package: pypi, guix
+  package: pip, guix
   interface: Python
 
 - name: ARGscape
   repo: https://github.com/chris-a-talbot/argscape
   publication: https://doi.org/10.48550/arXiv.2510.07255
   type: visualisation
-  package: pypi, guix
+  package: pip, guix
   interface: Python
 
 - name: tscompare
   repo: https://github.com/tskit-dev/tscompare
   publication: https://doi.org/10.1093/genetics/iyaf198
   type: analysis
-  package: pypi, guix
+  package: pip, guix
   interface: Python
 
 - name: tspop
   repo: https://github.com/gtsambos/tspop
   publication: https://doi.org/10.1093/bioadv/vbad163
   type: analysis
-  package: pypi, guix
+  package: pip, guix
   interface: Python
 
 - name: twisst2
@@ -446,7 +446,7 @@
   repo: https://github.com/awohns/ldgm
   publication: https://doi.org/10.1038/s41588-023-01487-8
   type: statgen_inf
-  package: pypi
+  package: pip
   interface: Python
 
 - name: SCAR
