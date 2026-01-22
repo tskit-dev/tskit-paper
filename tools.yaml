@@ -301,6 +301,13 @@
   notes: Strictly, relate_lib converts to tskit, but seems like hair-splitting
   package: guix
 
+- name: Colate
+  repo: https://github.com/leospeidel/Colate
+  publication: https://doi.org/10.1093/molbev/msab174
+  type: parameter_inference
+  interface: C
+  notes: Definitely compiled into Colate binary
+
 - name: ARGneedle
   repo: https://github.com/palamaralab/arg_needle
   publication: https://doi.org/10.1038/s41588-023-01379-x
