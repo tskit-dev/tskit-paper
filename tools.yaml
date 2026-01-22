@@ -51,6 +51,13 @@
   publication: https://doi.org/10.1038/s43588-024-00739-9
   notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``
 
+- name: gfkit
+  repo: https://github.com/lukashuebner/gfkit
+  interface: C
+  type: format_conversion
+  publication: https://doi.org/10.4230/LIPIcs.WABI.2024.5
+  notes: Uses tskit as it's input format, so ``format conversion'' is OK
+
 - name: gIMble
   repo: https://github.com/LohseLab/gIMble
   interface: Python
