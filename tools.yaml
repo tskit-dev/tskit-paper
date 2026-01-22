@@ -10,7 +10,7 @@
   publication: https://doi.org/10.48550/arXiv.2511.21124
   package: julia
   notes: Uses msprime; available at https://juliahub.com/ui/Packages/General/Moonshine
-  implementation: julia
+  implementation: Julia
 
 - name: Terracotta
   repo: https://github.com/kitchensjn/terracotta
@@ -219,7 +219,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: simulation
-  implementation: Python
+  implementation: C,Python
 
 - name: pyslim
   repo: https://github.com/tskit-dev/pyslim
@@ -303,7 +303,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: arg_inference
-  implementation: Python
+  implementation: C,Python
 
 - name: sc2ts
   repo: https://github.com/tskit-dev/sc2ts
@@ -339,12 +339,12 @@
   implementation: C++
 
 - name: ARGneedle
-  repo: https://github.com/palamaralab/arg_needle
+  repo: https://github.com/palamaralab/arg-needle
   publication: https://doi.org/10.1038/s41588-023-01379-x
   interface: Python
   package: pip
   type: arg_inference
-  note: Work doesn't seem to be on openalex for some reason
+  implementation: C++,Python
 
 - name: Threads
   repo: https://github.com/palamaralab/threads
@@ -352,6 +352,7 @@
   interface: Python
   package: pip, guix
   type: arg_inference
+  implementation: C++,Python
 
 - name: sticcs
   repo: https://github.com/simonhmartin/sticcs
@@ -424,7 +425,8 @@
   interface: Python
   implementation: Python
 
-- name: tskit-arg-visualizer
+# Shortened name for display - sorry James!
+- name: tskit-arg-vis...
   repo: https://github.com/kitchensjn/tskit_arg_visualizer
   publication: https://doi.org/10.1093/bioadv/vbaf302
   type: visualisation

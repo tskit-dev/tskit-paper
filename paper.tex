@@ -86,7 +86,7 @@ method evaluation. Simulation capabilities have continued to expand,
 including whole-autosome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}.
 A growing ecosystem of simulation tools now builds directly on tskit
-(Table 1).
+(Table S1).
 
 % Inference methods interoperate through tskit, enabling evaluation and reuse
 % without imposing design choices.
@@ -98,7 +98,7 @@ tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tskit data model\cite{kelleher2019inferring}.
 Many recent ARG inference methods have chosen to support tskit
 as an output format, in addition to their
-own native representations (Table 1).
+own native representations (Table S1).
 This shared output layer enables inferred ARGs to
 interoperate directly with simulators, facilitating systematic evaluation and
 benchmarking against known ground truth. It also shifts the burden of format
@@ -133,7 +133,7 @@ well-tested core.
 The goal of tskit is to provide a shared technical foundation, centred on
 efficient, well-tested, and documented primitive operations on ARGs, rather
 than to directly implement end-user workflows. This design principle has
-enabled a broad ecosystem of downstream software (Table 1) and has established
+enabled a broad ecosystem of downstream software (Table S1) and has established
 tskit as foundational infrastructure for population-scale genetic
 analysis. With the release of tskit 1.0, long-term stability of the data model
 and APIs is explicitly guaranteed, reflecting a commitment to maintain this
@@ -183,19 +183,17 @@ into the main document for ease of review.
 
 \subsection*{Published tools using tskit}
 We performed a search for published software tools that use tskit.
-[TODO document details and exact inclusion criteria]
-
-Named software tools 
-that have been described in a publication that depend on tskit 
-are listed. For each tool we show the interface used, how the 
-tool is packaged, the year of the corresponding publication 
-and the number of citations according to data from OpenAlex
+For each tool listed in Table S1, we list: its name (with a clickable
+hyperlink to its source code repository); the primary implementation
+language(s) of the tool; the DOI (with clickable hyperlink) 
+of the publication in which this 
+tool was first described (or, in the case of SLiM, the first 
+publication in which tskit-based features were described); 
+and the year of publication and number of citations to this 
+publication according to data from OpenAlex
 (\url{https://openalex.org}). 
 
-\begin{center}
 \input{tools_table.tex}
-\end{center}
-
 
 
 \end{document}

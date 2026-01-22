@@ -161,6 +161,7 @@ def main():
     df = df[~df["publication"].isnull()]
     print("With publications:", df.shape[0])
     print(df[["name", "type", "interface", "package"]].sort_values("type"))
+    num_tools = df.shape[0]
 
     df["doi"] = [normalize_doi(doi) for doi in df["publication"]]
     oa_results = get_openalex_results(df["doi"])
@@ -178,17 +179,33 @@ def main():
         "analysis": "Analysis",
     }
     assert set(sections.keys()) == set(df["type"])
+    tblr_options = """
+        colspec=lllrr,
+        rowhead=1,
+        """
+    tblr_spec = f"""
+        long,
+        caption={{Summary of {num_tools} published software tools
+            depending on tskit. See the supplementary
+            text for details on the columns and inclusion criteria.}}
+    """
+
     with open("tools_table.tex", "w") as f:
-        print("\\begin{tblr}[long]{colspec=llrr,rowhead=1}", file=f)
+        print("\\begin{tblr}[", tblr_spec, "]{", tblr_options, "}", file=f)
         print("\\hline", file=f)
-        print("Name & Publication & Year & Citations \\\\", file=f)
+        print("Name & Language & Publication & Year & Cites \\\\", file=f)
         for section, label in sections.items():
             print("\\hline", file=f)
             print("\\SetCell[c=4]{c} \\textbf{", label, "}\\\\", file=f)
+            print("\\hline", file=f)
             dfs = df[df["type"] == section]
             dfs = dfs.sort_values(["year", "citations"], ascending=False)
             for _, row in dfs.iterrows():
                 print("\\href{", row["repo"], "}{", row["name"], "}&", file=f)
+                impl = row["implementation"]
+                if not isinstance(impl, str):
+                    impl = "?"
+                print(impl, "&", file=f)
                 # print(f"{row['interface']} &", file=f)
                 print("\\href{", row["publication"], "}{", row["doi"], "}&", file=f)
                 year = int(row["year"])
