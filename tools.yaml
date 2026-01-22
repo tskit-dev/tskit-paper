@@ -3,6 +3,14 @@
 # - inspecting GitHub dependents graph
 # - looking up conda dependents using script conda_lookup.py
 
+- name: Moonshine.jl
+  repo: https://github.com/ps-pat/Moonshine.jl
+  interface: Python
+  type: arg_inference
+  publication: https://doi.org/10.48550/arXiv.2511.21124
+  package: julia
+  notes: Uses msprime; available at https://juliahub.com/ui/Packages/General/Moonshine
+
 - name: Terracotta
   repo: https://github.com/kitchensjn/terracotta
   interface: Python
