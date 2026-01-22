@@ -453,16 +453,17 @@ contributors:
   - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: currocam
-  name: Campuzano, Curro
+  name: Campuzano Jiménez, Francisco
   emails:
-  - campuzanocurro@gmail.com
+  - curro.campuzanojimenez@uantwerpen.be
+  orcid: https://orcid.org/0000-0001-8285-9318
   commits: 1
   lines_added: 29
   lines_deleted: 1
   lines_net: 28
   contribution: minor
   affiliations:
-  - Unknown
+  - Department of Biology, University of Antwerp, Antwerp, 2610, Belgium
 
 - github_username: hfr1tz3
   name: Fritze, Halley
