@@ -429,12 +429,19 @@
 - name: dolores
   repo: https://github.com/a-ignatieva/dolores
   publication: https://doi.org/10.1093/molbev/msaf190
-  type: statgen
+  type: parameter_inference
+  interface: Python
+
+- name: spectre
+  repo: https://github.com/a-ignatieva/spectre
+  publication: https://doi.org/10.1093/genetics/iyaf184
+  type: parameter_inference
   interface: Python
 
 - name: coaldecoder
   repo: https://github.com/nspope/coaldecoder
   publication: https://doi.org/10.1073/pnas.2208116120
   type: parameter_inference
-  interface: R
+  interface: Python
+  notes: Presented as an R package, but not on CRAN.
 
