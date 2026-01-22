@@ -494,6 +494,13 @@
   package: pip
   implementation: Python
 
+- name: phylokit
+  repo: https://github.com/jeromekelleher/phylokit
+  interface: Python
+  type: analysis
+  note: In development experimental phylogenetics toolkit with a conversion from/to tskit trees.
+  implementation: Python
+
 - name: egrm
   repo: https://github.com/Ephraim-usc/egrm
   publication: https://doi.org/10.1016/j.ajhg.2022.03.016
