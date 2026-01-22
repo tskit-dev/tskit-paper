@@ -43,6 +43,14 @@
   package: pypi, conda, guix
   publication: https://doi.org/10.1093/gigascience/giaf049
 
+- name: grgl
+  repo: https://github.com/aprilweilab/grgl
+  interface: C
+  type: format_conversion
+  package: conda
+  publication: https://doi.org/10.1038/s43588-024-00739-9
+  notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``
+
 - name: gIMble
   repo: https://github.com/LohseLab/gIMble
   interface: Python
