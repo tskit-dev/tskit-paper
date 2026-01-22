@@ -163,13 +163,15 @@ contributors:
 - github_username: awohns
   name: Wohns, Anthony Wilder
   emails:
-  - awohns@gmail.com
+  - awwohns@stanford.edu
+  orcid: https://orcid.org/0000-0001-7353-1177
   commits: 11
   lines_added: 1902
   lines_deleted: 47
   lines_net: 1855
   contribution: substantial
   affiliations:
+  - Department of Genetics, Stanford University School of Medicine, Stanford, CA 94305, USA
   - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: andrewkern
