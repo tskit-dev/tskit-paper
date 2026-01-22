@@ -125,7 +125,7 @@
 
 - name: dinf
   repo: https://github.com/racimolab/dinf
-  package: pypi
+  package: pypi, conda
   interface: Python
   type: parameter_inference
   publication: https://doi.org/10.1101/2023.04.27.538386
