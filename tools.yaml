@@ -14,13 +14,13 @@
 - name: Terracotta
   repo: https://github.com/kitchensjn/terracotta
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   note: In development
 
 - name: CLUES2
   repo: https://github.com/avaughn271/CLUES2
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1371/journal.pgen.1008384
   note: tskit is only used to convert SINGER output to CLUES format
 
@@ -33,20 +33,20 @@
 - name: tslmm
   repo: https://github.com/hanbin973/tslmm
   interface: Python
-  type: statgen
+  type: statgen_inf
   publication: https://doi.org/10.1101/2025.07.14.664631v1
 
 - name: bio2zarr
   repo: https://github.com/sgkit-dev/bio2zarr
   interface: Python
-  type: format_conversion
+  type: analysis
   package: pypi, conda, guix
   publication: https://doi.org/10.1093/gigascience/giaf049
 
 - name: grgl
   repo: https://github.com/aprilweilab/grgl
   interface: C
-  type: format_conversion
+  type: analysis
   package: conda
   publication: https://doi.org/10.1038/s43588-024-00739-9
   notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``
@@ -54,14 +54,14 @@
 - name: gfkit
   repo: https://github.com/lukashuebner/gfkit
   interface: C
-  type: format_conversion
+  type: analysis
   publication: https://doi.org/10.4230/LIPIcs.WABI.2024.5
-  notes: Uses tskit as it's input format, so ``format conversion'' is OK
+  notes: Uses tskit as its input format
 
 - name: gIMble
   repo: https://github.com/LohseLab/gIMble
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   package: conda
   publication: https://doi.org/10.1371/journal.pgen.1010999
 
@@ -88,28 +88,28 @@
 - name: lineagekit
   repo: https://github.com/lineagekit/lineagekit
   interface: Python
-  type: misc
+  type: analysis
   package: pypi
   note: Unclear if there's much functionality here yet
 
 - name: gaia
   repo: https://github.com/blueraleigh/gaia
   interface: C
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1126/science.adp4642
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
   package: pypi, guix
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   note: Reimplementation of gaia R package.
 
 - name: fastgaia
   repo: https://github.com/chris-a-talbot/fastgaia
   package: pypi, guix
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
 
 - name: espalier
   repo: https://github.com/davidrasm/Espalier
@@ -122,7 +122,7 @@
   repo: https://github.com/ctlab/gadma
   package: pypi
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1093/gigascience/giad059
 
 - name: spaceprime
@@ -135,55 +135,55 @@
   repo: https://github.com/PalamaraLab/arg-lmm
   package: pypi
   interface: Python
-  type: statgen
+  type: statgen_inf
   publication: https://doi.org/10.1016/j.xgen.2025.101072
 
 - name: transmission
   repo: https://github.com/mpjuers/transmission
   package: pypi
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
 
 - name: ReLERNN
   repo: https://github.com/kr-colab/ReLERNN
   package: pypi
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1093/molbev/msaa038
 
 - name: momi2
   repo: https://github.com/popgenmethods/momi2
   package: pypi
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1080/01621459.2019.1635482
 
 - name: dnadna
   repo: https://gitlab.com/mlgenetics/dnadna
   package: pypi, conda
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1093/bioinformatics/btac765
 
 - name: dinf
   repo: https://github.com/racimolab/dinf
   package: pypi, conda
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1101/2023.04.27.538386
 
 - name: DISMaL
   repo: https://github.com/simonharnqvist/DISMaL
   package: pypi
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1016/j.tpb.2021.03.001
 
 - name: disperseNN2
   repo: https://github.com/kr-colab/disperseNN2
   package: pypi
   interface: Python
-  type: parameter_inference
+  type: popgen_inf
   publication: https://doi.org/10.1186/s12859-023-05522-7
 
 - name: adnator
@@ -309,7 +309,7 @@
 - name: Colate
   repo: https://github.com/leospeidel/Colate
   publication: https://doi.org/10.1093/molbev/msab174
-  type: parameter_inference
+  type: popgen_inf
   interface: C
   notes: Definitely compiled into Colate binary
 
@@ -358,34 +358,34 @@
 - name: mrpast
   repo: https://github.com/aprilweilab/mrpast
   publication: https://doi.org/10.1101/2025.10.07.680347
-  type: parameter_inference
+  type: popgen_inf
   package: pypi
   interface: Python
 
 - name: phlash
   repo: https://github.com/jthlab/phlash
   publication: https://doi.org/10.1038/s41588-025-02323-x
-  type: parameter_inference
+  type: popgen_inf
   package: pypi
   interface: Python
 
 - name: spacetrees
   repo: https://github.com/osmond-lab/spacetrees
   publication: https://doi.org/10.7554/eLife.72177
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
 
 - name: sparg
   repo: https://github.com/osmond-lab/sparg
   publication: https://doi.org/10.1093/g3journal/jkaf214
-  type: parameter_inference
+  type: popgen_inf
   package: pypi, guix
   interface: Python
 
 - name: mapNN
   repo: https://github.com/kr-colab/mapNN
   publication: https://doi.org/10.1111/1755-0998.14005
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
 
 - name: tsbrowse
@@ -432,72 +432,57 @@
 - name: egrm
   repo: https://github.com/Ephraim-usc/egrm
   publication: https://doi.org/10.1016/j.ajhg.2022.03.016
-  type: statgen
+  type: statgen_inf
   package: pip
   interface: Python
 
 - name: as-eGRM
   repo: https://github.com/jitang-github/asegrm
   publication: https://doi.org/10.1016/j.ajhg.2025.06.016
-  type: statgen
+  type: statgen_inf
   interface: Python
 
 - name: lgdm
   repo: https://github.com/awohns/ldgm
   publication: https://doi.org/10.1038/s41588-023-01487-8
-  type: statgen
+  type: statgen_inf
   package: pypi
   interface: Python
 
 - name: SCAR
   repo: https://github.com/sunnyfangfangguo/SCAR_project_repo
   publication: https://doi.org/10.1371/journal.pcbi.1010422
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
 
 - name: gLike
   repo: https://github.com/Ephraim-usc/glike
   publication: https://doi.org/10.1038/s41588-025-02129-x
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
 
 - name: dolores
   repo: https://github.com/a-ignatieva/dolores
   publication: https://doi.org/10.1093/molbev/msaf190
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
 
 - name: spectre
   repo: https://github.com/a-ignatieva/spectre
   publication: https://doi.org/10.1093/genetics/iyaf184
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
 
 - name: coaldecoder
   repo: https://github.com/nspope/coaldecoder
   publication: https://doi.org/10.1073/pnas.2208116120
-  type: parameter_inference
+  type: popgen_inf
   interface: Python
   notes: Presented as an R package, but not on CRAN.
 
 - name: RcppTskit
   repo: https://github.com/HighlanderLab/RcppTskit
   interface: C, R
-  type: misc
+  type: analysis
   note: R package providing access to the tskit C API for high-performance/low-level use cases.
 
-- name: pygrgl
-  repo: https://github.com/aprilweilab/grgl
-  interface: C++, Python
-  type: format_conversion
-  package: pypi
-  note: Genotype Representation Graph Library; includes conversion from a tskit tree sequence
-    to GRG format.
-
-- name: Moonshine.jl
-  repo: https://github.com/ps-pat/Moonshine.jl
-  interface: Julia
-  type: arg_inference
-  publication: https://arxiv.org/abs/2511.21124
-  note: Julia toolkit for ARG inference and analysis with interoperability with tskit tree
-    sequences.
