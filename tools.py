@@ -159,6 +159,7 @@ def main():
     df = pd.DataFrame(d)
     print("Total = ", df.shape[0])
     df = df[~df["publication"].isnull()]
+    print("With publications:", df.shape[0])
     print(df[["name", "type", "interface", "package"]].sort_values("type"))
 
     print(df["publication"])
@@ -169,13 +170,32 @@ def main():
     # print(oa_results)
     # print(df)
 
-    sections = ["simulation", "arg_inference", "parameter_inference",
-            "statgen", "visualisation", "format_conversion", "analysis"]
+    sections = {
+            "simulation": "Simulation",
+            "arg_inference": "ARG Intference",
+            "parameter_inference": "Population Genetic Inference",
+            "statgen": "Statistical Genetic Inference",
+            "visualisation": "Visualisation",
+            "format_conversion": "Data Processing",
+            "analysis": "Analysis"
+    }
 
-    for section in sections:
-        dfs = df[df["type"] == section][["name", "interface", "package", "year", "citations"]]
+    fields = ["name", "interface", "package", "year", "citations"]
+    for section, label in sections.items():
+        dfs = df[df["type"] == section][fields]
         dfs = dfs.sort_values(["year", "citations"], ascending=False)
-        print(dfs.to_latex(index=False, na_rep='', float_format="%.0f"))
+        s = dfs.to_latex(index=False, header=False, na_rep="", float_format="%.0f")
+        # print(s)
+        # print("\\midrule", file=f)
+        # print("\\multicolumn{5}{c}{\\textsc{" + label + "}} \\\\", file=f)
+        # print(label, "\\\\", file=f)
+        # print("\\midrule", file=f)
+        # \midrule
+        # \midrule
+        with open(f"rows/{section}.tex", "w") as f:
+            for l in s.splitlines():
+                if not l.startswith("\\"):
+                    print(l, file=f)
 
 
 if __name__ == "__main__":
