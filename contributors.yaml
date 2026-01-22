@@ -203,13 +203,14 @@ contributors:
   name: Gower, Graham
   emails:
   - graham.gower@gmail.com
+  orcid: https://orcid.org/0000-0002-6197-3872
   commits: 6
   lines_added: 33
   lines_deleted: 14
   lines_net: 19
   contribution: substantial
   affiliations:
-  - Lundbeck GeoGenetics Centre, Globe Institute, University of Copenhagen, 1350 Copenhagen K, Denmark
+  - Microbiology and Infectious Diseases, SA Pathology, Adelaide, SA 5000, Australia
 
 - github_username: hugovk
   name: van Kemenade, Hugo
