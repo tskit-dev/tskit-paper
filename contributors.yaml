@@ -538,13 +538,12 @@ contributors:
   name: Saunack, Kumar
   emails:
   - kr.saunack@gmail.com
+  orcid: https://orcid.org/0000-0003-0502-1778
   commits: 1
   lines_added: 123
   lines_deleted: 23
   lines_net: 100
   contribution: minor
-  affiliations:
-  - IIT Bombay, Powai, Mumbai 400 076, Maharashtra, India
 
 - github_username: terhorst
   name: Terhorst, Jonathan
