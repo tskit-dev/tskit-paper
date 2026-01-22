@@ -10,6 +10,7 @@
   publication: https://doi.org/10.48550/arXiv.2511.21124
   package: julia
   notes: Uses msprime; available at https://juliahub.com/ui/Packages/General/Moonshine
+  implementation: Julia
 
 - name: Terracotta
   repo: https://github.com/kitchensjn/terracotta
@@ -29,13 +30,15 @@
   interface: C
   type: analysis
   publication: https://doi.org/10.1038/s41467-024-46659-0
+  implementation: C++
 
 - name: tslmm
   repo: https://github.com/hanbin973/tslmm
   interface: Python
   type: statgen_inf
-  publication: https://doi.org/10.1101/2025.07.14.664631v1
   package: pip, guix
+  publication: https://doi.org/10.1101/2025.07.14.664631
+  implementation: Python
 
 - name: bio2zarr
   repo: https://github.com/sgkit-dev/bio2zarr
@@ -43,6 +46,7 @@
   type: analysis
   package: pypi, conda, guix
   publication: https://doi.org/10.1093/gigascience/giaf049
+  implementation: Python
 
 - name: grgl
   repo: https://github.com/aprilweilab/grgl
@@ -51,6 +55,7 @@
   package: conda, pip
   publication: https://doi.org/10.1038/s43588-024-00739-9
   notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``. The python package is called pygrgl.
+  implementation: C++
 
 - name: gfkit
   repo: https://github.com/lukashuebner/gfkit
@@ -58,6 +63,7 @@
   type: analysis
   publication: https://doi.org/10.4230/LIPIcs.WABI.2024.5
   notes: Uses tskit as its input format
+  implementation: C++
 
 - name: gIMble
   repo: https://github.com/LohseLab/gIMble
@@ -65,6 +71,7 @@
   type: popgen_inf
   package: conda, pip
   publication: https://doi.org/10.1371/journal.pgen.1010999
+  implementation: Python
 
 - name: ipcoal
   repo: https://github.com/eaton-lab/ipcoal
@@ -85,6 +92,7 @@
   type: simulation
   package: cargo
   publication: https://doi.org/10.48550/arXiv.2108.05815
+  implementation: Rust
 
 - name: lineagekit
   repo: https://github.com/lineagekit/lineagekit
@@ -98,6 +106,7 @@
   interface: C
   type: popgen_inf
   publication: https://doi.org/10.1126/science.adp4642
+  implementation: R
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
@@ -138,6 +147,7 @@
   interface: Python
   type: statgen_inf
   publication: https://doi.org/10.1016/j.xgen.2025.101072
+  implementation: Python
 
 - name: transmission
   repo: https://github.com/mpjuers/transmission
@@ -151,6 +161,7 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/molbev/msaa038
+  implementation: Python
 
 - name: momi2
   repo: https://github.com/popgenmethods/momi2
@@ -179,6 +190,7 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1016/j.tpb.2021.03.001
+  implementation: Python
 
 - name: disperseNN2
   repo: https://github.com/kr-colab/disperseNN2
@@ -207,6 +219,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: simulation
+  implementation: C,Python
 
 - name: pyslim
   repo: https://github.com/tskit-dev/pyslim
@@ -221,6 +234,7 @@
   interface: Python
   type: simulation
   package: pip, conda, guix
+  implementation: Python
 
 - name: SLiM
   repo: https://github.com/MesserLab/SLiM
@@ -228,6 +242,7 @@
   interface: C
   type: simulation
   package: conda, guix
+  implementation: C++
 
 - name: fwdpy11
   repo: https://github.com/molpopgen/fwdpy11
@@ -235,6 +250,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: simulation
+  implementation: C++
 
 - name: stdpopsim
   repo: https://github.com/popsim-consortium/stdpopsim
@@ -242,6 +258,7 @@
   interface: Python
   package: pip, conda, guix
   type: simulation
+  implementation: Python
 
 - name: RADinitio
   publication: https://doi.org/10.1111/1755-0998.13163
@@ -256,6 +273,7 @@
   interface: Python
   package: CRAN
   type: simulation
+  implementation: R
 
 - name: gridCoal
   repo: https://github.com/Trubenova/gridCoal
@@ -269,6 +287,7 @@
   interface: Python
   package: pip, conda
   type: simulation
+  implementation: Python
 
 - name: TwisstNTern
   repo: https://github.com/HilaLifchitz/TwisstNTern
@@ -284,6 +303,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: arg_inference
+  implementation: C,Python
 
 - name: sc2ts
   repo: https://github.com/tskit-dev/sc2ts
@@ -291,6 +311,7 @@
   interface: Python
   package: pip, guix
   type: arg_inference
+  implementation: Python
 
 - name: tsdate
   repo: https://github.com/tskit-dev/tsdate
@@ -298,6 +319,7 @@
   interface: Python
   type: arg_inference
   package: pip, conda, guix
+  implementation: Python
 
 - name: Relate
   repo: https://github.com/MyersGroup/relate
@@ -306,6 +328,7 @@
   interface: C
   notes: Strictly, relate_lib converts to tskit, but seems like hair-splitting
   package: guix
+  implementation: C++
 
 - name: Colate
   repo: https://github.com/leospeidel/Colate
@@ -313,14 +336,15 @@
   type: popgen_inf
   interface: C
   notes: Definitely compiled into Colate binary
+  implementation: C++
 
 - name: ARGneedle
-  repo: https://github.com/palamaralab/arg_needle
+  repo: https://github.com/palamaralab/arg-needle
   publication: https://doi.org/10.1038/s41588-023-01379-x
   interface: Python
   package: pip
   type: arg_inference
-  note: Work doesn't seem to be on openalex for some reason
+  implementation: C++,Python
 
 - name: Threads
   repo: https://github.com/palamaralab/threads
@@ -328,6 +352,7 @@
   interface: Python
   package: pip, guix
   type: arg_inference
+  implementation: C++,Python
 
 - name: sticcs
   repo: https://github.com/simonhmartin/sticcs
@@ -342,6 +367,7 @@
   interface: Python
   package: pip
   type: arg_inference
+  implementation: Python
 
 - name: SINGER
   repo: https://github.com/popgenmethods/SINGER
@@ -349,6 +375,7 @@
   interface: Python
   type: arg_inference
   package: guix
+  implementation: C++
 
 - name: POLEGON
   repo: https://github.com/YunDeng98/POLEGON
@@ -396,13 +423,16 @@
   type: visualisation
   package: pip, guix
   interface: Python
+  implementation: Python
 
-- name: tskit-arg-visualizer
+# Shortened name for display - sorry James!
+- name: tskit-arg-vis...
   repo: https://github.com/kitchensjn/tskit_arg_visualizer
   publication: https://doi.org/10.1093/bioadv/vbaf302
   type: visualisation
   package: pip, guix
   interface: Python
+  implementation: Python
 
 - name: ARGscape
   repo: https://github.com/chris-a-talbot/argscape
@@ -410,6 +440,7 @@
   type: visualisation
   package: pip, guix
   interface: Python
+  implementation: Python
 
 - name: tscompare
   repo: https://github.com/tskit-dev/tscompare
@@ -417,6 +448,7 @@
   type: analysis
   package: pip, guix
   interface: Python
+  implementation: Python
 
 - name: tspop
   repo: https://github.com/gtsambos/tspop
@@ -424,6 +456,7 @@
   type: analysis
   package: pip, guix
   interface: Python
+  implementation: Python
 
 - name: twisst2
   repo: https://github.com/simonhmartin/twisst2
@@ -484,6 +517,7 @@
   type: popgen_inf
   interface: Python
   notes: Presented as an R package, but not on CRAN.
+  implementation: R
 
 - name: RcppTskit
   repo: https://github.com/HighlanderLab/RcppTskit

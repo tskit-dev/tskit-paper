@@ -7,7 +7,7 @@
 % \bibliographystyle{plain}
 \usepackage[hidelinks]{hyperref}
 \usepackage{authblk}
-\usepackage{booktabs}
+\usepackage{tabularray}
 
 % Make affiliations run inline
 \renewcommand\Affilfont{\small}
@@ -86,7 +86,7 @@ method evaluation. Simulation capabilities have continued to expand,
 including whole-autosome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}.
 A growing ecosystem of simulation tools now builds directly on tskit
-(Table 1).
+(Table S1).
 
 % Inference methods interoperate through tskit, enabling evaluation and reuse
 % without imposing design choices.
@@ -98,7 +98,7 @@ tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tskit data model\cite{kelleher2019inferring}.
 Many recent ARG inference methods have chosen to support tskit
 as an output format, in addition to their
-own native representations (Table 1).
+own native representations (Table S1).
 This shared output layer enables inferred ARGs to
 interoperate directly with simulators, facilitating systematic evaluation and
 benchmarking against known ground truth. It also shifts the burden of format
@@ -133,7 +133,7 @@ well-tested core.
 The goal of tskit is to provide a shared technical foundation, centred on
 efficient, well-tested, and documented primitive operations on ARGs, rather
 than to directly implement end-user workflows. This design principle has
-enabled a broad ecosystem of downstream software (Table 1) and has established
+enabled a broad ecosystem of downstream software (Table S1) and has established
 tskit as foundational infrastructure for population-scale genetic
 analysis. With the release of tskit 1.0, long-term stability of the data model
 and APIs is explicitly guaranteed, reflecting a commitment to maintain this
@@ -147,103 +147,6 @@ to grow.
 Extensive documentation, tutorials, and other information are available 
 at \url{https://tskit.dev}.
 
-% NOTE: generated from the data in tools.yaml using python tools.py.
-% Please correct an errors in the Yaml file
-
-\begin{table}
-\caption{The tskit software ecosystem. Named software tools 
-that have been described in a publication that depend on tskit 
-are listed. For each tool we show the interface used, how the 
-tool is packaged, the year of the corresponding publication 
-and the number of citations according to data from OpenAlex
-(\url{https://openalex.org}). Entries marked with
-`*' did not have data available on OpenAlex.}
-\begin{scriptsize}
-\begin{center}
-\begin{tabular}{lllrr}
-\toprule
-name & interface & package & year & citations \\
-\midrule
-\multicolumn{5}{c}{\textsc{Simulation}} \\
-\midrule
-pyslim & Python & pypi, conda & 2025 & 1 \\
-TwisstNTern & Python &  & 2025 & 0 \\
-tstrait & Python & pypi, conda & 2024 & 8 \\
-slendr & Python & CRAN & 2023 & 15 \\
-cnasim & Python & pypi & 2023 & 10 \\
-gridCoal & Python &  & 2022 & 5 \\
-Geonomics & Python & pypi & 2021 & 20 \\
-stdpopsim & Python & pypi, conda & 2020 & 233 \\
-RADinitio & Python & pypi & 2020 & 49 \\
-fwdpy11 & C, Python & pypi, conda & 2019 & 74 \\
-SLiM & C &  & 2018 & 860 \\
-msprime & C, Python & pypi, conda & 2016 & 806 \\
-
-\midrule
-\multicolumn{5}{c}{\textsc{ARG Inference}} \\
-\midrule
-SINGER & Python &  & 2025 & 12 \\
-sticcs & Python &  & 2025 & 0 \\
-POLEGON & Python &  & 2025 & 0 \\
-Threads & Python & pypi & 2024 & 22 \\
-espalier & Python & pypi & 2023 & 14 \\
-sc2ts & Python & pypi & 2023 & 14 \\
-tsdate & Python & pypi, conda & 2022 & 187 \\
-ARGinfer & Python & pypi & 2022 & 37 \\
-Relate & C &  & 2019 & 562 \\
-tsinfer & C, Python & pypi, conda & 2019 & 373 \\
-ARGneedle & Python & pypi & * & * \\
-
-\midrule
-\multicolumn{5}{c}{\textsc{Population Genetic Inference}} \\
-\midrule
-gaia & C &  & 2025 & 8 \\
-mrpast & Python & pypi & 2025 & 0 \\
-phlash & Python & pypi & 2025 & 0 \\
-sparg & Python & pypi & 2025 & 0 \\
-spacetrees & Python &  & 2024 & 18 \\
-mapNN & Python &  & 2024 & 4 \\
-gIMble & Python & conda & 2023 & 33 \\
-disperseNN2 & Python & pypi & 2023 & 10 \\
-dinf & Python & pypi & 2023 & 8 \\
-GADMA & Python & pypi & 2022 & 23 \\
-dnadna & Python & pypi, conda & 2022 & 8 \\
-DISMaL & Python & pypi & 2021 & 7 \\
-ReLERNN & Python & pypi & 2020 & 166 \\
-momi2 & Python & pypi & 2019 & 170 \\
-
-\midrule
-\multicolumn{5}{c}{\textsc{Statistical Genetic Inference}} \\
-\midrule
-as-eGRM & Python &  & 2025 & 1 \\
-arg-lmm & Python & pypi & 2025 & 0 \\
-tslmm & Python &  &  &  \\
-lgdm & Python & pypi & 2023 & 38 \\
-egrm & Python & pip & 2022 & 44 \\
-
-\midrule
-\multicolumn{5}{c}{\textsc{Visualisation}} \\
-\midrule
-tsbrowse & Python & pypi & 2025 & 0 \\
-ARGscape & Python & pypi & 2025 & 0 \\
-tskit-arg-visualizer & Python & pypi & 2024 & 0 \\
-
-\midrule
-\multicolumn{5}{c}{\textsc{Data processing}} \\
-\midrule
-bio2zarr & Python & pypi, conda & 2025 & 0 \\
-
-\midrule
-\multicolumn{5}{c}{\textsc{Analysis}} \\
-\midrule
-tscompare & Python & pypi & 2025 & 1 \\
-twisst2 & Python &  & 2025 & 0 \\
-tspop & Python & pypi & 2023 & 12 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{scriptsize}
-\end{table}
 
 % There is a hard limit of 10 references for this type of article!
 % Citations (sorted alphabetically here for ease of editing):
@@ -264,5 +167,33 @@ tspop & Python & pypi & 2023 & 12 \\
 \section*{Acknowledgments}
 
 \bibliography{paper}
+
+\newpage
+
+\section*{Supplementary Information}
+\appendix
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+This section contains the supplementary information, which we integrate
+into the main document for ease of review.
+
+\subsection*{Published tools using tskit}
+We performed a search for published software tools that use tskit.
+For each tool listed in Table S1, we list: its name (with a clickable
+hyperlink to its source code repository); the primary implementation
+language(s) of the tool; the DOI (with clickable hyperlink) 
+of the publication in which this 
+tool was first described (or, in the case of SLiM, the first 
+publication in which tskit-based features were described); 
+and the year of publication and number of citations to this 
+publication according to data from OpenAlex
+(\url{https://openalex.org}). 
+
+\input{tools_table.tex}
+
 
 \end{document}
