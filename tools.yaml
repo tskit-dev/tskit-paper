@@ -35,6 +35,7 @@
   interface: Python
   type: statgen_inf
   publication: https://doi.org/10.1101/2025.07.14.664631v1
+  package: pip, guix
 
 - name: bio2zarr
   repo: https://github.com/sgkit-dev/bio2zarr
@@ -47,9 +48,9 @@
   repo: https://github.com/aprilweilab/grgl
   interface: C
   type: analysis
-  package: conda
+  package: conda, pip
   publication: https://doi.org/10.1038/s43588-024-00739-9
-  notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``
+  notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``. The python package is called pygrgl.
 
 - name: gfkit
   repo: https://github.com/lukashuebner/gfkit
@@ -62,21 +63,21 @@
   repo: https://github.com/LohseLab/gIMble
   interface: Python
   type: popgen_inf
-  package: conda
+  package: conda, pip
   publication: https://doi.org/10.1371/journal.pgen.1010999
 
 - name: ipcoal
   repo: https://github.com/eaton-lab/ipcoal
   interface: Python
   type: simulation
-  package: conda
+  package: conda, pip
   publication: https://doi.org/10.1093/bioinformatics/btaa486
 
 - name: shadie
   repo: https://github.com/elissasoroj/shadie
   interface: Python
   type: simulation
-  package: conda
+  package: conda, pip
 
 - name: necsim-rust
   repo: https://github.com/juntyr/necsim-rust
@@ -120,7 +121,7 @@
 
 - name: GADMA
   repo: https://github.com/ctlab/gadma
-  package: pip
+  package: pip, conda
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/gigascience/giad059
@@ -194,7 +195,7 @@
 
 - name: cnasim
   repo: https://github.com/samsonweiner/cnasim
-  package: pip
+  package: pip, conda
   interface: Python
   type: simulation
   publication: https://doi.org/10.1093/bioinformatics/btad434
@@ -266,7 +267,7 @@
   repo: https://github.com/drewhart/geonomics
   publication: https://doi.org/10.1093/molbev/msab175
   interface: Python
-  package: pip
+  package: pip, conda
   type: simulation
 
 - name: TwisstNTern
@@ -288,7 +289,7 @@
   repo: https://github.com/tskit-dev/sc2ts
   publication: https://doi.org/10.1101/2023.06.08.544212
   interface: Python
-  package: pip
+  package: pip, guix
   type: arg_inference
 
 - name: tsdate
@@ -333,6 +334,7 @@
   publication: https://doi.org/10.1093/genetics/iyaf181
   interface: Python
   type: arg_inference
+  package: pip
 
 - name: ARGinfer
   repo: https://github.com/alimahmoudi29/arginfer
@@ -359,7 +361,7 @@
   repo: https://github.com/aprilweilab/mrpast
   publication: https://doi.org/10.1101/2025.10.07.680347
   type: popgen_inf
-  package: pip
+  package: pip, conda
   interface: Python
 
 - name: phlash
@@ -428,6 +430,7 @@
   publication: https://doi.org/10.1093/genetics/iyaf181
   type: analysis
   interface: Python
+  package: pip
 
 - name: egrm
   repo: https://github.com/Ephraim-usc/egrm
@@ -441,6 +444,7 @@
   publication: https://doi.org/10.1016/j.ajhg.2025.06.016
   type: statgen_inf
   interface: Python
+  package: pip
 
 - name: lgdm
   repo: https://github.com/awohns/ldgm
@@ -460,6 +464,7 @@
   publication: https://doi.org/10.1038/s41588-025-02129-x
   type: popgen_inf
   interface: Python
+  package: pip
 
 - name: dolores
   repo: https://github.com/a-ignatieva/dolores
