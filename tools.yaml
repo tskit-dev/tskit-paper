@@ -105,6 +105,12 @@
   type: parameter_inference
   note: Reimplementation of gaia R package.
 
+- name: fastgaia
+  repo: https://github.com/chris-a-talbot/fastgaia
+  package: pypi, guix
+  interface: Python
+  type: parameter_inference
+
 - name: espalier
   repo: https://github.com/davidrasm/Espalier
   package: pypi
