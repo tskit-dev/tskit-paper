@@ -162,7 +162,6 @@ def main():
     print("With publications:", df.shape[0])
     print(df[["name", "type", "interface", "package"]].sort_values("type"))
 
-    print(df["publication"])
     df["doi"] = [normalize_doi(doi) for doi in df["publication"]]
     oa_results = get_openalex_results(df["doi"])
     df["citations"] = [oa_results[doi]["citations"] for doi in df["doi"]]
@@ -171,31 +170,33 @@ def main():
     # print(df)
 
     sections = {
-            "simulation": "Simulation",
-            "arg_inference": "ARG Intference",
-            "parameter_inference": "Population Genetic Inference",
-            "statgen": "Statistical Genetic Inference",
-            "visualisation": "Visualisation",
-            "format_conversion": "Data Processing",
-            "analysis": "Analysis"
+        "simulation": "Simulation",
+        "arg_inference": "ARG Inference",
+        "popgen_inf": "Population Genetic Inference",
+        "statgen_inf": "Statistical Genetic Inference",
+        "visualisation": "Visualisation",
+        "analysis": "Analysis",
     }
-
-    fields = ["name", "interface", "package", "year", "citations"]
-    for section, label in sections.items():
-        dfs = df[df["type"] == section][fields]
-        dfs = dfs.sort_values(["year", "citations"], ascending=False)
-        s = dfs.to_latex(index=False, header=False, na_rep="", float_format="%.0f")
-        # print(s)
-        # print("\\midrule", file=f)
-        # print("\\multicolumn{5}{c}{\\textsc{" + label + "}} \\\\", file=f)
-        # print(label, "\\\\", file=f)
-        # print("\\midrule", file=f)
-        # \midrule
-        # \midrule
-        with open(f"rows/{section}.tex", "w") as f:
-            for l in s.splitlines():
-                if not l.startswith("\\"):
-                    print(l, file=f)
+    assert set(sections.keys()) == set(df["type"])
+    with open("tools_table.tex", "w") as f:
+        print("\\begin{tblr}[long]{colspec=llrr,rowhead=1}", file=f)
+        print("\\hline", file=f)
+        print("Name & Publication & Year & Citations \\\\", file=f)
+        for section, label in sections.items():
+            print("\\hline", file=f)
+            print("\\SetCell[c=4]{c} \\textbf{", label, "}\\\\", file=f)
+            dfs = df[df["type"] == section]
+            dfs = dfs.sort_values(["year", "citations"], ascending=False)
+            for _, row in dfs.iterrows():
+                print("\\href{", row["repo"], "}{", row["name"], "}&", file=f)
+                # print(f"{row['interface']} &", file=f)
+                print("\\href{", row["publication"], "}{", row["doi"], "}&", file=f)
+                year = int(row["year"])
+                citations = int(row["citations"])
+                print(f"{year}&", file=f)
+                print(f"{citations}\\\\", file=f)
+        print("\\hline", file=f)
+        print("\\end{tblr}", file=f)
 
 
 if __name__ == "__main__":

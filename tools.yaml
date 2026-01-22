@@ -34,8 +34,8 @@
   repo: https://github.com/hanbin973/tslmm
   interface: Python
   type: statgen_inf
-  publication: https://doi.org/10.1101/2025.07.14.664631v1
   package: pip, guix
+  publication: https://doi.org/10.1101/2025.07.14.664631
 
 - name: bio2zarr
   repo: https://github.com/sgkit-dev/bio2zarr

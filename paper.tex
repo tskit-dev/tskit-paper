@@ -7,8 +7,7 @@
 % \bibliographystyle{plain}
 \usepackage[hidelinks]{hyperref}
 \usepackage{authblk}
-\usepackage{booktabs}
-\usepackage{longtable}
+\usepackage{tabularray}
 
 % Make affiliations run inline
 \renewcommand\Affilfont{\small}
@@ -167,37 +166,6 @@ at \url{https://tskit.dev}.
 
 \section*{Acknowledgments}
 
-\begin{longtable}{l c r p{3cm} p{4cm}}
-\caption{Example longtable with five columns}\label{tab:example} \\
-\hline
-Col 1 & Col 2 & Col 3 & Col 4 & Col 5 \\
-\hline
-\endfirsthead
-
-\hline
-Col 1 & Col 2 & Col 3 & Col 4 & Col 5 \\
-\hline
-\endhead
-
-\hline
-\multicolumn{5}{r}{\emph{Continued on next page}} \\
-\endfoot
-
-\hline
-\endlastfoot
-
-A & 1 & 3.14 & Some text & More descriptive text \\
-B & 2 & 2.71 & Some text & More descriptive text \\
-C & 3 & 1.62 & Some text & More descriptive text \\
-D & 4 & 0.57 & Some text & More descriptive text \\
-E & 5 & 1.41 & Some text & More descriptive text \\
-F & 6 & 2.23 & Some text & More descriptive text \\
-G & 7 & 0.99 & Some text & More descriptive text \\
-H & 8 & 1.73 & Some text & More descriptive text \\
-
-\end{longtable}
-
-
 \bibliography{paper}
 
 \newpage
@@ -224,51 +192,10 @@ tool is packaged, the year of the corresponding publication
 and the number of citations according to data from OpenAlex
 (\url{https://openalex.org}). 
 
-\newcommand{\sectionrow}[1]{\multicolumn{5}{c}{#1}\\\hline}
+\begin{center}
+\input{tools_table.tex}
+\end{center}
 
-\begin{longtable}{lllrr}
-\caption{The tskit software ecosystem. See supplementary text 
-for details on the columns and inclusion criteria. Entries marked with
-`*' did not have data available on OpenAlex.}\\
-
-\toprule
-name & interface & package & year & citations \\
-\midrule
-
-% \hline 
-% \multicolumn{1}{c}{\textbf{name}} &
-% \multicolumn{1}{c}{\textbf{interface}} & 
-% \multicolumn{1}{c}{\textbf{package}} &
-% \multicolumn{1}{c}{\textbf{year}} &
-% \multicolumn{1}{c}{\textbf{citations}}
-% \\ \hline 
-\endfirsthead
-
-\multicolumn{3}{c}%
-{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-\hline 
-\multicolumn{1}{c}{name} &
-\multicolumn{1}{c}{interface} 
-\\ \hline 
-\endhead
-
-\hline \multicolumn{3}{r}{{Continued on next page}} \\ \hline
-\endfoot
-
-\hline \hline
-\endlastfoot
- 
-\sectionrow{Simulation}
-\input{rows/simulation.tex}
-% \sectionrow{ARG}
-\input{rows/arg_inference.tex}
-\input{rows/analysis.tex}
-\input{rows/popgen_inf.tex}
-\input{rows/statgen_inf.tex}
-\input{rows/visualisation.tex}
-
-% \bottomrule
-\end{longtable}
 
 
 \end{document}
