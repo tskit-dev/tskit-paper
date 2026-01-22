@@ -68,20 +68,20 @@
 - name: ipcoal
   repo: https://github.com/eaton-lab/ipcoal
   interface: Python
-  type: similation
+  type: simulation
   package: conda
   publication: https://doi.org/10.1093/bioinformatics/btaa486
 
 - name: shadie
   repo: https://github.com/elissasoroj/shadie
   interface: Python
-  type: similation
+  type: simulation
   package: conda
 
 - name: necsim-rust
   repo: https://github.com/juntyr/necsim-rust
   interface: Rust
-  type: similation
+  type: simulation
   package: cargo
   publication: https://doi.org/10.48550/arXiv.2108.05815
 
@@ -177,7 +177,7 @@
   package: pypi
   interface: Python
   type: parameter_inference
-  publication:  https://doi.org/10.1016/j.tpb.2021.03.001
+  publication: https://doi.org/10.1016/j.tpb.2021.03.001
 
 - name: disperseNN2
   repo: https://github.com/kr-colab/disperseNN2
@@ -276,7 +276,6 @@
   interface: Python
   notes: Not primarly simulator, but includes a frontend for running msprime simulations.
   package: guix
-
 
 - name: tsinfer
   repo: https://github.com/tskit-dev/tsinfer
@@ -390,7 +389,7 @@
   interface: Python
 
 - name: tsbrowse
-  repo: https://github.com/tskit-dev/tsinfer
+  repo: https://github.com/tskit-dev/tsbrowse
   publication: https://doi.org/10.1093/bioinformatics/btaf393
   type: visualisation
   package: pypi, guix
@@ -411,7 +410,7 @@
   interface: Python
 
 - name: tscompare
-  repo: https://github.com/tskit-dev/tsbrowse
+  repo: https://github.com/tskit-dev/tscompare
   publication: https://doi.org/10.1093/genetics/iyaf198
   type: analysis
   package: pypi, guix
@@ -481,3 +480,24 @@
   interface: Python
   notes: Presented as an R package, but not on CRAN.
 
+- name: RcppTskit
+  repo: https://github.com/HighlanderLab/RcppTskit
+  interface: C, R
+  type: misc
+  note: R package providing access to the tskit C API for high-performance/low-level use cases.
+
+- name: pygrgl
+  repo: https://github.com/aprilweilab/grgl
+  interface: C++, Python
+  type: format_conversion
+  package: pypi
+  note: Genotype Representation Graph Library; includes conversion from a tskit tree sequence
+    to GRG format.
+
+- name: Moonshine.jl
+  repo: https://github.com/ps-pat/Moonshine.jl
+  interface: Julia
+  type: arg_inference
+  publication: https://arxiv.org/abs/2511.21124
+  note: Julia toolkit for ARG inference and analysis with interoperability with tskit tree
+    sequences.
