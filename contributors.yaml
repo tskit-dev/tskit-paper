@@ -308,6 +308,7 @@ contributors:
   name: Guez, Jeremy
   emails:
   - jeremy.guez@outlook.fr
+  orcid: https://orcid.org/0009-0007-6406-5187
   commits: 4
   lines_added: 357
   lines_deleted: 9
@@ -315,6 +316,7 @@ contributors:
   contribution: substantial
   affiliations:
   - Program in Medical and Population Genetics, Broad Institute of MIT and Harvard, Cambridge, Massachusetts 02142, USA
+  - Analytic and Translational Genetics Unit, Massachusetts General Hospital, Boston, MA 02114, USA
 
 - github_username: agladstein
   name: Gladstein, Ariella
