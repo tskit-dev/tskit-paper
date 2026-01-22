@@ -43,6 +43,21 @@
   package: pypi, conda, guix
   publication: https://doi.org/10.1093/gigascience/giaf049
 
+- name: grgl
+  repo: https://github.com/aprilweilab/grgl
+  interface: C
+  type: format_conversion
+  package: conda
+  publication: https://doi.org/10.1038/s43588-024-00739-9
+  notes: Conversion from tskit ``grg convert /path/to/my.trees my.grg``
+
+- name: gfkit
+  repo: https://github.com/lukashuebner/gfkit
+  interface: C
+  type: format_conversion
+  publication: https://doi.org/10.4230/LIPIcs.WABI.2024.5
+  notes: Uses tskit as it's input format, so ``format conversion'' is OK
+
 - name: gIMble
   repo: https://github.com/LohseLab/gIMble
   interface: Python
@@ -285,6 +300,13 @@
   interface: C
   notes: Strictly, relate_lib converts to tskit, but seems like hair-splitting
   package: guix
+
+- name: Colate
+  repo: https://github.com/leospeidel/Colate
+  publication: https://doi.org/10.1093/molbev/msab174
+  type: parameter_inference
+  interface: C
+  notes: Definitely compiled into Colate binary
 
 - name: ARGneedle
   repo: https://github.com/palamaralab/arg_needle
