@@ -461,7 +461,8 @@
   type: visualisation
   package: pip, guix
   interface: Python
-  implementation: Python,JavaScript
+  # Shortened JavaScript to JS because the cols are too wide otherwise
+  implementation: Python,JS
 
 - name: ARGscape
   repo: https://github.com/chris-a-talbot/argscape
@@ -469,7 +470,7 @@
   type: visualisation
   package: pip, guix
   interface: Python
-  implementation: TypeScript,Python
+  implementation: JS,Python
 
 - name: tscompare
   repo: https://github.com/tskit-dev/tscompare
@@ -554,7 +555,8 @@
   type: popgen_inf
   interface: Python
   notes: Presented as an R package, but not on CRAN.
-  implementation: C++,R,Python
+  # Dropping Python here as cols are too wide
+  implementation: C++,R
 
 - name: RcppTskit
   repo: https://github.com/HighlanderLab/RcppTskit

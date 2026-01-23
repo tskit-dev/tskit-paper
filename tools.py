@@ -182,6 +182,8 @@ def main():
     tblr_options = """
         colspec=lllrr,
         rowhead=1,
+        width=\linewidth,
+        colsep=3pt,
         """
     tblr_spec = f"""
         long,
