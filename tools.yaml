@@ -111,7 +111,7 @@
   interface: C
   type: popgen_inf
   publication: https://doi.org/10.1126/science.adp4642
-  implementation: R,C,C++
+  implementation: R,C
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
