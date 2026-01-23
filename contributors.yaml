@@ -629,8 +629,9 @@ contributors:
   name: Gravel, Simon
   contribution: substantial
   notes: Leadership, pedigree support
+  orcid: https://orcid.org/0000-0002-9183-964X
   affiliations:
-  - Department of Human Genetics, McGill University, Montr\'eal, QC H3A 0C7, Canada
+  - Department of Human Genetics, McGill University, Montreal, QC H3A 0C7, Canada
 
 - github_username: apragsdale
   name: Ragsdale, Aaron P.
