@@ -111,7 +111,7 @@
   interface: C
   type: popgen_inf
   publication: https://doi.org/10.1126/science.adp4642
-  implementation: R,C,C++
+  implementation: R,C
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
@@ -219,7 +219,7 @@
   package: pip
   interface: Python
   type: simulation
-  implementation: Python
+  implementation: Python,C++
 
 - name: cnasim
   repo: https://github.com/samsonweiner/cnasim
@@ -236,7 +236,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: simulation
-  implementation: C,Python
+  implementation: Python,C
 
 - name: pyslim
   repo: https://github.com/tskit-dev/pyslim
@@ -260,7 +260,7 @@
   interface: C
   type: simulation
   package: conda, guix
-  implementation: C++
+  implementation: C++,C
 
 - name: fwdpy11
   repo: https://github.com/molpopgen/fwdpy11
@@ -268,7 +268,7 @@
   interface: C, Python
   package: pip, conda, guix
   type: simulation
-  implementation: C++
+  implementation: C++,Python
 
 - name: stdpopsim
   repo: https://github.com/popsim-consortium/stdpopsim
@@ -279,11 +279,12 @@
   implementation: Python
 
 - name: RADinitio
+  repo: https://catchenlab.life.illinois.edu/radinitio/
   publication: https://doi.org/10.1111/1755-0998.13163
   interface: Python
   package: pip
   type: simulation
-  note: No repo, homepage https://catchenlab.life.illinois.edu/radinitio/
+  note: No repo, homepage
   implementation: Python
 
 - name: slendr
@@ -365,7 +366,7 @@
   interface: Python
   package: pip
   type: arg_inference
-  implementation: C++,Python
+  implementation: Python,C++
 
 - name: Threads
   repo: https://github.com/palamaralab/threads
@@ -397,7 +398,7 @@
   interface: Python
   type: arg_inference
   package: guix
-  implementation: C++
+  implementation: C++,Python
 
 - name: POLEGON
   repo: https://github.com/YunDeng98/POLEGON
@@ -405,7 +406,7 @@
   type: arg_inference
   interface: Python
   package: guix
-  implementation: C++
+  implementation: C++,Python
 
 - name: mrpast
   repo: https://github.com/aprilweilab/mrpast
@@ -460,7 +461,8 @@
   type: visualisation
   package: pip, guix
   interface: Python
-  implementation: Python
+  # Shortened JavaScript to JS because the cols are too wide otherwise
+  implementation: Python,JS
 
 - name: ARGscape
   repo: https://github.com/chris-a-talbot/argscape
@@ -468,7 +470,7 @@
   type: visualisation
   package: pip, guix
   interface: Python
-  implementation: Python
+  implementation: JS,Python
 
 - name: tscompare
   repo: https://github.com/tskit-dev/tscompare
@@ -553,7 +555,8 @@
   type: popgen_inf
   interface: Python
   notes: Presented as an R package, but not on CRAN.
-  implementation: R
+  # Dropping Python here as cols are too wide
+  implementation: C++,R
 
 - name: RcppTskit
   repo: https://github.com/HighlanderLab/RcppTskit
