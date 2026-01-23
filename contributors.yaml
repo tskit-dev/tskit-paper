@@ -127,7 +127,7 @@ contributors:
   emails:
   - natep@uoregon.edu
   - nspope@utexas.edu
-  orcid: https://orcid.org/0000-0001-8409-7812 
+  orcid: https://orcid.org/0000-0001-8409-7812
   commits: 15
   lines_added: 6972
   lines_deleted: 2789
@@ -470,7 +470,7 @@ contributors:
 
 - github_username: hfr1tz3
   name: Fritze, Halley
-  emails: 
+  emails:
   - halley.fritze@gmail.com
   orcid: https://orcid.org/0000-0002-1171-2068
   commits: 1
@@ -509,6 +509,7 @@ contributors:
 
 - github_username: mmosmond
   name: Osmond, Matthew M
+  orcid: https://orcid.org/0000-0001-6170-8182
   emails:
   - mm.osmond@utoronto.ca
   commits: 1
@@ -641,12 +642,12 @@ contributors:
 
 - github_username: YunDeng98
   name: Deng, Yun
-  emails: 
+  emails:
   - yundeng@stanford.edu
   orcid: https://orcid.org/0000-0003-2802-2546
   contribution: substantial
   notes: Community organisation
-  affiliations: 
+  affiliations:
   - Department of Genetics, Stanford University, Stanford, CA 94305, USA
 
 - github_username: bhaller
