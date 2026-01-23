@@ -41,7 +41,7 @@ leading to renewed interest in ARG-based analyses across population and statisti
 genetics\cite{brandt2024promise,lewanski2024era,nielsen2024inference}.
 % genetics\cite{lewanski2024era}.
 The tskit library has played a key enabling role in this shift
-and has become foundational infrastructure for working with ARGs at scale.
+and has become foundational infrastructure for working with ARGs.
 This paper marks the release of tskit 1.0, which formalises long-term stability
 guarantees for its data formats and APIs.
 
@@ -51,15 +51,14 @@ defines a set of nodes (genomes at particular times) and
 edges (parent-child inheritance relationships spanning genomic intervals)
 in a simple tabular form\cite{kelleher2018efficient}.
 This encoding provides a lossless representation of a general class of
-ancestral recombination graphs,
-establishing a precise and machine-readable
-definition of ARGs suitable for large-scale computation\cite{wong2024general}.
+ARGs, establishing a precise and machine-readable
+definition suitable for large-scale computation\cite{wong2024general}.
 The data model also incorporates site, mutation, population, and pedigree
 information and supports arbitrary
 metadata associated with different components of the ARG.
 Provenance information is recorded natively, enhancing reproducibility
 and transparency.
-Together, these features make the tskit data model a 
+Together, these features make the tskit data model a
 semantically complete and interoperable
 representation of ARGs that serves as a common foundation across diverse
 analytical workflows.
@@ -85,8 +84,8 @@ selection that were previously infeasible, providing essential ground truth for
 method evaluation. Simulation capabilities have continued to expand,
 including whole-autosome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}.
-A growing ecosystem of simulation tools now builds directly on tskit
-(Table S1).
+A growing ecosystem of forward-time, coalescent, and hybrid simulation tools
+builds directly on tskit (Table S1).
 
 % Inference methods interoperate through tskit, enabling evaluation and reuse
 % without imposing design choices.
@@ -97,7 +96,7 @@ are many inference methods (see Wong et al.\cite{wong2024general}\ for a review)
 tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tskit data model\cite{kelleher2019inferring}.
 Many recent ARG inference methods have chosen to support tskit
-as an output format, in addition to their
+as an output format in addition to their
 own native representations (Table S1).
 This shared output layer enables inferred ARGs to
 interoperate directly with simulators, facilitating systematic evaluation and
@@ -118,8 +117,7 @@ For example, single-site
 population genetic statistics can be computed orders of magnitude faster than from
 genotype matrices while using far less memory by operating
 on the underlying ARG structure\cite{ralph2020efficiently}.
-Tskit exposes a large API spanning statistical calculations
-and visualisation, with a
+Tskit exposes a large API with a
 performance-critical core implemented in C and bindings available for Python,
 Rust, and R. Its vectorised, table-first design allows zero-copy access to
 underlying arrays, supporting high-performance analysis pipelines.
@@ -131,11 +129,13 @@ well-tested core.
 % infrastructure.
 
 The goal of tskit is to provide a shared technical foundation, centred on
-efficient, well-tested, and documented primitive operations on ARGs, rather
-than to directly implement end-user workflows. This design principle has
-enabled a broad ecosystem of downstream software (Table S1) and has established
-tskit as foundational infrastructure for population-scale genetic
-analysis. With the release of tskit 1.0, long-term stability of the data model
+efficient, well-tested, and thoroughly documented primitive operations on ARGs, rather
+than to directly implement end-user workflows.
+This design principle has enabled a broad ecosystem of downstream
+software---spanning simulation, ARG inference, population and statistical genetic
+inference, analysis, and visualisation---with 62 published tools now using tskit
+as a core dependency (Table S1).
+With the release of tskit 1.0, long-term stability of the data model
 and APIs is explicitly guaranteed, reflecting a commitment to maintain this
 minimal and composable core as the project evolves. By focusing on stable
 primitives rather than prescribing analytical pipelines, tskit enables
@@ -144,7 +144,7 @@ interpretation rather than bespoke data formats and tooling. In this way, tskit
 1.0 provides a common and extensible foundation that supports the continued
 expansion of ARG-based analyses as datasets, methods, and applications continue
 to grow.
-Extensive documentation, tutorials, and other information are available 
+Extensive documentation, tutorials, and other information are available
 at \url{https://tskit.dev}.
 
 
@@ -182,16 +182,22 @@ This section contains the supplementary information, which we integrate
 into the main document for ease of review.
 
 \subsection*{Published tools using tskit}
-We performed a search for published software tools that use tskit.
-For each tool listed in Table S1, we list: its name (with a clickable
-hyperlink to its source code repository); the primary implementation
-language(s) of the tool; the DOI (with clickable hyperlink) 
-of the publication in which this 
-tool was first described (or, in the case of SLiM, the first 
-publication in which tskit-based features were described); 
-and the year of publication and number of citations to this 
+We performed a search for published software using tskit.
+To be included in this list, the software must be described in a publication
+as a named tool intended for reuse and must use tskit.
+This list is intentionally conservative, and does not include
+(for example) publications depending on bespoke analysis
+pipelines using tskit.
+For each tool Table S1, we list: its name (with a clickable
+hyperlink to its source code repository);
+the main implementation
+language(s) of the tool based on GitHub summaries;
+the DOI (with clickable hyperlink) of the publication in which this
+tool was first described (or, in the case of SLiM, the first
+publication in which tskit-based features were described);
+and the year of publication and number of citations to this
 publication according to data from OpenAlex
-(\url{https://openalex.org}). 
+(\url{https://openalex.org}) retrieved on 2026-01-23.
 
 \input{tools_table.tex}
 
