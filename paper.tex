@@ -45,11 +45,18 @@ and has become foundational infrastructure for working with ARGs.
 This paper marks the release of tskit 1.0, which formalises long-term stability
 guarantees for its data formats and APIs.
 
+\begin{figure}
+\Large{PLACEHOLDER FOR FIGURE; see
+\url{https://github.com/tskit-dev/tskit-paper/issues/32}}
+\caption{The tskit data model and software ecosystem. [Further
+details about the panels].}
+\end{figure}
+
 % The succinct tree sequence is a complete, lossless encoding of ARGs.
 At the core of tskit is the succinct tree sequence data model which
 defines a set of nodes (genomes at particular times) and
 edges (parent-child inheritance relationships spanning genomic intervals)
-in a simple tabular form\cite{kelleher2018efficient}.
+in a simple tabular form\cite{kelleher2018efficient} (Figure 1).
 This encoding provides a lossless representation of a general class of
 ARGs, establishing a precise and machine-readable
 definition suitable for large-scale computation\cite{wong2024general}.
@@ -119,7 +126,8 @@ genotype matrices while using far less memory by operating
 on the underlying ARG structure\cite{ralph2020efficiently}.
 Tskit exposes a large API with a
 performance-critical core implemented in C and bindings available for Python,
-Rust, and R. Its vectorised, table-first design allows zero-copy access to
+Rust, and R (Figure 1).
+Its vectorised, table-first design allows zero-copy access to
 underlying arrays, supporting high-performance analysis pipelines.
 As a result,
 downstream tools inherit performance and correctness properties from a shared,
@@ -164,7 +172,6 @@ at \url{https://tskit.dev}.
 % 9 - wong2024general
 % 10 - zhan2025pandemic
 
-\section*{Acknowledgments}
 
 \bibliography{paper}
 
