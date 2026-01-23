@@ -17,6 +17,7 @@
   interface: Python
   type: popgen_inf
   note: In development
+  implementation: Python
 
 - name: CLUES2
   repo: https://github.com/avaughn271/CLUES2
@@ -24,6 +25,7 @@
   type: popgen_inf
   publication: https://doi.org/10.1371/journal.pgen.1008384
   note: tskit is only used to convert SINGER output to CLUES format
+  implementation: Python
 
 - name: tskibd
   repo: https://github.com/bguo068/tskibd
@@ -79,12 +81,14 @@
   type: simulation
   package: conda, pip
   publication: https://doi.org/10.1093/bioinformatics/btaa486
+  implementation: Python
 
 - name: shadie
   repo: https://github.com/elissasoroj/shadie
   interface: Python
   type: simulation
   package: conda, pip
+  implementation: Python
 
 - name: necsim-rust
   repo: https://github.com/juntyr/necsim-rust
@@ -100,13 +104,14 @@
   type: analysis
   package: pip
   note: Unclear if there's much functionality here yet
+  implementation: Python
 
 - name: gaia
   repo: https://github.com/blueraleigh/gaia
   interface: C
   type: popgen_inf
   publication: https://doi.org/10.1126/science.adp4642
-  implementation: R
+  implementation: R,C,C++
 
 - name: gaiapy
   repo: https://github.com/chris-a-talbot/gaiapy
@@ -114,12 +119,14 @@
   interface: Python
   type: popgen_inf
   note: Reimplementation of gaia R package.
+  implementation: Python
 
 - name: fastgaia
   repo: https://github.com/chris-a-talbot/fastgaia
   package: pip, guix
   interface: Python
   type: popgen_inf
+  implementation: Python
 
 - name: espalier
   repo: https://github.com/davidrasm/Espalier
@@ -127,6 +134,7 @@
   interface: Python
   type: arg_inference
   publication: https://doi.org/10.1093/sysbio/syad040
+  implementation: Python
 
 - name: GADMA
   repo: https://github.com/ctlab/gadma
@@ -134,12 +142,14 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/gigascience/giad059
+  implementation: Python
 
 - name: spaceprime
   repo: https://github.com/connor-french/spaceprime
   package: pip
   interface: Python
   type: simulation
+  implementation: Python
 
 - name: arg-lmm
   repo: https://github.com/PalamaraLab/arg-lmm
@@ -154,6 +164,7 @@
   package: pip
   interface: Python
   type: popgen_inf
+  implementation: Python
 
 - name: ReLERNN
   repo: https://github.com/kr-colab/ReLERNN
@@ -169,6 +180,7 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1080/01621459.2019.1635482
+  implementation: Python
 
 - name: dnadna
   repo: https://gitlab.com/mlgenetics/dnadna
@@ -176,6 +188,7 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1093/bioinformatics/btac765
+  implementation: Python
 
 - name: dinf
   repo: https://github.com/racimolab/dinf
@@ -183,6 +196,7 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1101/2023.04.27.538386
+  implementation: Python
 
 - name: DISMaL
   repo: https://github.com/simonharnqvist/DISMaL
@@ -198,12 +212,14 @@
   interface: Python
   type: popgen_inf
   publication: https://doi.org/10.1186/s12859-023-05522-7
+  implementation: Python
 
 - name: adnator
   repo: https://github.com/jazpy/adnator
   package: pip
   interface: Python
   type: simulation
+  implementation: Python
 
 - name: cnasim
   repo: https://github.com/samsonweiner/cnasim
@@ -211,6 +227,7 @@
   interface: Python
   type: simulation
   publication: https://doi.org/10.1093/bioinformatics/btad434
+  implementation: Python
 
 - name: msprime
   repo: https://github.com/tskit-dev/msprime
@@ -227,6 +244,7 @@
   type: simulation
   package: pip, conda, guix
   interface: Python
+  implementation: Python
 
 - name: tstrait
   repo: https://github.com/tskit-dev/tstrait
@@ -266,6 +284,7 @@
   package: pip
   type: simulation
   note: No repo, homepage https://catchenlab.life.illinois.edu/radinitio/
+  implementation: Python
 
 - name: slendr
   repo: https://github.com/bodkan/slendr/
@@ -280,6 +299,7 @@
   publication: https://doi.org/10.1111/1755-0998.13676
   interface: Python
   type: simulation
+  implementation: Python
 
 - name: Geonomics
   repo: https://github.com/drewhart/geonomics
@@ -296,6 +316,7 @@
   interface: Python
   notes: Not primarly simulator, but includes a frontend for running msprime simulations.
   package: guix
+  implementation: Python
 
 - name: tsinfer
   repo: https://github.com/tskit-dev/tsinfer
@@ -360,6 +381,7 @@
   interface: Python
   type: arg_inference
   package: pip
+  implementation: Python
 
 - name: ARGinfer
   repo: https://github.com/alimahmoudi29/arginfer
@@ -383,6 +405,7 @@
   type: arg_inference
   interface: Python
   package: guix
+  implementation: C++
 
 - name: mrpast
   repo: https://github.com/aprilweilab/mrpast
@@ -390,6 +413,7 @@
   type: popgen_inf
   package: pip, conda
   interface: Python
+  implementation: C++,Python
 
 - name: phlash
   repo: https://github.com/jthlab/phlash
@@ -397,12 +421,14 @@
   type: popgen_inf
   package: pip
   interface: Python
+  implementation: Python
 
 - name: spacetrees
   repo: https://github.com/osmond-lab/spacetrees
   publication: https://doi.org/10.7554/eLife.72177
   type: popgen_inf
   interface: Python
+  implementation: Python
 
 - name: sparg
   repo: https://github.com/osmond-lab/sparg
@@ -410,12 +436,14 @@
   type: popgen_inf
   package: pip, guix
   interface: Python
+  implementation: Python
 
 - name: mapNN
   repo: https://github.com/kr-colab/mapNN
   publication: https://doi.org/10.1111/1755-0998.14005
   type: popgen_inf
   interface: Python
+  implementation: Python
 
 - name: tsbrowse
   repo: https://github.com/tskit-dev/tsbrowse
@@ -464,6 +492,7 @@
   type: analysis
   interface: Python
   package: pip
+  implementation: Python
 
 - name: egrm
   repo: https://github.com/Ephraim-usc/egrm
@@ -471,6 +500,7 @@
   type: statgen_inf
   package: pip
   interface: Python
+  implementation: Python,C
 
 - name: as-eGRM
   repo: https://github.com/jitang-github/asegrm
@@ -478,6 +508,7 @@
   type: statgen_inf
   interface: Python
   package: pip
+  implementation: Python,C
 
 - name: lgdm
   repo: https://github.com/awohns/ldgm
@@ -485,12 +516,14 @@
   type: statgen_inf
   package: pip
   interface: Python
+  implementation: Python,Matlab
 
 - name: SCAR
   repo: https://github.com/sunnyfangfangguo/SCAR_project_repo
   publication: https://doi.org/10.1371/journal.pcbi.1010422
   type: popgen_inf
   interface: Python
+  implementation: Python
 
 - name: gLike
   repo: https://github.com/Ephraim-usc/glike
@@ -498,18 +531,21 @@
   type: popgen_inf
   interface: Python
   package: pip
+  implementation: Python,C
 
 - name: dolores
   repo: https://github.com/a-ignatieva/dolores
   publication: https://doi.org/10.1093/molbev/msaf190
   type: popgen_inf
   interface: Python
+  implementation: Python
 
 - name: spectre
   repo: https://github.com/a-ignatieva/spectre
   publication: https://doi.org/10.1093/genetics/iyaf184
   type: popgen_inf
   interface: Python
+  implementation: Python
 
 - name: coaldecoder
   repo: https://github.com/nspope/coaldecoder
@@ -524,4 +560,5 @@
   interface: C, R
   type: analysis
   note: R package providing access to the tskit C API for high-performance/low-level use cases.
+  implementation: R,C,C++
 
