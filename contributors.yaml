@@ -54,7 +54,8 @@ contributors:
   name: Tsambos, Georgia
   emails:
   - g.tsambos@gmail.com
-  - gtsambos@student.unimelb.edu.au
+  - gtsambos@uw.edu
+  orcid: https://orcid.org/0000-0001-7001-2275
   commits: 36
   lines_added: 7378
   lines_deleted: 2777
@@ -63,6 +64,7 @@ contributors:
   class: first
   affiliations:
   - Melbourne Integrative Genomics, School of Mathematics and Statistics, University of Melbourne, Victoria, 3010, Australia
+  - Department of Genome Sciences, University of Washington, Seattle, WA 98195, USA
 
 - github_username: petrelharp
   name: Ralph, Peter
