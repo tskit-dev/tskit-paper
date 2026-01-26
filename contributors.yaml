@@ -191,10 +191,11 @@ contributors:
   - Institute of Ecology and Evolution, University of Oregon, Eugene OR 97402, USA
 
 - github_username: brianzhang01
-  name: Zhang, Brian
+  name: Zhang, Brian C.
   emails:
   - brianzhang01@users.noreply.github.com
   - zhang.brian@gmail.com
+  orcid: https://orcid.org/0000-0003-0366-6521
   commits: 6
   lines_added: 371
   lines_deleted: 28
