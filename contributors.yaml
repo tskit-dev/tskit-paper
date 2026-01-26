@@ -566,8 +566,9 @@ contributors:
 
 - github_username: terhorst
   name: Terhorst, Jonathan
+  orcid: https://orcid.org/0000-0001-7765-2101
   emails:
-  - terhorst@gmail.com
+  - jonth@umich.edu
   commits: 1
   lines_added: 44
   lines_deleted: 0
