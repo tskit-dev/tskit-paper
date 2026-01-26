@@ -285,16 +285,18 @@ contributors:
   - Fresh Pond Research Institute, Cambridge, MA 02140, USA
 
 - github_username: clwgg
-  name: Weiss, Clemens
+  name: Weiß, Clemens L.
   emails:
-  - clw.genomics@gmail.com
+  - clweiss@stanford.edu
+  orcid: https://orcid.org/0000-0003-3321-3902
   commits: 5
   lines_added: 737
   lines_deleted: 133
   lines_net: 604
   contribution: substantial
   affiliations:
-  - Unknown
+  - Department of Genetics, Stanford School of Medicine, Stanford, CA, USA
+  - Stanford Cancer Institute, Stanford School of Medicine, Stanford, CA, USA
 
 - github_username: hossam26644
   name: Loay, Hossameldin
