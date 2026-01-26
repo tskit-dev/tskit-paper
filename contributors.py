@@ -42,7 +42,11 @@ def main():
     for _, row in dfs.iterrows():
         authors.append(Author(row["name"], row["affiliations"], annotation=annotation))
     # Second authors
-    dfs = df[df["contribution"] == "substantial"].sort_values("name")
+    # NOTE: case-insensitive sorting by name here so that van Kemenande is sorted
+    # correctly (or at least in the same way as it was in the msprime 1.0 paper)
+    dfs = df[df["contribution"] == "substantial"].sort_values(
+        "name", key=lambda col: col.str.lower()
+    )
     annotation = Annotation("$\\dagger$", "Joint second author")
     annotations.append(annotation)
     for _, row in dfs.iterrows():
