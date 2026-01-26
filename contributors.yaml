@@ -579,7 +579,8 @@ contributors:
 - github_username: winni2k
   name: Kretzschumar, Warren W
   emails:
-  - warren.kretzschmar@ki.se
+    - wwk@warrenwk.com
+  orcid: https://orcid.org/0000-0002-2575-0807
   commits: 2
   lines_added: 421
   lines_deleted: 1
