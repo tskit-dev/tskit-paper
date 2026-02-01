@@ -1,4 +1,4 @@
-FIGURES=
+FIGURES=figure.pdf
 
 paper.pdf: paper.tex authors.tex tools_table.tex paper.bib ${FIGURES}
 	pdflatex paper.tex
@@ -26,3 +26,6 @@ clean:
 
 mrproper: clean
 	rm -f *.ps *.pdf
+
+%.pdf : %.svg
+	inkscape $< --export-filename=$@
