@@ -8,6 +8,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{authblk}
 \usepackage{tabularray}
+\usepackage{graphicx}
 
 % Make affiliations run inline
 \renewcommand\Affilfont{\small}
@@ -46,10 +47,12 @@ This paper marks the release of tskit 1.0, which formalises long-term stability
 guarantees for its data formats and APIs.
 
 \begin{figure}
-\Large{PLACEHOLDER FOR FIGURE; see
-\url{https://github.com/tskit-dev/tskit-paper/issues/32}}
-\caption{The tskit data model and software ecosystem. [Further
-details about the panels].}
+\includegraphics[width=\textwidth]{figure.png}
+\caption{Tskit enables an interoperable ARG software ecosystem.
+ARGs produced by simulation or inference tools can be analysed by diverse
+downstream applications via tskit’s well-defined tabular data model, C library and
+Python/Rust/R bindings. Tools shown are representative examples from Table S1
+(three per category; ordered by citation count).}
 \end{figure}
 
 % The succinct tree sequence is a complete, lossless encoding of ARGs.
