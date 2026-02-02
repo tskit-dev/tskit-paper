@@ -8,3 +8,8 @@ kastore
 *.a
 *.so
 tskit
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
