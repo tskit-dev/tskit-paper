@@ -1,36 +1,43 @@
 \documentclass{letter}
 
+
+\usepackage{letterbib}
+\usepackage[super,comma,sort&compress]{natbib}
+% \usepackage[superscript,biblabel]{cite}
+% \bibliographystyle{naturemag}
+
 \signature{Jerome Kelleher}
 
 \address{Big Data Institute\\University of Oxford\\UK}
 \begin{document}
 
-\begin{letter}{GENETICS}
+\begin{letter}{Nature Methods}
 
 \opening{Dear Editors,}
 
 I am writing on behalf of my coauthors to submit our manuscript entitled
-\emph{Efficient ancestry and mutation simulation with msprime 1.0}
-for consideration for publication in GENETICS
-as a ``Methods, Technology, and Resources'' full length research article.
+\emph{Population-scale Ancestral Recombination
+Graphs with tskit 1.0}
+for consideration for publication in Nature Methods
+as a Correspondence article.
+The purpose of the manuscript is to announce the release of tskit 1.0,
+marking an important milestone of maturity for the software.
+
+We believe that this will be of strong interest to the readership
+of Nature Methods for two reasons. Firstly, as outlined in the
+manuscript, there is now great interest in the practical application
+of Ancestral Recombination Graphs across varied applications
+in population and statistical genetics. Beyond the three review
+articles articles published in 2024 that are cited in the manuscript,
+there has been several other opinion pieces published on the
+great promise of ARGs\cite{harris2019database,tang2019genealogy}
 
 
-Since its introduction in 2016, \texttt{msprime} has grown in popularity
-and is now challenging \texttt{ms} as the most widely used coalescent simulator
-(according to Google Scholar, \texttt{ms} has had 100 citations so far
-in 2021 and \texttt{msprime} 107). This manuscript marks the important
-1.0 release milestone and represents the work
-of a large community--the list of 32 authors represents substantial efforts from a large consortium. We illustrate the large range of features
-that \texttt{msprime} has accumulated since the 2016 publication,
-and show that performance is excellent,
-often many times faster and more memory efficient than specialised
-alternative simulators.
-
-We believe that this manuscript is a summary of the state-of-the-art
-in coalescent simulation, presents many substantial advances in this fundamental tool for popgen work, and it will be of substantial
-interest to the readers of GENETICS. We hope that you agree.
 
 \closing{Sincerely,}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \end{letter}
 \end{document}
