@@ -59,7 +59,7 @@ Python/Rust/R bindings. Tools shown are representative examples from Table S1
 At the core of tskit is the succinct tree sequence data model which
 defines a set of nodes (genomes at particular times) and
 edges (parent-child inheritance relationships spanning genomic intervals)
-in a simple tabular form\cite{kelleher2018efficient} (Figure 1).
+in a simple tabular form\cite{kelleher2018efficient}.
 This encoding provides a lossless representation of a general class of
 ARGs, establishing a precise and machine-readable
 definition suitable for large-scale computation\cite{wong2024general}.
@@ -71,7 +71,7 @@ and transparency.
 Together, these features make the tskit data model a
 semantically complete and interoperable
 representation of ARGs that serves as a common foundation across diverse
-analytical workflows.
+analytical workflows (Figure 1).
 
 % This encoding first proved itself by transforming population-genetic
 % simulation.
@@ -101,7 +101,7 @@ builds directly on tskit (Table S1).
 % without imposing design choices.
 
 The lack of scalable inference methods has been a major obstacle
-to practical application of ARG inference methods. Although there
+to practical application of ARGs. Although there
 are many inference methods (see Wong et al.\cite{wong2024general}\ for a review),
 tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tskit data model\cite{kelleher2019inferring}.
@@ -129,7 +129,7 @@ genotype matrices while using far less memory by operating
 on the underlying ARG structure\cite{ralph2020efficiently}.
 Tskit exposes a large API with a
 performance-critical core implemented in C and bindings available for Python,
-Rust, and R (Figure 1).
+Rust, and R.
 Its vectorised, table-first design allows zero-copy access to
 underlying arrays, supporting high-performance analysis pipelines.
 As a result,
