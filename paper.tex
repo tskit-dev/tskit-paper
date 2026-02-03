@@ -58,14 +58,14 @@ Python/Rust/R bindings. Tools shown are representative examples from Table S1
 % The succinct tree sequence is a complete, lossless encoding of ARGs.
 At the core of tskit is the succinct tree sequence data model which
 defines a set of nodes (genomes at particular times) and
-edges (parent-child inheritance relationships spanning genomic intervals)
+edges (inheritance relationships between nodes spanning genomic intervals)
 in a simple tabular form\cite{kelleher2018efficient}.
 This encoding provides a lossless representation of a general class of
 ARGs, establishing a precise and machine-readable
 definition suitable for large-scale computation\cite{wong2024general}.
 The data model also incorporates site, mutation, population, and pedigree
 information and supports arbitrary
-metadata associated with different components of the ARG.
+metadata associated with each of these components of the ARG.
 Provenance information is recorded natively, enhancing reproducibility
 and transparency.
 Together, these features make the tskit data model a
