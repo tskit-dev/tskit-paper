@@ -1,0 +1,54 @@
+\documentclass{letter}
+
+
+\usepackage{letterbib}
+\usepackage[super,comma,sort&compress]{natbib}
+% \usepackage[superscript,biblabel]{cite}
+% \bibliographystyle{naturemag}
+
+\signature{Jerome Kelleher}
+
+\address{Big Data Institute\\University of Oxford\\UK}
+\begin{document}
+
+\begin{letter}{Nature Methods}
+
+\opening{Dear Editors,}
+
+I am writing on behalf of my coauthors to submit our manuscript
+\textbf{Population-scale Ancestral Recombination Graphs with tskit 1.0}
+for consideration as a \textbf{Correspondence} in Nature Methods.
+% [One line description of the contribution]
+This article announces the release of tskit 1.0, marking a stable
+versioned data model and API for representing ancestral recombination
+graphs (ARGs) at population scale.
+
+ARG-based approaches are increasingly used across population and statistical
+genetics, but their practical adoption has been limited by fragmented data
+representations and bespoke tooling.
+Tskit provides a semantically complete and efficient representation of
+genetic ancestry that enables interoperability across methods and scales
+from thousands to millions of samples.
+The purpose of the Correspondence is to document the transition of tskit to
+long-term stable infrastructure, and to articulate the intent and guarantees
+associated with its 1.0 release, supporting a broad range of simulation,
+inference, and analysis methods.
+With the release of version 1.0, tskit formally guarantees the stability of its
+data model and core APIs, allowing downstream developers to build new methods
+on a shared and dependable foundation.
+The manuscript clarifies the core goal of providing a library focused on
+well-tested primitive operations, and highlights the ecosystem of independent
+tools that has been built around it.
+We intend this Correspondence to serve as a stable, citable reference
+describing the scope, guarantees, and intended use of tskit 1.0, providing a
+durable foundation for future method development and interoperable,
+reproducible workflows.
+
+\closing{Sincerely,}
+
+% \nocite{*}
+% \bibliographystyle{plainnat}
+% \bibliography{references}
+
+\end{letter}
+\end{document}

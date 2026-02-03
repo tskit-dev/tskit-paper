@@ -53,7 +53,6 @@ contributors:
 - github_username: gtsambos
   name: Tsambos, Georgia
   emails:
-  - g.tsambos@gmail.com
   - gtsambos@uw.edu
   orcid: https://orcid.org/0000-0001-7001-2275
   commits: 36
@@ -195,7 +194,6 @@ contributors:
 - github_username: brianzhang01
   name: Zhang, Brian C.
   emails:
-  - brianzhang01@users.noreply.github.com
   - zhang.brian@gmail.com
   orcid: https://orcid.org/0000-0003-0366-6521
   commits: 6
@@ -221,7 +219,8 @@ contributors:
 
 - github_username: hugovk
   name: van Kemenade, Hugo
-  emails: []
+  emails:
+  - WITHHELD
   orcid: https://orcid.org/0000-0001-5715-8632
   commits: 6
   lines_added: 242
@@ -409,7 +408,7 @@ contributors:
 
 - github_username: minesrebollo
   name: Rebollo, Inés
-  email:
+  emails:
   - minesrebollo@gmail.com
   orcid: https://orcid.org/0000-0002-9899-0801
   commits: 2
@@ -582,7 +581,7 @@ contributors:
 - github_username: winni2k
   name: Kretzschumar, Warren W
   emails:
-    - wwk@warrenwk.com
+  - wwk@warrenwk.com
   orcid: https://orcid.org/0000-0002-2575-0807
   commits: 2
   lines_added: 421
@@ -637,6 +636,8 @@ contributors:
   contribution: substantial
   notes: Leadership, pedigree support
   orcid: https://orcid.org/0000-0002-9183-964X
+  emails:
+  - simon.gravel@mcgill.ca
   affiliations:
   - Department of Human Genetics, McGill University, Montreal, QC H3A 0C7, Canada
 
@@ -673,7 +674,7 @@ contributors:
 - github_username: percyfal
   name: Unneberg, Per
   emails:
-    - per.unneberg@scilifelab.se
+  - per.unneberg@scilifelab.se
   orcid: https://orcid.org/0000-0001-5735-3315
   contribution: minor
   notes: Instrumental for several tskit workshops, e.g. https://ebp-nor.github.io/GARG/
