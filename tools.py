@@ -199,7 +199,7 @@ def main():
         print("Name & Language & Publication & Year & Cites \\\\", file=f)
         j = 0
         print(df["type"].value_counts())
-        for section in df["type"].value_counts().keys():
+        for section in reversed(df["type"].value_counts().keys()):
             label = sections[section]
             if j == 0:
                 print("\\hline", file=f)
@@ -213,9 +213,7 @@ def main():
             print("\\hline[dashed]", file=f)
             for _, row in dfs.iterrows():
                 print("\\href{", row["repo"], "}{", row["name"], "}&", file=f)
-                impl = row["implementation"]
-                if not isinstance(impl, str):
-                    impl = "?"
+                impl = ", ".join(row["implementation"].split(","))
                 print(impl, "&", file=f)
                 # print(f"{row['interface']} &", file=f)
                 print("\\href{", row["publication"], "}{", row["doi"], "}&", file=f)

@@ -454,15 +454,13 @@
   interface: Python
   implementation: Python
 
-# Shortened name for display - sorry James!
-- name: tskit-arg-vis...
+- name: tskit-arg-visualizer
   repo: https://github.com/kitchensjn/tskit_arg_visualizer
   publication: https://doi.org/10.1093/bioadv/vbaf302
   type: visualisation
   package: pip, guix
   interface: Python
-  # Shortened JavaScript to JS because the cols are too wide otherwise
-  implementation: Python,JS
+  implementation: Python,JavaScript
 
 - name: ARGscape
   repo: https://github.com/chris-a-talbot/argscape
@@ -470,7 +468,7 @@
   type: visualisation
   package: pip, guix
   interface: Python
-  implementation: JS,Python
+  implementation: TypeScript,Python
 
 - name: tscompare
   repo: https://github.com/tskit-dev/tscompare
