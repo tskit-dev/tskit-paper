@@ -351,7 +351,7 @@ contributors:
   lines_net: 952
   contribution: substantial
   affiliations:
-  - Department of Statistics, University of Michigan, Ann Arbor, MI 48109, USA
+  - Department of Statistics, University of Michigan, Ann Arbor, MI, 48109, USA
 
 - github_username: savitakartik
   name: Karthikeyan, Savita
@@ -538,7 +538,6 @@ contributors:
   contribution: minor
   affiliations:
   - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
-
 - github_username: roohy
   name: Shemirani, Ruhollah
   emails:
@@ -550,7 +549,7 @@ contributors:
   lines_net: 24
   contribution: minor
   affiliations:
-  - Institute for Genomic Health, Icahn School of Medicine at Mount Sinai, NY, 10029, US
+  - Institute for Genomic Health, Icahn School of Medicine at Mount Sinai, NY, 10029, USA
 
 - github_username: saunack
   name: Saunack, Kumar
