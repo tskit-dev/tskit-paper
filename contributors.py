@@ -74,6 +74,7 @@ def main():
     affil_map = {}
     for author in authors:
         for affil in author.affiliations:
+            affil = affil.strip()
             if affil not in affil_map:
                 affil_map[affil] = len(affil_map) + 1
 
@@ -93,11 +94,14 @@ def main():
             print("\\affil[" + annotation.symbol + "]{" + annotation.text + "}", file=f)
 
     for author in authors:
-        print(author.full_name())
+        # print(author.full_name())
         print(author.email)
         for affil in author.affiliations:
             print(affil)
         print()
+    emails = [author.email for author in authors]
+    print(", ".join(emails))
+
 
 
 
