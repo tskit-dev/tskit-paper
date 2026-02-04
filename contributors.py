@@ -120,6 +120,8 @@ def main():
     # emails = [author.email for author in authors]
     # print(", ".join(emails))
 
+    full_names = [author.full_name() for author in authors]
+    print(", ".join(full_names))
 
 if __name__ == "__main__":
     main()
