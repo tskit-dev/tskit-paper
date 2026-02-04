@@ -41,8 +41,14 @@ def main():
     annotation = Annotation("$\\ast$", "Joint first author")
     annotations = [annotation]
     for _, row in dfs.iterrows():
-        authors.append(Author(row["name"], row["affiliations"], annotation=annotation,
-            email=row["emails"][0]))
+        authors.append(
+            Author(
+                row["name"],
+                row["affiliations"],
+                annotation=annotation,
+                email=row["emails"][0],
+            )
+        )
     # Second authors
     # NOTE: case-insensitive sorting by name here so that van Kemenande is sorted
     # correctly (or at least in the same way as it was in the msprime 1.0 paper)
@@ -52,21 +58,32 @@ def main():
     annotation = Annotation("$\\dagger$", "Joint second author")
     annotations.append(annotation)
     for _, row in dfs.iterrows():
-        authors.append(Author(row["name"], row["affiliations"], annotation=annotation,
-            email=row["emails"][0]))
+        authors.append(
+            Author(
+                row["name"],
+                row["affiliations"],
+                annotation=annotation,
+                email=row["emails"][0],
+            )
+        )
     # Middle authors
     dfs = df[df["contribution"] == "minor"].sort_values("name")
     for _, row in dfs.iterrows():
-        authors.append(Author(row["name"], row["affiliations"],
-            email=row["emails"][0]))
+        authors.append(Author(row["name"], row["affiliations"], email=row["emails"][0]))
 
     # last authors
     dfs = df[df["class"] == "last"]  # Keep the last author sorting
     annotation = Annotation("$\\ddagger$", "Joint senior author")
     annotations.append(annotation)
     for _, row in dfs.iterrows():
-        authors.append(Author(row["name"], row["affiliations"], annotation=annotation,
-            email=row["emails"][0]))
+        authors.append(
+            Author(
+                row["name"],
+                row["affiliations"],
+                annotation=annotation,
+                email=row["emails"][0],
+            )
+        )
 
     assert len(authors) == df.shape[0]
 
@@ -94,15 +111,14 @@ def main():
             print("\\affil[" + annotation.symbol + "]{" + annotation.text + "}", file=f)
 
     for author in authors:
-        # print(author.full_name())
+        # print("no  ", author.full_name())
         print(author.email)
         for affil in author.affiliations:
             print(affil)
         print()
-    emails = [author.email for author in authors]
-    print(", ".join(emails))
 
-
+    # emails = [author.email for author in authors]
+    # print(", ".join(emails))
 
 
 if __name__ == "__main__":
