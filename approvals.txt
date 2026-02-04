@@ -1,0 +1,52 @@
+no    Ben Jeffery
+yes    Yan Wong
+yes    Kevin Thornton
+no    Georgia Tsambos
+yes    Gertjan Bisschop
+yes    Yun Deng
+yes    E Castedo Ellerman
+yes    Thomas B. Forest
+no    Halley Fritze
+no    Daniel Goldstein
+yes    Gregor Gorjanc
+yes    Graham Gower
+no    Simon Gravel
+yes    Jeremy Guez
+yes    Benjamin C. Haller
+no    Andrew D. Kern
+no    Lloyd Kirk
+no    Ivan Krukov
+yes    Hanbin Lee
+no    Brieuc Lehmann
+yes    Hossameldin Loay
+yes    Matthew M Osmond
+no    Duncan S Palmer
+yes    Nathaniel S Pope
+yes    Aaron P. Ragsdale
+yes    Duncan Robertson
+no    Murillo F Rodrigues
+yes    Hugo van Kemenade
+no    Clemens L. Weiß
+yes    Anthony Wilder Wohns
+yes    Shing H Zhan
+yes    Brian C. Zhang
+yes    Marianne Aspbury
+yes    Nikolas A Baya
+yes    Saurabh Belsare
+yes    Arjun Biddanda
+yes    Francisco Campuzano Jiménez
+no    Ariella Gladstein
+yes    Bing Guo
+yes    Savita Karthikeyan
+no    Warren W Kretzschumar
+no    Inés Rebollo
+yes    Kumar Saunack
+yes    Ruhollah Shemirani
+yes    Alexis Simon
+yes    Chris Smith
+yes    Jeet Sukumaran
+yes    Jonathan Terhorst
+yes    Per Unneberg
+no    Ao Zhang
+no    Peter Ralph
+yes    Jerome Kelleher
