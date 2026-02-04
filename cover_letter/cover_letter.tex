@@ -1,8 +1,5 @@
 \documentclass{letter}
 
-
-\usepackage{letterbib}
-\usepackage[super,comma,sort&compress]{natbib}
 % \usepackage[superscript,biblabel]{cite}
 % \bibliographystyle{naturemag}
 
@@ -18,8 +15,7 @@
 I am writing on behalf of my coauthors to submit our manuscript
 \textbf{Population-scale Ancestral Recombination Graphs with tskit 1.0}
 for consideration as a \textbf{Correspondence} in Nature Methods.
-% [One line description of the contribution]
-This article announces the release of tskit 1.0, marking a stable
+This article announces the release of tskit 1.0, marking a stable,
 versioned data model and API for representing and manipulating ancestral recombination
 graphs (ARGs) at population scale.
 
@@ -29,27 +25,22 @@ representations and bespoke tooling.
 Tskit provides a semantically complete and efficient representation of
 genetic ancestry that enables interoperability across methods and scales
 from thousands to millions of samples.
-The philosophy and design of tskit aims to provide the sort of stable, fundamental, and efficient tooling
-that is provided by tools like bedtools or bcftools in current workflows.
-The purpose of the Correspondence is to document the transition of tskit to
-long-term stable infrastructure,
-% and to articulate the intent and guarantees
-% associated with its 1.0 release, supporting a broad range of simulation,
-% inference, and analysis methods.
-% With the release of version 1.0, tskit formally 
-and the associated stability guarantees for its data model and core APIs. 
-This will allow downstream developers to continue to build new methods
-on a shared and dependable foundation.
-The manuscript clarifies the core goal of providing a library focused on
-well-tested primitive operations, and highlights the ecosystem of independent
-tools that has been built around it.
-We intend this Correspondence to serve as a stable, citable reference for tskit 1.0 moving forwards.
+Through providing core infrastructure for a broad range of downstream software
+(including widely used tools such as msprime and SLiM), as well as for many
+bespoke analyses in individual publications, tskit underpins many current
+ARG-based workflows.
+The purpose of the
+Correspondence is to document the transition of tskit to long-term stable
+infrastructure, and to provide a concise, unified description of its design
+principles and long-term stability guarantees. The explicit articulation of
+these principles will allow downstream developers to build new methods on a
+shared and dependable foundation with confidence, while aiding the
+reproducibility of bespoke analyses. 
+We intend this Correspondence to provide a stable, citable reference for the
+scope, guarantees, and intended use of tskit, supporting reproducible and
+interoperable workflows as methods and applications develop.
 
 \closing{Sincerely,}
-
-% \nocite{*}
-% \bibliographystyle{plainnat}
-% \bibliography{references}
 
 \end{letter}
 \end{document}
