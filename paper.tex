@@ -48,15 +48,6 @@ and has become foundational infrastructure for working with ARGs.
 This paper marks the release of tskit 1.0, which formalises long-term stability
 guarantees for its data formats and APIs.
 
-\begin{figure}
-\includegraphics[width=\textwidth]{figure}
-\caption{Tskit enables an interoperable ARG software ecosystem.
-ARGs produced by simulation or inference tools can be analysed by diverse
-downstream applications via tskit’s well-defined tabular data model, C library and
-Python/Rust/R bindings. Tools shown are representative examples from Table S1
-(three per category; ordered by citation count).}
-\end{figure}
-
 % The succinct tree sequence is a complete, lossless encoding of ARGs.
 At the core of tskit is the succinct tree sequence data model which
 defines a set of nodes (genomes at particular times) and
@@ -77,6 +68,16 @@ analytical workflows (Figure 1).
 
 % This encoding first proved itself by transforming population-genetic
 % simulation.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{figure}
+\caption{Tskit enables an interoperable ARG software ecosystem.
+ARGs produced by simulation or inference tools can be analysed by diverse
+downstream applications via tskit’s well-defined tabular data model, C library and
+Python/Rust/R bindings. Tools shown are representative examples from Table S1
+(three per category; ordered by citation count).}
+\end{figure}
+
 
 Simulation is a fundamental tool in population genomics, and
 was the first domain in which the tskit data model demonstrated its impact.
@@ -160,23 +161,9 @@ to grow.
 Extensive documentation, tutorials, and other information are available
 at \url{https://tskit.dev}.
 
-
-% There is a hard limit of 10 references for this type of article!
-% Citations (sorted alphabetically here for ease of editing):
-
-% 1 - andersontrocme2023genes
-% X - brandt2024promise The Promise of Inferring the Past Using the Ancestral Recombination Graph
-% 2 - haller2025simHumanity
-% 3 - lewanski2024era The era of the ARG: An introduction to ancestral recombination graphs and their significance in empirical evolutionary genomics
-% X - nielsen2024inference Inference and applications of ancestral recombination graphs
-% 4 - kelleher2016efficient
-% 5 - kelleher2018efficient
-% 6 - kelleher2019inferring
-% 7 - ralph2020efficiently
-% 8 - wohns2022unified or pope2026tracing TODO: pick one of these two
-% 9 - wong2024general
-% 10 - zhan2025pandemic
-
+\subsection*{Acknowledgements}
+We gratefully acknowledge funding from the Robertson Foundation and 
+NIH (research grants HG011395 and HG012473) supporting core tskit development.
 
 \bibliography{paper}
 
