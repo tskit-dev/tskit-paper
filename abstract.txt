@@ -1,0 +1,8 @@
+Ancestral recombination graphs (ARGs) are an increasingly important component
+of population and statistical genetics. The tskit library has become key
+infrastructure for the field, providing an expressive and general
+representation of ARGs together with a suite of efficient fundamental
+operations. In this note, we announce tskit version 1.0, describe its
+underlying rationale, and document its stability guarantees. These guarantees
+provide a foundation for durable computational artefacts and support long-term
+reproducibility of code and analyses.
