@@ -17,7 +17,7 @@ no    Andrew D. Kern
 no    Lloyd Kirk
 no    Ivan Krukov
 yes    Hanbin Lee
-no    Brieuc Lehmann
+yes    Brieuc Lehmann
 yes    Hossameldin Loay
 yes    Matthew M Osmond
 no    Duncan S Palmer
