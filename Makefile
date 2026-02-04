@@ -1,6 +1,6 @@
 FIGURES=figure.pdf
 
-paper.pdf: paper.tex authors.tex tools_table.tex paper.bib ${FIGURES}
+paper.pdf: paper.tex authors.tex tools_table.tex paper.bib
 	pdflatex paper.tex
 	bibtex paper
 	pdflatex paper.tex

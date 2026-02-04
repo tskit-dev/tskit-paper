@@ -97,7 +97,7 @@ contributors:
 # End of "major" contributors
 
 - github_username: szhan
-  name: Zhan, Shing H
+  name: Zhan, Shing H..
   emails:
   - shing.zhan@gmail.com
   orcid: https://orcid.org/0000-0002-6351-8873
@@ -124,7 +124,7 @@ contributors:
   - Khoury College of Computer Sciences, Northeastern University, MA 02115, USA
 
 - github_username: nspope
-  name: Pope, Nathaniel S
+  name: Pope, Nathaniel S.
   emails:
   - natep@uoregon.edu
   - nspope@utexas.edu
@@ -231,7 +231,7 @@ contributors:
   - Independent researcher
 
 - github_username: mufernando
-  name: Rodrigues, Murillo F
+  name: Rodrigues, Murillo F.
   emails:
   - murillofer.rodrigues@gmail.com
   orcid: https://orcid.org/0000-0001-7508-1384
@@ -257,7 +257,7 @@ contributors:
   - Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, University of Oxford, OX3 7LF, UK
 
 - github_username: astheeggeggs
-  name: Palmer, Duncan S
+  name: Palmer, Duncan S.
   emails:
   - duncan.stuart.palmer@gmail.com
   commits: 5
@@ -271,7 +271,7 @@ contributors:
   - Program in Medical and Population Genetics, Broad Institute of MIT and Harvard, Cambridge, Massachusetts 02142, USA
 
 - github_username: castedo
-  name: Ellerman, E Castedo
+  name: Ellerman, E. Castedo
   emails:
   - castedo@castedo.com
   orcid: https://orcid.org/0000-0002-5014-4809
@@ -321,8 +321,10 @@ contributors:
   lines_net: 348
   contribution: substantial
   affiliations:
+  - UMR 7206 Eco-Anthropologie, CNRS, MNHN, Université Paris Cité, 75116 Paris, France
+  - Université Paris-Saclay, CNRS, INRIA, Laboratoire Interdisciplinaire des Sciences du Numérique, 91400, Orsay, France
   - Program in Medical and Population Genetics, Broad Institute of MIT and Harvard, Cambridge, Massachusetts 02142, USA
-  - Analytic and Translational Genetics Unit, Massachusetts General Hospital, Boston, MA 02114, USA
+  # - Analytic and Translational Genetics Unit, Massachusetts General Hospital, Boston, MA 02114, USA
 
 - github_username: agladstein
   name: Gladstein, Ariella
@@ -514,7 +516,7 @@ contributors:
   - Biology Department, San Diego State University, San Diego, CA 92182-4614, USA
 
 - github_username: mmosmond
-  name: Osmond, Matthew M
+  name: Osmond, Matthew M.
   orcid: https://orcid.org/0000-0001-6170-8182
   emails:
   - mm.osmond@utoronto.ca
@@ -527,7 +529,7 @@ contributors:
   - Department of Ecology and Evolutionary Biology, University of Toronto, Toronto, Ontario, M5S 3B2, Canada
 
 - github_username: nikbaya
-  name: Baya, Nikolas A
+  name: Baya, Nikolas A.
   emails:
   - nikolasbaya@gmail.com
   orcid: https://orcid.org/0000-0002-4681-374X
@@ -578,7 +580,7 @@ contributors:
   - Department of Statistics, University of Michigan, Ann Arbor, MI, 48109, USA
 
 - github_username: winni2k
-  name: Kretzschumar, Warren W
+  name: Kretzschumar, Warren W.
   emails:
   - wwk@warrenwk.com
   orcid: https://orcid.org/0000-0002-2575-0807
