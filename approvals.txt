@@ -1,13 +1,13 @@
 no    Ben Jeffery
 yes    Yan Wong
 yes    Kevin Thornton
-no    Georgia Tsambos
+yes    Georgia Tsambos
 yes    Gertjan Bisschop
 yes    Yun Deng
 yes    E Castedo Ellerman
 yes    Thomas B. Forest
-no    Halley Fritze
-no    Daniel Goldstein
+yes    Halley Fritze
+yes    Daniel Goldstein
 yes    Gregor Gorjanc
 yes    Graham Gower
 no    Simon Gravel
@@ -26,7 +26,7 @@ yes    Aaron P. Ragsdale
 yes    Duncan Robertson
 no    Murillo F Rodrigues
 yes    Hugo van Kemenade
-no    Clemens L. Weiß
+yes    Clemens L. Weiß
 yes    Anthony Wilder Wohns
 yes    Shing H Zhan
 yes    Brian C. Zhang
@@ -35,7 +35,7 @@ yes    Nikolas A Baya
 yes    Saurabh Belsare
 yes    Arjun Biddanda
 yes    Francisco Campuzano Jiménez
-no    Ariella Gladstein
+yes    Ariella Gladstein
 yes    Bing Guo
 yes    Savita Karthikeyan
 no    Warren W Kretzschumar
