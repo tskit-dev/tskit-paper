@@ -1,4 +1,4 @@
-no    Ben Jeffery
+yes    Ben Jeffery
 yes    Yan Wong
 yes    Kevin Thornton
 yes    Georgia Tsambos
@@ -24,7 +24,7 @@ no    Duncan S Palmer
 yes    Nathaniel S Pope
 yes    Aaron P. Ragsdale
 yes    Duncan Robertson
-no    Murillo F Rodrigues
+yes    Murillo F Rodrigues
 yes    Hugo van Kemenade
 yes    Clemens L. Weiß
 yes    Anthony Wilder Wohns
@@ -47,6 +47,6 @@ yes    Chris Smith
 yes    Jeet Sukumaran
 yes    Jonathan Terhorst
 yes    Per Unneberg
-no    Ao Zhang
+yes    Ao Zhang
 no    Peter Ralph
 yes    Jerome Kelleher
