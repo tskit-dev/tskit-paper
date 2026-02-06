@@ -20,7 +20,7 @@ yes    Hanbin Lee
 yes    Brieuc Lehmann
 yes    Hossameldin Loay
 yes    Matthew M Osmond
-no    Duncan S Palmer
+yes    Duncan S Palmer
 yes    Nathaniel S Pope
 yes    Aaron P. Ragsdale
 yes    Duncan Robertson
@@ -38,7 +38,7 @@ yes    Francisco Campuzano Jiménez
 yes    Ariella Gladstein
 yes    Bing Guo
 yes    Savita Karthikeyan
-no    Warren W Kretzschumar
+yes    Warren W Kretzschumar
 no    Inés Rebollo
 yes    Kumar Saunack
 yes    Ruhollah Shemirani
@@ -48,5 +48,5 @@ yes    Jeet Sukumaran
 yes    Jonathan Terhorst
 yes    Per Unneberg
 yes    Ao Zhang
-no    Peter Ralph
+yes    Peter Ralph
 yes    Jerome Kelleher
