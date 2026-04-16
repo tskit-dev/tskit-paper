@@ -67,8 +67,20 @@ semantically complete and interoperable
 representation of ARGs that serves as a common foundation across diverse
 analytical workflows (Figure 1).
 
-% This encoding first proved itself by transforming population-genetic
-% simulation.
+% Rev 3: summary of what makes this package particularly effective for large-scale ARGs
+The tree sequence is particularly effective for large-scale ARGs
+because the data structure is designed to succinctly encode the history of genetic inheritance,
+which--because mutation and recombination are rare--extremely compactly describes the relationships
+between sequences.
+Algorithms in tskit take advantage of this shared inheritance structure across the genome
+to rapidly compute on even the largest datasets.
+% backing up claims with citations
+These data structures and algorithms have allowed orders-of-magnitude advances in storage\cite{kelleher2019inferring},
+computation\cite{kelleher2018efficient}, and simulation\cite{kelleher2016efficient,kelleher2018efficient}.
+Other projects have used related techniques to achieve similar goals
+(reviewed in Appendix X),
+but none have the breadth and stability goals of tskit.
+
 
 \begin{figure}
 \includegraphics[width=\textwidth]{figure}
@@ -80,6 +92,8 @@ Python/Rust/R bindings. Tools shown are representative examples from Table S1
 \end{figure}
 
 
+% This encoding first proved itself by transforming population-genetic
+% simulation.
 Simulation is a fundamental tool in population genomics, and
 was the first domain in which the tskit data model demonstrated its impact.
 Introduced initially as part of the msprime simulator,
@@ -150,10 +164,15 @@ This design principle has enabled a broad ecosystem of downstream
 software---spanning simulation, ARG inference, population and statistical genetic
 inference, analysis, and visualisation---with 62 published tools now using tskit
 as a core dependency (Table S1).
-With the release of tskit 1.0, long-term stability of the data model
-and APIs is explicitly guaranteed, reflecting a commitment to maintain this
-minimal and composable core as the project evolves. By focusing on stable
-primitives rather than prescribing analytical pipelines, tskit enables
+
+% Reviewer 2: "why this milestone is reached now?"
+This major version release--tskit 1.0--represents a transition from an
+evolving library in active development
+to a mature tool with long-term stability guarantees for the data model and APIs.
+The tool has seen enough diverse use to engender confidence in the API and implementation,
+and so stability of this minimal and composable core
+is now the best way the project can support future developement.
+By focusing on stable primitives rather than prescribing analytical pipelines, tskit enables
 methodological innovation to concentrate on modelling, inference, and
 interpretation rather than bespoke data formats and tooling. In this way, tskit
 1.0 provides a common and extensible foundation that supports the continued
