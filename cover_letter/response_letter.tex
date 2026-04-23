@@ -41,7 +41,7 @@ and have revised the manuscript accordingly.
 \noindent \textbf{Editorial request:} ``Clarification of the significance of the tskit 1.0 release.''
 
 We have revised the main text so that it now explicitly states that
-the paper ``marks the release of tskit 1.0,'' which ``formalises long-term
+the paper ``marks the release of tskit 1.0, a milestone that was chosen to formalise long-term
 stability guarantees for its data formats and APIs.'' This is intended to make
 clear that the significance of version 1.0 is the stabilisation of a mature
 software platform for ARG analysis.
@@ -50,14 +50,19 @@ software platform for ARG analysis.
 of others and your own prior work to clarify the advance made in the tskit
 software.''
 
-We have strengthened this in both the main text and the Supplementary
-Information. In the main text, we now explicitly state that, ``Building on the
-initial introduction of the succinct tree sequence data model and its
-formalisation as a general ARG representation, tskit 1.0 marks the maturity
-of the software library and data model for scalable ARG analysis (see
-Supplementary Information).'' The new supplementary section then provides the
+We have edited wording throughout to indicate some more of the context,
+but due to space limitations, we have primarily addressed this with a new section
+in the Supplementary Information. The new supplementary section then provides the
 fuller developmental arc from the original tree sequence work, through
 a series of publications developing core operations, to the present 1.0 release.
+
+%% Previous version; I don't see how this answers the question, really?
+% We have strengthened this in both the main text and the Supplementary
+% Information. In the main text, we now explicitly state that, ``Building on the
+% initial introduction of the succinct tree sequence data model and its
+% formalisation as a general ARG representation, tskit 1.0 marks the maturity
+% of the software library and data model for scalable ARG analysis (see
+% Supplementary Information).''
 
 \noindent \textbf{Editorial request:} ``Discussion comparing tskit to related
 work with respect to functionality, efficiency, or scalability.''
@@ -163,8 +168,8 @@ engineering?''
 We have addressed this in the new supplementary section, which now
 summarises the key algorithmic advances underlying
 scalability, including the succinct tree sequence encoding, sequential tree
-iteration, simplify, and later core operations for statistics, ancestry, and
-relatedness. The section also points to published benchmarks demonstrating
+iteration, simplify, and later core operations for statistics, ancestry, and relatedness.
+The section also points to published benchmarks demonstrating
 major gains in speed and memory efficiency in several settings.
 
 \noindent \textbf{Reviewer \#3, comment 3:} ``Related to the prior point, it
