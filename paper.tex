@@ -86,8 +86,14 @@ Introduced initially as part of the msprime simulator,
 the tskit data model enabled performance improvements of
 several orders of magnitude
 over previous coalescent simulation approaches\cite{kelleher2016efficient}.
+<<<<<<< Updated upstream
 The same representation later yielded substantial speedups in
 forward-time simulation by avoiding explicit simulation of neutral mutations\cite{kelleher2018efficient}.
+=======
+The same representation was later used for
+forward-time simulation of ARGs, yielding substantial speedups by avoiding
+explicit simulation of neutral mutations\cite{kelleher2018efficient}.
+>>>>>>> Stashed changes
 Because these forward-time and coalescent
 simulators share this rich data structure,
 their complementary strengths can be combined within a single workflow.
@@ -146,7 +152,10 @@ This design principle has enabled a broad ecosystem of downstream
 software---spanning simulation, ARG inference, population and statistical genetic
 inference, analysis, and visualisation---with 63 published tools now using tskit
 as a core dependency (Table S1).
-This release of tskit 1.0 is made to mark the maturity of the software library and data model
+Tskit thus builds on the theoretical potential provided by
+the succinct tree sequence data structure~\cite{kelleher2016efficient}
+and its formalisation as a general ARG representation~\cite{wong2024general},
+providing a mature, general purpose software library
 for scalable ARG analysis (see Supplementary Information).
 By focusing on stable
 primitives rather than prescribing analytical pipelines, tskit allows
