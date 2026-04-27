@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["tqdm", "ruamel.yaml", "pandas", "requests"]
+# ///
 from __future__ import annotations
 
 import json
