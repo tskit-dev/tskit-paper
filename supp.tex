@@ -50,7 +50,7 @@ tool was first described (or, in the case of SLiM, the first
 publication in which tskit-based features were described);
 and the year of publication and number of citations to this
 publication according to data from OpenAlex
-(\url{https://openalex.org}) retrieved on 2026-01-23.
+(\url{https://openalex.org}) retrieved on 2026-04-27.
 
 \input{tools_table.tex}
 
@@ -71,7 +71,7 @@ The key algorithmic result is that
 the cost of iterating over the local trees along the genome scales
 with the number of trees and the edge differences between neighbouring
 trees, rather than with the sample size.
-The practical consequence was demonstrated in a benchmark in~\citet{kelleher2016efficient} 
+The practical consequence was demonstrated in a benchmark in~\citet{kelleher2016efficient}
 which showed that using the succinct tree sequence format and sequential iteration was more
 than a million times faster than reading the same trees individually
 from Newick using the standard libraries available at the time, for a
@@ -114,11 +114,11 @@ Development of the core API has continued through 2024--2026.
 \citet{fritze2026forest} added the ``extend\_haplotypes'' function to
 tskit, which restores unary-node spans lost to simplification or
 inference and roughly halves the number of edges in typical ARGs, with
-corresponding reductions in statistic-computation time. \citet{lehmann2026on} 
-introduced operations to calculate ``branch'' genetic relatedness matrices 
-(GRMs), which encode pairwise relatedness via shared branch area in an ARG, and their 
+corresponding reductions in statistic-computation time. \citet{lehmann2026on}
+introduced operations to calculate ``branch'' genetic relatedness matrices
+(GRMs), which encode pairwise relatedness via shared branch area in an ARG, and their
 vector products directly from the ARG. As described in \citet{lehmann2026on},
-for one million simulated diploids on human chromosome~21, the 
+for one million simulated diploids on human chromosome~21, the
 branch GRM--vector product completes in under 18~seconds, and the associated
 randomised PCA scales to $2^{20}$ samples, a scale at which genotype-matrix PCA
 would run out of memory on most machines.
@@ -144,7 +144,7 @@ selection models~\citep{haller2025simHumanity}.
 ages of ancestral nodes from an inferred ARG under a mutational-clock
 prior, and used it to combine 3{,}601 modern and eight high-coverage
 ancient human genomes into a single unified genealogy.
-Alongside these core additions, tskit's exposure to Numba~\citep{lam2015numba} 
+Alongside these core additions, tskit's exposure to Numba~\citep{lam2015numba}
 of vectors allowing structured tree traversal
 has allowed Python-level user code to JIT-compile ARG traversals at close to C speed,
 enabling downstream packages such as
