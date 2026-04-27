@@ -55,14 +55,14 @@ defines a set of nodes (genomes at particular times) and
 edges (inheritance relationships between nodes spanning genomic intervals)
 in a simple tabular form\cite{kelleher2018efficient}.
 This encoding provides a lossless representation of a general class of
-ARGs, establishing a precise and machine-readable
-definition suitable for large-scale computation\cite{wong2024general}.
+ARGs
+suitable for large-scale computation\cite{wong2024general}.
 The data model also incorporates site, mutation, population, and pedigree
 information and supports arbitrary
-metadata associated with each of these components of the ARG.
+metadata associated with each of these components.
 Provenance information is recorded natively, enhancing reproducibility
 and transparency.
-Together, these features make the tskit data model a
+These features make the tskit data model a
 semantically complete and interoperable
 representation of ARGs that serves as a common foundation across diverse
 analytical workflows (Figure 1).
@@ -91,21 +91,19 @@ enabled efficient forward-time simulation of ARGs
 and yielded substantial speedups by avoiding
 explicit simulation of neutral mutations\cite{kelleher2018efficient}.
 Because these forward-time and coalescent
-simulators share a common underlying representation, their complementary
+simulators share this common representation, their complementary
 strengths can be combined within a single workflow. This has made it possible
 to simulate ARGs under complex demographic scenarios involving geography and
 selection that were previously infeasible, providing essential ground truth for
 method evaluation. Simulation capabilities have continued to expand,
 including whole-autosome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}.
-A growing ecosystem of forward-time, coalescent, and hybrid simulation tools
-builds directly on tskit (Table S1).
 
 % Inference methods interoperate through tskit, enabling evaluation and reuse
 % without imposing design choices.
 
 The lack of scalable inference methods has been a major obstacle
-to practical application of ARGs. Although there
+to empirical application of ARGs. Although there
 are many inference methods (see Wong et al.\cite{wong2024general}\ for a review),
 tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tskit data model\cite{kelleher2019inferring}.
