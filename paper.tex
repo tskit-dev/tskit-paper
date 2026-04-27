@@ -94,8 +94,8 @@ Because these forward-time and coalescent
 simulators share this common representation, their complementary
 strengths can be combined within a single workflow. This has made it possible
 to simulate ARGs under complex demographic scenarios involving geography and
-selection that were previously infeasible, providing essential ground truth for
-method evaluation. Simulation capabilities have continued to expand,
+selection that were previously infeasible.
+Simulation capabilities have continued to expand,
 including whole-autosome ARG simulations for nearly 1.5 million individuals
 based on a large human pedigree\cite{andersontrocme2023genes}.
 
@@ -104,7 +104,7 @@ based on a large human pedigree\cite{andersontrocme2023genes}.
 
 The lack of scalable inference methods has been a major obstacle
 to empirical application of ARGs. Although there
-are many inference methods (see Wong et al.\cite{wong2024general}\ for a review),
+are many inference methods\cite{wong2024general},
 tsinfer was the first to scale to hundreds of thousands of samples,
 directly leveraging the tskit data model\cite{kelleher2019inferring}.
 Many recent ARG inference methods have chosen to support tskit
@@ -146,7 +146,7 @@ efficient, well-tested, and thoroughly documented primitive operations on ARGs, 
 than to directly implement end-user workflows.
 This design principle has enabled a broad ecosystem of downstream
 software---spanning simulation, ARG inference, population and statistical genetic
-inference, analysis, and visualisation---with 63 published tools now using tskit
+inference, analysis, and visualisation---with 64 published tools now using tskit
 as a core dependency (Table S1).
 Building on the initial introduction of the succinct tree sequence
 data model~\cite{kelleher2016efficient}
@@ -157,7 +157,7 @@ By focusing on stable
 primitives rather than prescribing analytical pipelines, tskit enables
 methodological innovation to concentrate on modelling, inference, and
 interpretation rather than bespoke data formats and tooling.
-In this way, tskit 1.0 provides
+In this way, tskit provides
 a common and extensible foundation that supports the further expansion of
 ARG-based analyses as datasets, methods, and applications grow.
 As tskit is applied to a wider range of biological applications, future development
