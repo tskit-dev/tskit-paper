@@ -77,7 +77,7 @@ than a million times faster than reading the same trees individually
 from Newick using the standard libraries available at the time, for a
 simulation of 100,000 samples, with storage requirements reduced by
 roughly four orders of magnitude.
-The data model was subsequently generalised to enable forwards-time
+The data model was subsequently generalised to enable forward-time
 simulation in~\citet{kelleher2018efficient}. This publication also
 introduced the columnar tables API and was the first paper in which
 the tskit library itself appeared as a distinct component.
@@ -86,7 +86,7 @@ to the history ancestral to a specified set of samples, showing that
 its time complexity is linear in the number of input edges.
 ARG simplification is a fundamental operation with many
 applications~\citep{wong2024general}, as well as being the primitive
-operation making forwards-time simulation of ARGs
+operation making forward-time simulation of ARGs
 tractable~\citep{haller2018tree}.
 
 Building on this foundation, tskit has accumulated a broad set of
@@ -115,7 +115,7 @@ Development of the core API has continued through 2024--2026.
 tskit, which restores unary-node spans lost to simplification or
 inference and roughly halves the number of edges in typical ARGs, with
 corresponding reductions in statistic-computation time. \citet{lehmann2026on} 
-introduced operations to calculate `branch' genetic relatedness matrices 
+introduced operations to calculate ``branch'' genetic relatedness matrices 
 (GRMs), which encode pairwise relatedness via shared branch area in an ARG, and their 
 vector products directly from the ARG. As described in \citet{lehmann2026on},
 for one million simulated diploids on human chromosome~21, the 
@@ -123,7 +123,7 @@ branch GRM--vector product completes in under 18~seconds, and the associated
 randomised PCA scales to $2^{20}$ samples, a scale at which genotype-matrix PCA
 would run out of memory on most machines.
 \citet{lee2026genetic} apply this last operation to fitting linear mixed models,
-and compare the branch GRM-vector prodcut to the corresponding approximate (Monte Carlo)
+and compare the branch GRM-vector product to the corresponding approximate (Monte Carlo)
 implementation in ARGneedle-lib~\citep{zhang2023biobank}, showing that tskit is
 one to two orders of magnitude faster despite using an exact algorithm.
 
