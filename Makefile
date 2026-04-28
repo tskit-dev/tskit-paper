@@ -51,5 +51,5 @@ clean:
 mrproper: clean
 	rm -f *.ps *.pdf
 
-%.pdf : %.svg
+%.pdf: %.svg
 	inkscape $< --export-filename=$@
