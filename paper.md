@@ -131,20 +131,30 @@ available at <https://tskit.dev>.
 
 ## Data and Code Availability
 
-tskit is free and open-source software. Documentation, tutorials, and installation instructions are available at <https://tskit.dev>, and the source code is maintained at <https://github.com/tskit-dev/tskit>. The code and data used to produce this manuscript are available at <https://github.com/tskit-dev/tskit-paper>.
+tskit is free and open-source software. Documentation, tutorials, and
+installation instructions are available at <https://tskit.dev>, and the source
+code is maintained at <https://github.com/tskit-dev/tskit>. The code and data
+used to produce this manuscript are available at
+<https://github.com/tskit-dev/tskit-paper>.
 
-## Acknowledgements
-We gratefully acknowledge funding from the Robertson Foundation, the NIH (research grants HG011395 and HG012473), and the NSF (research grant OAC-2104115), supporting core tskit development.
+## Acknowledgements 
+
+We gratefully acknowledge funding from the Robertson
+Foundation, the NIH (research grants HG011395 and HG012473), and the NSF
+(research grant OAC-2104115), supporting core tskit development.
 
 ## Author Contributions
 
-*[Draft grouped by author tier, per the joint-first / joint-second / joint-senior structure; to be reviewed and refined by the authors. Per-author roles are not yet recorded, and duplicate initials (e.g. G.G. for G. Gorjanc and G. Gower; H.L. for H. Lee and H. Loay) will need disambiguation in the journal's style.]*
-
-J.K. and P.R. conceived and led the project. B.J., Y.W., K.T., and G.T. (joint first authors) led the design, implementation, and maintenance of the core tskit library. The joint second authors made substantial contributions to the development, testing, documentation, and downstream tooling of tskit. The remaining authors contributed additional code, analyses, and improvements. J.K. and P.R. wrote the manuscript with input from all authors. All authors read and approved the final manuscript.
+Authors contributed to tskit through software design, development, testing,
+documentation, and sustained contributions to the tskit-dev community. 
+J.K., P.R., B.J., Y.W., K.T., and G.T. made major contributions;
+the joint second authors made substantial contributions; 
+and the remaining authors made minor contributions. 
+J.K. and P.R. wrote the manuscript with input from all authors.
 
 ## Competing Interests
 
-*[Draft — please confirm.]* The authors declare no competing interests.
+The authors declare no competing interests.
 
 ## References
 1. Brandt, D. Y. C., Huber, C. D., Chiang, C. W. K. & Ortega-Del Vecchyo, D. The promise of inferring the past using the Ancestral Recombination Graph (ARG). *Genome Biology and Evolution* **16**, evae005 (2024).
