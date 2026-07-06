@@ -1,46 +1,28 @@
 FIGURES=figure.pdf
 
-all: paper.pdf supp.pdf review-diff.pdf
+all: supp.pdf paper.docx
 
-paper.pdf: paper.tex authors.tex paper.bib ${FIGURES}
-	pdflatex paper.tex
-	bibtex paper
-	pdflatex paper.tex
-	pdflatex paper.tex
-
+# Supplementary information (kept as a LaTeX-built PDF).
 supp.pdf: supp.tex authors.tex tools_table.tex functionality_table.tex paper.bib
 	pdflatex supp.tex
 	bibtex supp
 	pdflatex supp.tex
 	pdflatex supp.tex
 
-arxiv-submission.tar.gz:
-	rm -fR arxiv-submission
-	mkdir arxiv-submission
-	cp paper.tex supp.tex authors.tex tools_table.tex functionality_table.tex naturemag.bst paper.bib figure.pdf ./arxiv-submission/
-	tar -zcvf arxiv-submission.tar.gz arxiv-submission
+# Main text. paper.md is the editable master (produced once from the former
+# paper.tex by convert_to_markdown.py); the Word file for submission is a
+# direct pandoc conversion of it. Citations and references are already inlined
+# in paper.md, so no bibliography processing is needed here.
+paper.docx: paper.md
+	pandoc paper.md -o paper.docx
 
-review-diff.tex: paper.tex
-	latexdiff reviewed-paper.tex paper.tex > review-diff.tex
-
-review-diff.pdf: review-diff.tex
-	pdflatex review-diff.tex
-	pdflatex review-diff.tex
-	bibtex review-diff
-	pdflatex review-diff.tex
-
-
-paper.ps: paper.dvi
-	dvips paper
-
-paper.dvi: paper.tex paper.bib
-	latex paper.tex
-	bibtex paper
-	latex paper.tex
-	latex paper.tex
-
+# Regenerate plot figures from data.
 figures/%.pdf: plot.py
 	python3 plot.py $*
+
+# Rasterise/convert SVG figures to PDF.
+%.pdf: %.svg
+	inkscape $< --export-filename=$@
 
 clean:
 	rm -f *.log *.dvi *.aux
@@ -49,7 +31,4 @@ clean:
 	rm -f src/*.mpx *.mpx
 
 mrproper: clean
-	rm -f *.ps *.pdf
-
-%.pdf: %.svg
-	inkscape $< --export-filename=$@
+	rm -f *.ps *.pdf *.docx
