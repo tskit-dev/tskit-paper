@@ -14,3 +14,5 @@ tskit
 *.log
 *.out
 .*.swp
+# Word file generated from paper.md
+paper.docx
