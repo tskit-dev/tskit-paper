@@ -44,6 +44,8 @@ Ben Jeffery^1,\*^, Yan Wong^1,\*^, Kevin Thornton^2,\*^, Georgia Tsambos^3,4,\*^
 
 \*Joint first author; †Joint second author; ‡Joint senior author
 
+Correspondence to P. Ralph (plr@uoregon.edu) or J. Kelleher (jerome.kelleher@well.ox.ac.uk).
+
 ## Main text
 
 Ancestral recombination graphs (ARGs) capture the full genetic history of
@@ -152,9 +154,9 @@ the joint second authors made substantial contributions;
 and the remaining authors made minor contributions. 
 J.K. and P.R. wrote the manuscript with input from all authors.
 
-## Competing Interests
+## Ethics Declaration
 
-The authors declare no competing interests.
+**Competing interests.** The authors declare no competing interests.
 
 ## References
 1. Brandt, D. Y. C., Huber, C. D., Chiang, C. W. K. & Ortega-Del Vecchyo, D. The promise of inferring the past using the Ancestral Recombination Graph (ARG). *Genome Biology and Evolution* **16**, evae005 (2024).
