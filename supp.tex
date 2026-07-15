@@ -20,9 +20,10 @@
 \renewcommand\AB@affilsepx{;\hspace{0.6em}\protect\Affilfont}
 \makeatother
 
-\renewcommand{\thetable}{S\arabic{table}}
-\renewcommand{\thefigure}{S\arabic{figure}}
+% \renewcommand{\thetable}{S\arabic{table}}
+% \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\tablename}{Supplementary Table}
 
 \begin{document}
 
@@ -41,7 +42,7 @@ as a named tool intended for reuse and must use tskit.
 This list is intentionally conservative, and does not include
 (for example) publications depending on bespoke analysis
 pipelines using tskit.
-For each tool in Table S1, we list: its name (with a clickable
+For each tool in Supplementary Table 1, we list: its name (with a clickable
 hyperlink to its source code repository);
 the main implementation
 language(s) of the tool based on GitHub summaries;
@@ -160,7 +161,7 @@ second~\citep{zhan2025pandemic}; and recent work has dated contiguous
 ARGs spanning 14\% of the human genome for 47,535 Genomics England
 participants, estimating ages for 23.2 million
 variants~\citep{pope2026tracing}.
-More broadly, Table~S1 shows that tskit now underpins a substantial
+More broadly, Supplementary Table 1 shows that tskit now underpins a substantial
 ecosystem of downstream tools spanning simulation, ARG inference,
 population-genetic and statistical-genetic inference, analysis, and
 visualisation.
@@ -193,7 +194,7 @@ It is important to note that all these libraries have different goals than tskit
 we are comparing their functionality in terms of the core ARG operations implemented by tskit,
 rather than the main use cases addressed by the authors of these libraries.
 
-Table S2 lists properties and operations that tskit supports, grouped
+Supplementary Table 2 lists properties and operations that tskit supports, grouped
 into nine broad categories.
 For each operation we mark whether each comparison library offers a
 comparable feature:

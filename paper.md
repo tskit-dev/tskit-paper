@@ -91,7 +91,7 @@ application of ARGs. Although there are many inference methods^5^, tsinfer was
 the first to scale to hundreds of thousands of samples, directly leveraging the
 tskit data model^8^. Many recent ARG inference methods have chosen to support
 tskit as an output format in addition to their own native representations
-(Table S1). This shared output layer enables inferred ARGs to interoperate
+(Supplementary Table 1). This shared output layer enables inferred ARGs to interoperate
 directly with simulators, facilitating systematic evaluation and benchmarking
 against known ground truth. It also shifts the burden of format conversion away
 from downstream users, who can instead rely on inference tools to emit results
@@ -117,7 +117,7 @@ rather than to directly implement end-user workflows. This design principle has
 enabled a broad ecosystem of downstream software---spanning simulation, ARG
 inference, population and statistical genetic inference, analysis, and
 visualisation---with 64 published tools now using tskit as a core dependency
-(Table S1). Building on the initial introduction of the succinct tree sequence
+(Supplementary Table 1). Building on the initial introduction of the succinct tree sequence
 data model^6^ and its formalisation as a general ARG representation^5^, tskit
 1.0 marks the maturity of the software library and data model for scalable ARG
 analysis (see Supplementary Information). By focusing on stable primitives
@@ -181,4 +181,4 @@ J.K. and P.R. wrote the manuscript with input from all authors.
 
 ## Figure Legend
 
-**Figure 1.** Tskit enables an interoperable ARG software ecosystem. ARGs produced by simulation or inference tools can be analysed by diverse downstream applications via tskit's well-defined tabular data model, C library and Python/Rust/R bindings. Tools shown are representative examples from Table S1 (three per category; ordered by citation count).
+**Figure 1.** Tskit enables an interoperable ARG software ecosystem. ARGs produced by simulation or inference tools can be analysed by diverse downstream applications via tskit's well-defined tabular data model, C library and Python/Rust/R bindings. Tools shown are representative examples from Supplementary Table 1 (three per category; ordered by citation count).
